@@ -77,13 +77,13 @@ values
 (5, 'Nirvana', 'vraiment cool', 'youtube.com/Nirvana', 'Rock');
 
 -- groupe de rap
-insert into GROUPE (idgroupe, nomgroupe, description, lienvideo, stylemusical, idh, jourdebut, dureeh)
+insert into GROUPE (idgroupe, nomgroupe, description, lienvideo, stylemusical)
 values
-(6, 'PNL', 'deux frères', 'youtube.com/PNL', 'Rap', 1, 'Mercredi', 3),
-(7, 'Arsenic', 'Un groupe de rap menbre de collectif Secteur 1', 'youtube.com/Arsenic', 'Rap', 4, 'Lundi', 4),
-(8, 'Foncky Family', 'groupe de rap originaire de marseille', 'youtube.com/FonckyFamily', 'Rap', 2, 'Mardi', 5),
-(9, 'Casseurs Flwoters', 'Orelsan et des gens', 'youtube.com/CasseursFlwoters', 'Rap', 4, 'Mardi', 1),
-(10, 'S-Crew', 'groupe de pote qui rap', 'youtube.com/S-Crew', 'Rap', 3, 'Vendredi', 2);
+(6, 'PNL', 'deux frères', 'youtube.com/PNL', 'Rap'),
+(7, 'Arsenic', 'Un groupe de rap menbre de collectif Secteur 1', 'youtube.com/Arsenic', 'Rap'),
+(8, 'Foncky Family', 'groupe de rap originaire de marseille', 'youtube.com/FonckyFamily', 'Rap'),
+(9, 'Casseurs Flwoters', 'Orelsan et des gens', 'youtube.com/CasseursFlwoters', 'Rap'),
+(10, 'S-Crew', 'groupe de pote qui rap', 'youtube.com/S-Crew', 'Rap');
 
 
 -------

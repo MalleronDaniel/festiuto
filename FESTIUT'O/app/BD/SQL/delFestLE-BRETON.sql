@@ -19,6 +19,7 @@ drop table `JOUER`;
 drop table `INSTRUMENTS`;
 drop table `SOUS_STYLE`;
 drop table `ARTISTE`;
+drop table `HEBERGER`;
 drop table `GROUPE`; 
 drop table `HEBERGEMENT`; 
 
