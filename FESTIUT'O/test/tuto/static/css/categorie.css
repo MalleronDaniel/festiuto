@@ -1,0 +1,65 @@
+
+.books{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 15%;
+    text-decoration: none; 
+}
+
+.books>li{
+    flex-basis: 20%;
+    flex-grow: 0;
+    margin-bottom: 3%;
+}
+
+.books>li>a{
+    color: black; 
+    text-decoration: none; 
+}
+
+#titre{
+    text-align: center;
+}
+
+.books a>img {
+    margin-left: 25%;
+}
+
+h3{
+    margin: 5%;
+    text-align:center;
+}
+
+.refresh{
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: grey; /* Couleur de fond du bouton */
+    color: #fff; 
+    text-decoration: none; 
+    border: 1px solid black; /* Bordure du bouton */
+    border-radius: 5px; /* Coins arrondis */
+    transition: background-color 0.3s ease; /* Transition de couleur de fond */
+    text-align: center;
+    margin-left: 40%;
+    margin-top: 5%;
+    width: 20%;
+}
+.refresh:hover {
+    background-color: white; /* Nouvelle couleur de fond au survol */
+    color: grey; /* Nouvelle couleur du texte au survol */
+}
+
+.form-check{
+    flex-basis: 20%;
+    flex-grow: 0;
+}
+
+fieldset{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+legend{
+    text-align: center;
+    margin: 3%;
+}

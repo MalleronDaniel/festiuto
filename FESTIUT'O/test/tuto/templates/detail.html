@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('static',filename='css/home.css')}}">
+{% endblock %}
+{% block content %}
+<h1>Voici le détail du livre choisi :</h1>
+<div class="main">
+    <img src="{{url_for('static', filename='images/'+book.img)}}" alt="image du livre {{book.title}}" title="{{book.title}}">
+
+    <div class="infos">
+        <p>Le titre du livre : {{book.title}}</p>
+        <p>L'auteur est : {{book.author}}</p>
+        <p>Son prix sur amazon est : {{book.price}} €</p>
+        <p>Note : {{ moyenne }}</p> 
+        <div class="button_detail">
+            <a class="detail" id="l1" href="{{book.url}}">Acheter ce Livre </a>
+            <a class="detail" id="l1" href="{{url_for('ajouteNoteLivre', id=book.id )}}">Ajouter une Note</a>
+            {% if current_user.is_authenticated %}
+                <form method="POST" action="{{ url_for('ajouter_ou_supprimer_favoris', book_id=book.id) }}">
+                    {% if est_favori %}
+                        <input class="detail" type="submit" value="Supprimer des favoris">
+                    {% else %}
+                        <input class="detail" type="submit" value="Ajouter aux favoris">
+                    {% endif %}
+                </form>
+            {% endif %}
+            <div>
+                <a class="detail" id="l2" href="{{url_for('detail', id=book.id-2)}}">Précedent</a>
+                
+                <a class="detail" id="l2" href="{{url_for('detail', id=book.id)}}">Suivant</a>
+                <a class="detail" id="l2" href="{{url_for('home')}}">Retour</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

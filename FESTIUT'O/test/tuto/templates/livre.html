@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block main %}
+    {% block content %}
+    <h1>Voici la liste de tout nos livres en stock :</h1>
+    <div class="sample" id="affichage_home">
+        {% for x in books %}
+            <a href="{{url_for('detail', id=x.id-1)}}">
+                <img src="{{url_for('static', filename='images/'+x.img)}}" alt="image du livre {{x.title}}" title="{{x.title}}">
+                <p id="titre">{{x.title}}</p>
+            </a>
+        {% endfor %}  
+    </div>
+    <a class="button_livre" href="{{ url_for('home') }}">Voir notre selection pour vous</a>
+    {% endblock %}
+{% endblock %}

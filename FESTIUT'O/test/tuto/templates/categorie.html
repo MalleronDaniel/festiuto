@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/categorie.css') }}">
+{% endblock %}
+{% block content %}
+    <div class="category-header">
+        <h1>Trie par catégorie</h1>
+    </div>
+
+    <form method="POST" action="{{ url_for('maj_categorie') }}">
+        {{ form.hidden_tag() }}
+        <fieldset>
+            <legend>Veuillez choisir une catégorie :</legend>
+            {% for subfield in form.category %}
+                <div class="form-check">
+                    <label class="form-check-label">
+                        {{ subfield() }} {{ subfield.label.text }}
+                    </label>
+                </div>
+            {% endfor %}
+        </fieldset>
+        <input class="refresh" type="submit" value="Rafraichir">
+    </form>
+
+    <div class="book-list">
+        {% if books %}
+        <h3>Voici les livres de la catégorie : {{cat}}</h3>
+            <ul class="books">
+                {% for book in books %}
+                    <li class="book-item">
+                        <a href="{{ url_for('detail', id=book.id-1) }}">
+                            <img src="{{ url_for('static', filename='images/' + book.img) }}" alt="{{ book.title }}" title="{{ book.title }}">
+                            <p id="titre">{{ book.title }}</p>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}

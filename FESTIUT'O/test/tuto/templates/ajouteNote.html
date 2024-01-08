@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="POST" action="{{ url_for('save_note', id=book.id) }}">
+    {{ form.hidden_tag() }}
+    <fieldset>
+        <legend>Choisissez une note :</legend>
+        {% for subfield in form.notes %}
+            <div class="form-check">
+                <label class="form-check-label">
+                    {{ subfield() }} {{ subfield.label.text }}
+                </label>
+            </div>
+        {% endfor %}
+    </fieldset>
+    <input class="btn btn-default" type="submit" value="Ajouter Note">
+</form>
+{% endblock %}
+

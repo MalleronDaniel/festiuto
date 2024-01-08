@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>On teste</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='home.css')}}">
+</head>
+    <header>
+        <h1>{{ titre_home_v2 }}</h1>
+    </header>
+    <body>
+        <ul>
+            {% for membre in groupe %}
+                <li>{{ membre }}</li>
+            {% endfor %}
+        </ul>
+        <a href="./">lien vers la première page</a>
+        <a href="./livre">lien vers la troisième page</a>
+    </body>
+</html>
