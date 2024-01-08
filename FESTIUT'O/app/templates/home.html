@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+{% block header %}
+      <h1>FEST'IUTO</span></h1>
+{% endblock %}
+{% block content %}
+        <h2>SPECTATEURS</h2>
+        {% for spec in spectateurs %}
+        <p>{{ spec.nomspec }}</p>
+        {% endfor %}
+        <h2>ARTISTES</h2>
+        {% for art in artistes %}
+        <p>{{ art.prenomartiste }} {{ art.nomartiste }}</p>
+        {% endfor %}
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+{% endblock %}
