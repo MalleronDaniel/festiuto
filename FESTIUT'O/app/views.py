@@ -14,7 +14,7 @@ from datetime import datetime
 def home():
     s = Spectateur.query.all()
     a = Artiste.query.all()
-    return render_template("accueil.html", spectateurs=s, artistes=a)
+    return render_template("home.html", spectateurs=s, artistes=a)
 
 @app.route("/admin/ajout-billet/")
 def ajout_billet():
