@@ -51,7 +51,7 @@ class BILLET(Base):
     typebillet = Column(String(42))
     prixbillet = Column(Float(6))
     nbjoursbillet = Column(Integer)
-    spectateurs = relationship('SPECTATEUR', back_populates='billet')
+    spectateurs = relationship('UTILISATEUR', back_populates='billet')
     acceder = relationship('ACCEDER', back_populates='billet')
     regarder = relationship('REGARDER', back_populates='billet')
 
@@ -90,16 +90,16 @@ class SOUS_STYLE(Base):
     nomstyle = Column(String(42))
     avoir = relationship('AVOIR', back_populates='sous_style')
 
-class SPECTATEUR(Base):
-    __tablename__ = 'SPECTATEUR'
+class UTILISATEUR(Base):
+    __tablename__ = 'UTILISATEUR'
 
-    idspec = Column(Integer, primary_key=True)
+    idUser = Column(Integer, primary_key=True)
     nomspec = Column(String(42))
     age = Column(Integer)
     email = Column(String(42))
     idbillet = Column(Integer, ForeignKey('BILLET.idbillet'))
     billet = relationship('BILLET', back_populates='spectateurs')
-    appreciations = relationship('APPRECIER', back_populates='spectateur')
+    appreciations = relationship('APPRECIER', back_populates='UTILISATEUR')
 
 class ACTIVITE_ANNEXE(Base):
     __tablename__ = 'ACTIVITE_ANNEXE'

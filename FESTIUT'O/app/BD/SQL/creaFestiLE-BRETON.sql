@@ -78,13 +78,13 @@ CREATE TABLE `SOUS_STYLE` (
   `nomstyle` VARCHAR(42),
   PRIMARY KEY (`ids`)
 );
-CREATE TABLE `SPECTATEUR` (
-  `idspec` int(3),
+CREATE TABLE `UTILISATEUR` (
+  `idUser` int(3),
   `nomspec` VARCHAR(42),
   `age` int(3),
   `email` VARCHAR(42),
   `idbillet` int(3),
-  PRIMARY KEY (`idspec`)
+  PRIMARY KEY (`idUser`)
 );
 CREATE TABLE `ACCEDER` (
   `jour` ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'),
@@ -96,8 +96,8 @@ CREATE TABLE `ACCEDER` (
 );
 CREATE TABLE `APPRECIER` (
   `idgroupe` int(3),
-  `idspec` int(3),
-  PRIMARY KEY (`idgroupe`, `idspec`)
+  `idUser` int(3),
+  PRIMARY KEY (`idgroupe`, `idUser`)
 );
 CREATE TABLE `AVOIR` (
   `ids` int(3),
@@ -141,6 +141,11 @@ CREATE TABLE `PARTICIPER` (
   `dateact` DATETIME,
   PRIMARY KEY (`idgroupe`, `idact`, `dateact`)
 );
+CREATE TABLE `POSSEDER`(
+  `idUser` int(3),
+  `idBillet` int(3),
+  PRIMARY KEY (`idUser`, `idBillet`)
+);
 CREATE TABLE `REGARDER` (
   `idact` int(3),
   `dateact` DATETIME,
@@ -154,10 +159,10 @@ CREATE TABLE `SIMILAIRE` (
 );
 ALTER TABLE `ARTISTE` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `CONCERT` ADD FOREIGN KEY (`noml`) REFERENCES `LIEU` (`noml`);
-ALTER TABLE `SPECTATEUR` ADD FOREIGN KEY (`idbillet`) REFERENCES `BILLET` (`idbillet`);
+ALTER TABLE `UTILISATEUR` ADD FOREIGN KEY (`idbillet`) REFERENCES `BILLET` (`idbillet`);
 ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`idbillet`) REFERENCES `BILLET` (`idbillet`);
 ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`jour`, `datedebutc`, `idconcert`) REFERENCES `CONCERT` (`jour`, `datedebutc`, `idconcert`);
-ALTER TABLE `APPRECIER` ADD FOREIGN KEY (`idspec`) REFERENCES `SPECTATEUR` (`idspec`);
+ALTER TABLE `APPRECIER` ADD FOREIGN KEY (`idUser`) REFERENCES `UTILISATEUR` (`idUser`);
 ALTER TABLE `APPRECIER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `AVOIR` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `AVOIR` ADD FOREIGN KEY (`ids`) REFERENCES `SOUS_STYLE` (`ids`);
@@ -179,6 +184,8 @@ ALTER TABLE `SIMILAIRE` ADD FOREIGN KEY (`idgroupe_1`) REFERENCES `GROUPE` (`idg
 ALTER TABLE `SIMILAIRE` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `HEBERGER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `HEBERGER` ADD FOREIGN KEY (`idh`) REFERENCES `HEBERGEMENT` (`idh`);
+ALTER TABLE `POSSEDER` ADD FOREIGN KEY (`idUser`) REFERENCES `UTILISATEUR` (`idUser`);
+ALTER TABLE `POSSEDER` ADD FOREIGN KEY (`idBillet`) REFERENCES `BILLET` (`idbillet`);
 
 -- FONCTIONS 
 

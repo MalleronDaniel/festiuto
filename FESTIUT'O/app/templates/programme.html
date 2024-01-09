@@ -1,0 +1,21 @@
+
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+{% block content %}
+    <h2>Vendredi</h2>
+    {% for c in concerts_vendredi %}
+        <p>{{ c.idconcert }}</p>
+        <p>{{ c.get_groupe_concert() }}</p>
+    {% endfor %}
+    <h2>Samedi</h2>
+    {% for c in concerts_samedi %}
+        <p>{{ c.idconcert }}</p>
+    {% endfor %}
+    <h2>Dimanche</h2>
+    {% for c in concerts_dimanche %}
+        <p>{{ c.idconcert }}</p>
+    {% endfor %}
+{% endblock %}

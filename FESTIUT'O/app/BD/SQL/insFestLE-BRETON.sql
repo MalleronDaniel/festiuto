@@ -169,7 +169,7 @@ values
 
 -- insertion des spectateurs
 
-insert into SPECTATEUR (idspec, nomspec, age, email, idbillet)
+insert into UTILISATEUR (idUser, nomspec, age, email, idbillet)
 values
 (1, 'Daniel Malleron', 18, 'danyyyy@gmail.com', 1),
 (2, 'Kevin Le Breton', 19, 'kevin.le.breton@gmail.com', 2),
@@ -183,7 +183,7 @@ values
 
 -- insertion dans la table apprecier
 
-insert into APPRECIER (idgroupe, idspec)
+insert into APPRECIER (idgroupe, idUser)
 values
 (1, 1),
 (7, 1),
