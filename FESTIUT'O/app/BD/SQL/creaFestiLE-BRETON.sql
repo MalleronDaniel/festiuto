@@ -154,6 +154,7 @@ CREATE TABLE `SIMILAIRE` (
 );
 ALTER TABLE `ARTISTE` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `CONCERT` ADD FOREIGN KEY (`noml`) REFERENCES `LIEU` (`noml`);
+
 ALTER TABLE `SPECTATEUR` ADD FOREIGN KEY (`idbillet`) REFERENCES `BILLET` (`idbillet`);
 ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`idbillet`) REFERENCES `BILLET` (`idbillet`);
 ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`jour`, `datedebutc`, `idconcert`) REFERENCES `CONCERT` (`jour`, `datedebutc`, `idconcert`);

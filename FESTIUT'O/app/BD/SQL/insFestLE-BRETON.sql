@@ -77,6 +77,7 @@ values
 (5, 'Nirvana', 'vraiment cool', 'youtube.com/Nirvana', 'Rock');
 
 -- groupe de rap
+
 insert into GROUPE (idgroupe, nomgroupe, description, lienvideo, stylemusical)
 values
 (6, 'PNL', 'deux frères', 'youtube.com/PNL', 'Rap'),
