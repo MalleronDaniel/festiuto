@@ -63,10 +63,7 @@ class Groupe(db.Model):
     description = db.Column(db.Text)
     lienvideo = db.Column(db.String(42))
     stylemusical = db.Column(db.String(42))
-    idh = db.Column(db.Integer, db.ForeignKey('HEBERGEMENT.idh'))
-    jourdebut = db.Column(db.Enum('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'))
-    dureeh = db.Column(db.Integer)
-    hebergement = db.relationship('Hebergement', backref=db.backref("groupes", lazy="dynamic"))
+
     
     def __repr__(self):
         return f"<Groupe ({self.idgroupe}) | {self.nomgroupe}>"
@@ -80,6 +77,17 @@ class Hebergement(db.Model):
     
     def __repr__(self):
         return f"<Hebergement ({self.idh}) | {self.adresse}>"
+    
+class Heberger(db.Model):
+    __tablename__ = "HEBERGER"
+    idh = db.Column(db.Integer, db.ForeignKey('HEBERGEMENT.idh'), primary_key=True)
+    idgroupe = db.Column(db.Integer, db.ForeignKey('GROUPE.idgroupe'), primary_key=True)
+    jourDebut = db.Column(db.Enum('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'))
+    dureeH = db.Column(db.Integer)
+
+    def __repr__(self) :
+        return f"<Heberger ({self.idh}) | ({self.idgroupe}) | ({self.jourDebut}) | ({self.dureeH})>"
+
 
 
 class Instruments(db.Model):
@@ -269,9 +277,10 @@ db.ForeignKeyConstraint(['idbillet', 'idact', 'dateact'], ['ACTIVITE_ANNEXE.idac
 db.ForeignKeyConstraint(['idreseau', 'idgroupe'], ['GROUPE.idgroupe', 'PARTAGER.idreseau'])
 db.ForeignKeyConstraint(['idact', 'dateact'], ['ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
 db.ForeignKeyConstraint(['idgroupe', 'idact', 'dateact'], ['GROUPE.idgroupe', 'ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
-db.ForeignKeyConstraint(['idbillet', 'idact', 'dateact'], ['regarder.idbillet', 'ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
+db.ForeignKeyConstraint(['idbillet', 'idact', 'dateact'], ['REGARDER.idbillet', 'ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
 db.ForeignKeyConstraint(['idgroupe_1'], ['GROUPE.idgroupe'])
-db.ForeignKeyConstraint(['idgroupe'], ['GROUPE.idgroupe'])
+
+
 
 if __name__ == '__main__':
     db.create_all()
