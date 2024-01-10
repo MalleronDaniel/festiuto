@@ -8,7 +8,7 @@ from flask_login import UserMixin
 # pour login
 @login_manager.user_loader
 def load_user(user_id):
-    return Spectateur.query.get(int(user_id))
+    return Utilisateur.query.get(int(user_id))
 
 # TABLES
 class ActiviteAnnexe(db.Model):
@@ -189,12 +189,12 @@ class Utilisateur(db.Model, UserMixin):
     age = db.Column(db.Integer)
     email = db.Column(db.String(42), unique=True)
     idbillet = db.Column(db.Integer, db.ForeignKey('BILLET.idbillet'))
-    billet = db.relationship('Billet', backref=db.backref("spectateurs", lazy="dynamic"))
+    billet = db.relationship('Billet', backref=db.backref("utilisateur", lazy="dynamic"))
     mdp = db.Column(db.String(42))
     admin = db.Column(db.Boolean)
     
     def __repr__(self):
-        return f"<Utilisateur ({self.idUser}) | {self.nomspec}>"
+        return f"<Utilisateur ({self.iduser}) | {self.nomuser}>"
     
     def get_id(self):
         return self.iduser
@@ -215,7 +215,7 @@ class Acceder(db.Model):
 class Apprecier(db.Model):
     __tablename__ = "APPRECIER"
     idgroupe = db.Column(db.Integer, db.ForeignKey('GROUPE.idgroupe'))
-    idUser = db.Column(db.Integer, db.ForeignKey('Utilisateur.idUser'), primary_key=True)
+    iduser = db.Column(db.Integer, db.ForeignKey('UTILISATEUR.iduser'))
     utilisateur = db.relationship('Utilisateur', backref=db.backref("appreciations", lazy="dynamic"))
     groupe = db.relationship('Groupe', backref=db.backref("appreciations", lazy="dynamic"))
     __table_args__ = (db.PrimaryKeyConstraint('idgroupe', 'iduser'),)
@@ -312,7 +312,7 @@ class Similaire(db.Model):
 class Posseder(db.Model):
     __tablename__ = "POSSEDER"
     idbillet = db.Column(db.Integer, db.ForeignKey('BILLET.idbillet'), primary_key=True)
-    idUser = db.Column(db.Integer, db.ForeignKey('UTILISATEUR.idUser'), primary_key=True)
+    iduser = db.Column(db.Integer, db.ForeignKey('UTILISATEUR.iduser'), primary_key=True)
 
 # Define foreign key relationships
 db.ForeignKeyConstraint(['idgroupe', 'jour', 'datedebutc', 'idconcert'], ['CONTRIBUER.idgroupe', 'CONTRIBUER.jour', 'CONTRIBUER.datedebutc', 'CONTRIBUER.idconcert'])
@@ -336,6 +336,7 @@ db.ForeignKeyConstraint(['idgroupe_1'], ['GROUPE.idgroupe'])
 
 if __name__ == '__main__':
     db.create_all()
+
 
 
 

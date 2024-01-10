@@ -12,7 +12,7 @@ from datetime import datetime
 
 @app.route("/")
 def home():
-    s = UTILISATEUR.query.all()
+    s = Utilisateur.query.all()
     a = Artiste.query.all()
     return render_template("home.html", spectateurs=s, artistes=a)
 

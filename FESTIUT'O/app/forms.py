@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import DateField, FileField, StringField, HiddenField, PasswordField, SelectField, RadioField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, NumberRange
-from .models import UTILISATEUR
+from .models import Utilisateur
 
 "Formulaires de l'application"
 
@@ -20,7 +20,7 @@ class LoginForm(FlaskForm):
     next = HiddenField()
 
     def get_authenticated_user(self):
-        user = Spectateur.query.filter_by(email=self.email.data).first()
+        user = Utilisateur.query.filter_by(email=self.email.data).first()
         if user and user.mdp == self.mdp.data:
             return user
     
