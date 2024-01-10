@@ -43,6 +43,26 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+@app.route('/inscription/')
+def inscription():
+    f = UtilisateurForm()
+    return render_template("inscription.html", form=f)
+    
+@app.route("/save/util/", methods=("POST",))
+def save_inscription():
+    f = UtilisateurForm()
+    u = Utilisateur(
+        iduser = 1 + db.session.query(db.func.max(Utilisateur.iduser)).scalar(),
+        nomuser = f.nomuser.data,
+        ddn = f.ddn.data,
+        email = f.email.data,
+        mdp = f.mdp.data,
+        admin = f.admin.data
+    )
+    db.session.add(u)
+    db.session.commit()
+    return redirect(url_for('login'))
+
 @app.route("/admin/ajout-billet/")
 def ajout_billet():
     f = BilletForm()
@@ -50,7 +70,7 @@ def ajout_billet():
 
 @app.route("/admin/ajout-UTILISATEUR/")
 def ajout_spectateur():
-    f = SpectateurForm()
+    f = UtilisateurForm()
     return render_template("ajout-billet.html", form=f)
 
 @app.route("/programme/")

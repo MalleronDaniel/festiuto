@@ -9,7 +9,7 @@ CREATE TABLE `ARTISTE` (
   `idartiste` int(3),
   `nomartiste` VARCHAR(42),
   `prenomartiste` VARCHAR(42),
-  `age` int(3),
+  `ddn` date,
   `descriptiona` VARCHAR(42),
   `idgroupe` int(3),
   PRIMARY KEY (`idartiste`)
@@ -81,7 +81,7 @@ CREATE TABLE `SOUS_STYLE` (
 CREATE TABLE `UTILISATEUR` (
   `iduser` int(3),
   `nomuser` VARCHAR(42),
-  `age` int(3),
+  `ddn` date,
   `email` VARCHAR(42),
   `idbillet` int(3),
   `mdp` VARCHAR(42),
