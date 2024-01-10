@@ -93,8 +93,9 @@ class SOUS_STYLE(Base):
 class UTILISATEUR(Base):
     __tablename__ = 'UTILISATEUR'
 
-    idUser = Column(Integer, primary_key=True)
-    nomspec = Column(String(42))
+
+    iduser = Column(Integer, primary_key=True)
+    nomuser = Column(String(42))
     age = Column(Integer)
     email = Column(String(42))
     idbillet = Column(Integer, ForeignKey('BILLET.idbillet'))

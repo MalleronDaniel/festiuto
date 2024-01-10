@@ -77,6 +77,7 @@ values
 (5, 'Nirvana', 'vraiment cool', 'youtube.com/Nirvana', 'Rock');
 
 -- groupe de rap
+
 insert into GROUPE (idgroupe, nomgroupe, description, lienvideo, stylemusical)
 values
 (6, 'PNL', 'deux frères', 'youtube.com/PNL', 'Rap'),
@@ -167,23 +168,23 @@ values
 
 -------
 
--- insertion des spectateurs
+-- insertion des utilisateurs
 
-insert into UTILISATEUR (idUser, nomspec, age, email, idbillet)
+insert into UTILISATEUR (iduser, nomuser, age, email, idbillet, mdp, admin)
 values
-(1, 'Daniel Malleron', 18, 'danyyyy@gmail.com', 1),
-(2, 'Kevin Le Breton', 19, 'kevin.le.breton@gmail.com', 2),
-(3, 'Adam Daniel', 19, 'dadam@gmail.com', 3),
-(4, 'Alicia Romero', 20, 'alicia.romero@gmail.com', 4),
-(5, 'Jordan Zebo', 26, 'jojo5sec@gmail.com', 5),
-(6, 'Cyril Doumbe', 27, 'jordanTmort@gmail.com', 6);
+(1, 'Daniel Malleron', 18, 'danyyyy@gmail.com', 1, 'mdp', true),
+(2, 'Kevin Le Breton', 19, 'kevin.le.breton@gmail.com', 2, 'mdp', false),
+(3, 'Adam Daniel', 19, 'dadam@gmail.com', 3, 'mdp', false),
+(4, 'Alicia Romero', 20, 'alicia.romero@gmail.com', 4, 'mdp', false),
+(5, 'Jordan Zebo', 26, 'jojo5sec@gmail.com', 5, 'mdp', false),
+(6, 'Cyril Doumbe', 27, 'jordanTmort@gmail.com', 6, 'mdp', false);
 
 
 -------
 
 -- insertion dans la table apprecier
 
-insert into APPRECIER (idgroupe, idUser)
+insert into APPRECIER (idgroupe, iduser)
 values
 (1, 1),
 (7, 1),

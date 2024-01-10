@@ -16,6 +16,33 @@ def home():
     a = Artiste.query.all()
     return render_template("home.html", spectateurs=s, artistes=a)
 
+@app.route("/admin/")
+def admin_home():
+    return render_template("admin.html")
+
+@app.route("/login/", methods = ("GET","POST",))
+def login():
+    f = LoginForm()
+    if not f.is_submitted():
+        f.next.data = request.args.get("next")
+    elif f.validate_on_submit():
+        user = f.get_authenticated_user()
+        if user:
+            login_user(user)
+            if user.admin:
+                next = f.next.data or url_for("admin_home")
+            else:
+                next = f.next.data or url_for("home")
+            return redirect(next)
+    return render_template (
+        "login.html",
+        form=f)
+
+@app.route('/logout/')
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
 @app.route("/admin/ajout-billet/")
 def ajout_billet():
     f = BilletForm()

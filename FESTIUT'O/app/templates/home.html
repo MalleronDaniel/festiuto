@@ -4,12 +4,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 {% endblock %}
 {% block header %}
-      <h1>FEST'IUTO</span></h1>
+{{ super() }}
 {% endblock %}
 {% block content %}
-        <h2>SPECTATEURS</h2>
+        <h2>UTILISATEURS</h2>
         {% for spec in spectateurs %}
-        <p>{{ spec.nomspec }}</p>
+        <p>{{ spec.nomuser }}</p>
         {% endfor %}
         <h2>ARTISTES</h2>
         {% for art in artistes %}

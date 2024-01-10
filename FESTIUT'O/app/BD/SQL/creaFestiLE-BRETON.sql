@@ -79,12 +79,14 @@ CREATE TABLE `SOUS_STYLE` (
   PRIMARY KEY (`ids`)
 );
 CREATE TABLE `UTILISATEUR` (
-  `idUser` int(3),
-  `nomspec` VARCHAR(42),
+  `iduser` int(3),
+  `nomuser` VARCHAR(42),
   `age` int(3),
   `email` VARCHAR(42),
   `idbillet` int(3),
-  PRIMARY KEY (`idUser`)
+  `mdp` VARCHAR(42),
+  `admin` boolean,
+  PRIMARY KEY (`iduser`)
 );
 CREATE TABLE `ACCEDER` (
   `jour` ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'),
@@ -96,8 +98,8 @@ CREATE TABLE `ACCEDER` (
 );
 CREATE TABLE `APPRECIER` (
   `idgroupe` int(3),
-  `idUser` int(3),
-  PRIMARY KEY (`idgroupe`, `idUser`)
+  `iduser` int(3),
+  PRIMARY KEY (`idgroupe`, `iduser`)
 );
 CREATE TABLE `AVOIR` (
   `ids` int(3),
@@ -162,7 +164,7 @@ ALTER TABLE `CONCERT` ADD FOREIGN KEY (`noml`) REFERENCES `LIEU` (`noml`);
 ALTER TABLE `UTILISATEUR` ADD FOREIGN KEY (`idbillet`) REFERENCES `BILLET` (`idbillet`);
 ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`idbillet`) REFERENCES `BILLET` (`idbillet`);
 ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`jour`, `datedebutc`, `idconcert`) REFERENCES `CONCERT` (`jour`, `datedebutc`, `idconcert`);
-ALTER TABLE `APPRECIER` ADD FOREIGN KEY (`idUser`) REFERENCES `UTILISATEUR` (`idUser`);
+ALTER TABLE `APPRECIER` ADD FOREIGN KEY (`iduser`) REFERENCES `UTILISATEUR` (`iduser`);
 ALTER TABLE `APPRECIER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `AVOIR` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `AVOIR` ADD FOREIGN KEY (`ids`) REFERENCES `SOUS_STYLE` (`ids`);

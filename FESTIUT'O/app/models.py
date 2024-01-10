@@ -1,13 +1,19 @@
 """Lien avec la bd"""
 
-import datetime
-from .app import db     #, login_manager
+import datetime   
 from sqlalchemy import func
+from .app import db, login_manager #, login_manager
+from flask_login import UserMixin
+
+# pour login
+@login_manager.user_loader
+def load_user(user_id):
+    return Spectateur.query.get(int(user_id))
 
 # TABLES
 class ActiviteAnnexe(db.Model):
     __tablename__ = "ACTIVITE_ANNEXE"
-    idact = db.Column(db.Integer, primary_key=True)
+    idact = db.Column(db.Integer)
     dateact = db.Column(db.DateTime, nullable=False)
     typeact = db.Column(db.String(42))
     dureeact = db.Column(db.Float)
@@ -76,7 +82,7 @@ class Concert(db.Model):
     __tablename__ = "CONCERT"
     jour = db.Column(db.Enum('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'))
     datedebutc = db.Column(db.DateTime, nullable=False)
-    idconcert = db.Column(db.Integer, primary_key=True)
+    idconcert = db.Column(db.Integer)
     duree = db.Column(db.Float)
     noml = db.Column(db.String(42), db.ForeignKey('LIEU.noml'))
     lieu = db.relationship('Lieu', backref=db.backref("concerts", lazy="dynamic"))
@@ -175,17 +181,23 @@ class SousStyle(db.Model):
         return f"<SousStyle ({self.ids}) | {self.nomstyle}>"
 
 
-class UTILISATEUR(db.Model):
+class Utilisateur(db.Model, UserMixin):
     __tablename__ = "UTILISATEUR"
-    idUser = db.Column(db.Integer, primary_key=True)
-    nomspec = db.Column(db.String(42))
+    iduser = db.Column(db.Integer, primary_key=True)
+    nomuser = db.Column(db.String(42))
+
     age = db.Column(db.Integer)
-    email = db.Column(db.String(42))
+    email = db.Column(db.String(42), unique=True)
     idbillet = db.Column(db.Integer, db.ForeignKey('BILLET.idbillet'))
     billet = db.relationship('Billet', backref=db.backref("spectateurs", lazy="dynamic"))
+    mdp = db.Column(db.String(42))
+    admin = db.Column(db.Boolean)
     
     def __repr__(self):
-        return f"<UTILISATEUR ({self.idUser}) | {self.nomspec}>"
+        return f"<Utilisateur ({self.idUser}) | {self.nomspec}>"
+    
+    def get_id(self):
+        return self.iduser
 
 
 class Acceder(db.Model):
@@ -203,10 +215,11 @@ class Acceder(db.Model):
 class Apprecier(db.Model):
     __tablename__ = "APPRECIER"
     idgroupe = db.Column(db.Integer, db.ForeignKey('GROUPE.idgroupe'))
-    idUser = db.Column(db.Integer, db.ForeignKey('UTILISATEUR.idUser'), primary_key=True)
-    UTILISATEUR = db.relationship('UTILISATEUR', backref=db.backref("appreciations", lazy="dynamic"))
+    idUser = db.Column(db.Integer, db.ForeignKey('Utilisateur.idUser'), primary_key=True)
+    utilisateur = db.relationship('Utilisateur', backref=db.backref("appreciations", lazy="dynamic"))
     groupe = db.relationship('Groupe', backref=db.backref("appreciations", lazy="dynamic"))
-    __table_args__ = (db.PrimaryKeyConstraint('idgroupe', 'idUser'),)
+    __table_args__ = (db.PrimaryKeyConstraint('idgroupe', 'iduser'),)
+
 
 
 class Avoir(db.Model):
@@ -307,7 +320,7 @@ db.ForeignKeyConstraint(['idact', 'dateact'], ['ACTIVITE_ANNEXE.idact', 'ACTIVIT
 db.ForeignKeyConstraint(['idbillet'], ['BILLET.idbillet'])
 db.ForeignKeyConstraint(['idphoto'], ['PHOTOS.idphoto'])
 db.ForeignKeyConstraint(['idreseau'], ['RESEAUX.idreseau'])
-db.ForeignKeyConstraint(['idUser'], ['UTILISATEUR.idUser'])
+db.ForeignKeyConstraint(['iduser'], ['UTILISATEUR.iduser'])
 db.ForeignKeyConstraint(['idgroupe'], ['GROUPE.idgroupe'])
 db.ForeignKeyConstraint(['idinstrument'], ['INSTRUMENTS.idinstrument'])
 db.ForeignKeyConstraint(['idartiste'], ['ARTISTE.idartiste'])
