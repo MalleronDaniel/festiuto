@@ -94,9 +94,14 @@ class Concert(db.Model):
     #GETTERS
     def get_groupe_concert(self):
         """Retourne l'id des groupe d'un concert"""
-        groupes = (db.session.query(Contribuer.idgroupe)
-            .join(Concert, Contribuer.idconcert == self.idconcert)
+        id_groupes = (db.session.query(Contribuer.idgroupe)
+            .join(Concert, Contribuer.idconcert == self.idconcert and Contribuer.datedebutc == self.datedebutc and Contribuer.jour == self.jour)
+            .distinct()
             .all())
+        
+        groupes = []
+        for id in id_groupes:
+            groupes.append(get_groupe_by_id(id))
         return groupes
     
 class Groupe(db.Model):
@@ -336,6 +341,15 @@ db.ForeignKeyConstraint(['idgroupe_1'], ['GROUPE.idgroupe'])
 
 if __name__ == '__main__':
     db.create_all()
+
+# GETTERS
+def get_groupe_by_id(idgroupe: int):
+    """Retourn le groupe grâce à son id
+    
+    Args:
+        idgroupe : l'id du groupe
+    """
+    return Groupe.query.get(idgroupe)
 
 
 

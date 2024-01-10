@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 {% block styles %}
 {{ super() }}
@@ -6,9 +5,11 @@
 {% endblock %}
 {% block content %}
     <h2>Vendredi</h2>
-    {% for c in concerts_vendredi %}
-        <p>{{ c.idconcert }}</p>
-        <p>{{ c.get_groupe_concert() }}</p>
+    {% for concert in concerts_vendredi %}
+        <p>{{ concert.idconcert }}</p>
+        {% for groupe in concert.get_groupe_concert() %}
+            <p>{{ groupe.nomgroupe }}</p>
+        {% endfor %}
     {% endfor %}
     <h2>Samedi</h2>
     {% for c in concerts_samedi %}
