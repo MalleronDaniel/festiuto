@@ -91,18 +91,18 @@ values
 
 -- insertion des artistes
 
-insert into ARTISTE (idartiste, nomartiste, prenomartiste, age, descriptiona, idgroupe)
+insert into ARTISTE (idartiste, nomartiste, prenomartiste, ddn, descriptiona, idgroupe)
 values
-(1, 'Smith', 'John', 31, 'Guitare', 1),
-(2, 'Doe', 'Jane', 29, 'Batterie', 2),
-(3, 'Johnson', 'Mike', 27, 'Basse', 3),
-(4, 'Brown', 'Lisa', 32, 'Chanteur', 4),
-(5, 'Wilson', 'David', 34, 'Piano', 5),
-(6, 'Jackson', 'Chris', 29 ,'Chanteur', 6),
-(7, 'White', 'Emily', 46, 'Chanteur', 7),
-(8, 'Davis', 'Alex', 27, 'Guitare', 8),
-(9, 'Green', 'Sophia', 23, 'Piano', 9),
-(10, 'Lee', 'Daniel', 27, 'Chanteur', 10);
+(1, 'Smith', 'John', '1999-12-22', 'Guitare', 1),
+(2, 'Doe', 'Jane', '1969-01-02', 'Batterie', 2),
+(3, 'Johnson', 'Mike', '1988-11-24', 'Basse', 3),
+(4, 'Brown', 'Lisa', '1975-09-13', 'Chanteur', 4),
+(5, 'Wilson', 'David', '1977-09-26', 'Piano', 5),
+(6, 'Jackson', 'Chris', '1998-09-13' ,'Chanteur', 6),
+(7, 'White', 'Emily', '1976-09-12', 'Chanteur', 7),
+(8, 'Davis', 'Alex', '1976-09-04', 'Guitare', 8),
+(9, 'Green', 'Sophia', '1989-09-06', 'Piano', 9),
+(10, 'Lee', 'Daniel', '1950-09-19', 'Chanteur', 10);
 
 
 ------
@@ -170,14 +170,14 @@ values
 
 -- insertion des utilisateurs
 
-insert into UTILISATEUR (iduser, nomuser, age, email, idbillet, mdp, admin)
+insert into UTILISATEUR (iduser, nomuser, ddn, email, idbillet, mdp, admin)
 values
-(1, 'Daniel Malleron', 18, 'danyyyy@gmail.com', 1, 'mdp', true),
-(2, 'Kevin Le Breton', 19, 'kevin.le.breton@gmail.com', 2, 'mdp', false),
-(3, 'Adam Daniel', 19, 'dadam@gmail.com', 3, 'mdp', false),
-(4, 'Alicia Romero', 20, 'alicia.romero@gmail.com', 4, 'mdp', false),
-(5, 'Jordan Zebo', 26, 'jojo5sec@gmail.com', 5, 'mdp', false),
-(6, 'Cyril Doumbe', 27, 'jordanTmort@gmail.com', 6, 'mdp', false);
+(1, 'Daniel Malleron', '2004-09-13', 'danyyyy@gmail.com', 1, 'mdp', true),
+(2, 'Kevin Le Breton', '2004-09-13', 'kevin.le.breton@gmail.com', 2, 'mdp', false),
+(3, 'Adam Daniel', '2004-09-13', 'dadam@gmail.com', 3, 'mdp', false),
+(4, 'Alicia Romero', '2004-09-13', 'alicia.romero@gmail.com', 4, 'mdp', false),
+(5, 'Jordan Zebo', '2004-09-13', 'jojo5sec@gmail.com', 5, 'mdp', false),
+(6, 'Cyril Doumbe', '2004-09-13', 'jordanTmort@gmail.com', 6, 'mdp', false);
 
 
 -------

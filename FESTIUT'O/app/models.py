@@ -42,7 +42,7 @@ class Artiste(db.Model):
     idartiste = db.Column(db.Integer, primary_key=True)
     nomartiste = db.Column(db.String(42))
     prenomartiste = db.Column(db.String(42))
-    age = db.Column(db.Integer)
+    ddn = db.Column(db.Date, nullable=False)
     descriptiona = db.Column(db.String(42))
     idgroupe = db.Column(db.Integer, db.ForeignKey('GROUPE.idgroupe'))
     groupe = db.relationship('Groupe', backref=db.backref("artistes", lazy="dynamic"))
@@ -190,8 +190,7 @@ class Utilisateur(db.Model, UserMixin):
     __tablename__ = "UTILISATEUR"
     iduser = db.Column(db.Integer, primary_key=True)
     nomuser = db.Column(db.String(42))
-
-    age = db.Column(db.Integer)
+    ddn = db.Column(db.Date, nullable=False)
     email = db.Column(db.String(42), unique=True)
     idbillet = db.Column(db.Integer, db.ForeignKey('BILLET.idbillet'))
     billet = db.relationship('Billet', backref=db.backref("utilisateur", lazy="dynamic"))

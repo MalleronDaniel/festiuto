@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import DateField, FileField, StringField, HiddenField, PasswordField, SelectField, RadioField, IntegerField, TextAreaField
+from wtforms import DateField, FileField, StringField, HiddenField, PasswordField, SelectField, RadioField, IntegerField, TextAreaField, EmailField, BooleanField
 from wtforms.validators import DataRequired, NumberRange
 from .models import Utilisateur
 
@@ -9,11 +9,17 @@ class BilletForm(FlaskForm):
     """Formulaire pour ajouter un billet"""
     pass
 
-class SpectateurForm(FlaskForm):
+class UtilisateurForm(FlaskForm):
     """Formulaire pour ajouter un UTILISATEUR"""
-    pass
+    iduser = HiddenField('id')
+    nomuser = StringField('Nom', validators=[DataRequired()])
+    ddn = DateField('Date de Naissance', validators=[DataRequired()])
+    email = EmailField('Adresse Mail', validators=[DataRequired()])
+    mdp = PasswordField('Mot de Passe', validators=[DataRequired()])
+    admin = BooleanField('Admin')
 
 class LoginForm(FlaskForm):
+    """Formulaire pour se connecter"""
     email = StringField('Email')
     mdp = PasswordField('Password')
     mdp_incorrect = ""
