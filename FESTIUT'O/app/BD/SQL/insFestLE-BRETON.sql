@@ -41,13 +41,13 @@ values
 
 -- insertion des concerts
 
-insert into CONCERT (jour, datedebutc, idconcert, duree, noml)
+insert into CONCERT (idconcert, jour, datedebutc, duree, noml)
 values
-('Vendredi', '2023-09-22 18:00:00', 1, 120, 'Main Stage'),
-('Vendredi', '2023-09-22 19:30:00', 2, 150, 'Outdoor Arena'),
-('Vendredi', '2023-09-22 20:15:00', 3, 105, 'Intimate Hall'),
-('Vendredi', '2023-09-22 21:00:00', 4, 120, 'Club Venue'),
-('Vendredi', '2023-09-22 22:45:00', 5, 135, 'Open Air Park');
+(1, 'Vendredi', '2023-09-22 18:00:00', 120, 'Main Stage'),
+(2, 'Vendredi', '2023-09-22 19:30:00', 150, 'Outdoor Arena'),
+(3, 'Vendredi', '2023-09-22 20:15:00', 105, 'Intimate Hall'),
+(4, 'Vendredi', '2023-09-22 21:00:00', 120, 'Club Venue'),
+(5, 'Vendredi', '2023-09-22 22:45:00', 135, 'Open Air Park');
 
 
 ------
@@ -343,36 +343,36 @@ values
 
 -- insertion dans la table contenir
 
-insert into CONTRIBUER (idgroupe, jour, datedebutc, idconcert, tempsdemontage, tempsmontage)
+insert into CONTRIBUER (idgroupe, idconcert, tempsdemontage, tempsmontage)
 values
-(1, 'Vendredi', '2023-09-22 18:00:00', 1, 0.75, 0.5),
-(2, 'Vendredi', '2023-09-22 19:30:00', 2, 1, 0.5),
-(3, 'Vendredi', '2023-09-22 20:15:00', 3, 1.25, 0.75),
-(4, 'Vendredi', '2023-09-22 21:00:00', 4, 1, 0.5),
-(7, 'Vendredi', '2023-09-22 22:45:00', 5, 1, 0.5);
+(1, 1, 0.75, 0.5),
+(2, 2, 1, 0.5),
+(3, 3, 1.25, 0.75),
+(4, 4, 1, 0.5),
+(7, 5, 1, 0.5);
 
 
 -------
 
 -- insertion des acceder
 
-insert into ACCEDER (jour, datedebutc, idconcert, idbillet)
+insert into ACCEDER (idconcert, idbillet, preinscription)
 values
-('Vendredi', '2023-09-22 18:00:00', 1, 1),
-('Vendredi', '2023-09-22 19:30:00', 2, 2),
-('Vendredi', '2023-09-22 20:15:00', 3, 3);
+(1, 1, false),
+(2, 2, false),
+(3, 3, false);
 
 
 
 -- Test trigger groupeDisponibleConcert
 
 -- Test 1: Insertion d'un concert avec un événement précédent trop proche en temps
-INSERT INTO CONTRIBUER (idgroupe, jour, datedebutc, idconcert, tempsdemontage, tempsmontage)
-VALUES (1, 'Vendredi', '2023-09-22 19:30:00', 2, 0.75, 0.5);
+INSERT INTO CONTRIBUER (idgroupe, idconcert, tempsdemontage, tempsmontage)
+VALUES (1, 2, 0.75, 0.5);
 
 -- Test 2: Insertion d'un concert avec un événement suivant trop proche en temps
-INSERT INTO CONTRIBUER (idgroupe, jour, datedebutc, idconcert, tempsdemontage, tempsmontage)
-VALUES (2, 'Vendredi', '2023-09-22 18:00:00', 1, 0.75, 0.5);
+INSERT INTO CONTRIBUER (idgroupe, idconcert, tempsdemontage, tempsmontage)
+VALUES (2, 1, 0.75, 0.5);
 
 --Test trigger groupeDisponibleActiviteAnnexe
 
@@ -386,24 +386,21 @@ VALUES (2, 5, '2023-09-22 17:00:00');
 
 -- test trigger lieuUtiliseConcert
 
-INSERT INTO CONCERT values('Vendredi', '2023-09-22 18:00:00', 6, 100, 'Main Stage');
+INSERT INTO CONCERT values('6','Vendredi','2023-09-22 18:00:00', 100, 'Main Stage');
 
 
 --  test trigger lieuUtiliseAnnexe
 
 INSERT INTO ACTIVITE_ANNEXE values(2, '2023-09-20 14:30:00', 'Entretien avec les artistes', 2);
 INSERT INTO GEOLOCALISER values(2, '2023-09-20 14:30:00', 'Main Stage');
-delete from ACTIVITE_ANNEXE where typeact='Entretien avec les artistes';
 
 -- test trigger nbPreinscrip
 
 insert into LIEU values('test', 5, 0);
-insert into CONCERT values('Lundi', '2023-08-16 10:15:00', 600, 100, 'test');
-insert into ACCEDER values('Lundi', '2023-08-16 10:15:00', 600, 1, 0);
-insert into ACCEDER values('Lundi', '2023-08-16 10:15:00', 600, 2, 0);
-insert into ACCEDER values('Lundi', '2023-08-16 10:15:00', 600, 3, 0);
-insert into ACCEDER values('Lundi', '2023-08-16 10:15:00', 600, 4, 0);
-insert into ACCEDER values('Lundi', '2023-08-16 10:15:00', 600, 5, 0);
-insert into ACCEDER values('Lundi', '2023-08-16 10:15:00', 600, 6, 0);
-delete from CONCERT where noml='test';
-delete from LIEU where noml='test';
+insert into CONCERT values(600, 'Lundi', '2023-08-16 10:15:00', 100, 'test');
+insert into ACCEDER values(600, 1, 0);
+insert into ACCEDER values(600, 2, 0);
+insert into ACCEDER values(600, 3, 0);
+insert into ACCEDER values(600, 4, 0);
+insert into ACCEDER values(600, 5, 0);
+insert into ACCEDER values(600, 6, 0);

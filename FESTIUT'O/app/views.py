@@ -55,9 +55,17 @@ def ajout_spectateur():
 
 @app.route("/programme/")
 def programme():
-    c = Concert.query.all()
     concerts_vendredi = Concert.query.filter(Concert.jour == "Vendredi").order_by(Concert.datedebutc).all();
     concerts_samedi = Concert.query.filter((Concert.jour) == "Samedi").order_by(Concert.datedebutc).all();
     concerts_dimanche = Concert.query.filter((Concert.jour) == "Dimanche").order_by(Concert.datedebutc).all();
     
-    return render_template("programme.html", concerts_vendredi=concerts_vendredi, concerts_samedi=concerts_samedi, concerts_dimanche=concerts_dimanche, c = c)
+    return render_template("programme.html", 
+                           concerts_vendredi=concerts_vendredi,
+                           concerts_samedi=concerts_samedi,
+                           concerts_dimanche=concerts_dimanche)
+
+@app.route("/details-concert/<int:id>")
+def details_concert(id):
+    c = Concert.query.get(id)
+    return render_template("details-concert.html", 
+    concert=c)
