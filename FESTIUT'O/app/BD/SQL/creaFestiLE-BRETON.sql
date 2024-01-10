@@ -143,6 +143,11 @@ CREATE TABLE `PARTICIPER` (
   `dateact` DATETIME,
   PRIMARY KEY (`idgroupe`, `idact`, `dateact`)
 );
+CREATE TABLE `POSSEDER`(
+  `idUser` int(3),
+  `idBillet` int(3),
+  PRIMARY KEY (`idUser`, `idBillet`)
+);
 CREATE TABLE `REGARDER` (
   `idact` int(3),
   `dateact` DATETIME,
@@ -181,6 +186,8 @@ ALTER TABLE `SIMILAIRE` ADD FOREIGN KEY (`idgroupe_1`) REFERENCES `GROUPE` (`idg
 ALTER TABLE `SIMILAIRE` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `HEBERGER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `HEBERGER` ADD FOREIGN KEY (`idh`) REFERENCES `HEBERGEMENT` (`idh`);
+ALTER TABLE `POSSEDER` ADD FOREIGN KEY (`idUser`) REFERENCES `UTILISATEUR` (`idUser`);
+ALTER TABLE `POSSEDER` ADD FOREIGN KEY (`idBillet`) REFERENCES `BILLET` (`idbillet`);
 
 -- FONCTIONS 
 

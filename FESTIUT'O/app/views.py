@@ -12,7 +12,7 @@ from datetime import datetime
 
 @app.route("/")
 def home():
-    s = Spectateur.query.all()
+    s = UTILISATEUR.query.all()
     a = Artiste.query.all()
     return render_template("home.html", spectateurs=s, artistes=a)
 
@@ -48,7 +48,16 @@ def ajout_billet():
     f = BilletForm()
     return render_template("ajout-billet.html", form=f)
 
-@app.route("/admin/ajout-spectateur/")
+@app.route("/admin/ajout-UTILISATEUR/")
 def ajout_spectateur():
     f = SpectateurForm()
     return render_template("ajout-billet.html", form=f)
+
+@app.route("/programme/")
+def programme():
+    c = Concert.query.all()
+    concerts_vendredi = Concert.query.filter(Concert.jour == "Vendredi").order_by(Concert.datedebutc).all();
+    concerts_samedi = Concert.query.filter((Concert.jour) == "Samedi").order_by(Concert.datedebutc).all();
+    concerts_dimanche = Concert.query.filter((Concert.jour) == "Dimanche").order_by(Concert.datedebutc).all();
+    
+    return render_template("programme.html", concerts_vendredi=concerts_vendredi, concerts_samedi=concerts_samedi, concerts_dimanche=concerts_dimanche, c = c)

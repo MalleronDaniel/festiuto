@@ -1,6 +1,8 @@
 """Lien avec la bd"""
 
-from .app import db, login_manager
+import datetime   
+from sqlalchemy import func
+from .app import db, login_manager #, login_manager
 from flask_login import UserMixin
 
 # pour login
@@ -8,6 +10,7 @@ from flask_login import UserMixin
 def load_user(user_id):
     return Spectateur.query.get(int(user_id))
 
+# TABLES
 class ActiviteAnnexe(db.Model):
     __tablename__ = "ACTIVITE_ANNEXE"
     idact = db.Column(db.Integer)
@@ -18,6 +21,20 @@ class ActiviteAnnexe(db.Model):
     
     def __repr__(self):
         return f"<ActiviteAnnexe ({self.idact}) | {self.dateact} | {self.typeact}>"
+
+    #GETTERS
+    def get_activites():
+        """  Retourne les activités  """
+        return ActiviteAnnexe.query.all()    
+
+    def get_activite(idact: int, dateact: datetime): 
+        """Retourne l'activité avec l'id associé
+
+        Args:
+            idact : l'id associé
+            dateact : la date associée
+        """
+        return ActiviteAnnexe.query.get((idact, dateact))
 
 
 class Artiste(db.Model):
@@ -32,6 +49,19 @@ class Artiste(db.Model):
     
     def __repr__(self):
         return f"<Artiste ({self.idartiste}) | {self.prenomartiste} {self.nomartiste}>"
+
+    #GETTERS
+    def get_artiste(idartiste: int): 
+        """Retourne l'artiste avec l'id associé
+
+        Args:
+            idartiste : l'id associé
+        """
+        return Artiste.query.get(idartiste)
+
+    def get_artistes():
+        """  Retourne les artistes  """
+        return Artiste.query.all()
 
 
 class Billet(db.Model):
@@ -61,6 +91,13 @@ class Concert(db.Model):
     def __repr__(self):
         return f"<Concert ({self.idconcert}) | {self.datedebutc} | {self.jour}>"
 
+    #GETTERS
+    def get_groupe_concert(self):
+        """Retourne l'id des groupe d'un concert"""
+        groupes = (db.session.query(Contribuer.idgroupe)
+            .join(Concert, Contribuer.idconcert == self.idconcert)
+            .all())
+        return groupes
     
 class Groupe(db.Model):
     __tablename__ = 'GROUPE'
@@ -69,10 +106,7 @@ class Groupe(db.Model):
     description = db.Column(db.Text)
     lienvideo = db.Column(db.String(42))
     stylemusical = db.Column(db.String(42))
-    idh = db.Column(db.Integer, db.ForeignKey('HEBERGEMENT.idh'))
-    jourdebut = db.Column(db.Enum('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'))
-    dureeh = db.Column(db.Integer)
-    hebergement = db.relationship('Hebergement', backref=db.backref("groupes", lazy="dynamic"))
+
     
     def __repr__(self):
         return f"<Groupe ({self.idgroupe}) | {self.nomgroupe}>"
@@ -86,6 +120,17 @@ class Hebergement(db.Model):
     
     def __repr__(self):
         return f"<Hebergement ({self.idh}) | {self.adresse}>"
+    
+class Heberger(db.Model):
+    __tablename__ = "HEBERGER"
+    idh = db.Column(db.Integer, db.ForeignKey('HEBERGEMENT.idh'), primary_key=True)
+    idgroupe = db.Column(db.Integer, db.ForeignKey('GROUPE.idgroupe'), primary_key=True)
+    jourDebut = db.Column(db.Enum('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'))
+    dureeH = db.Column(db.Integer)
+
+    def __repr__(self) :
+        return f"<Heberger ({self.idh}) | ({self.idgroupe}) | ({self.jourDebut}) | ({self.dureeH})>"
+
 
 
 class Instruments(db.Model):
@@ -136,10 +181,11 @@ class SousStyle(db.Model):
         return f"<SousStyle ({self.ids}) | {self.nomstyle}>"
 
 
-class Spectateur(db.Model, UserMixin):
+class Utilisateur(db.Model, UserMixin):
     __tablename__ = "UTILISATEUR"
     iduser = db.Column(db.Integer, primary_key=True)
     nomuser = db.Column(db.String(42))
+
     age = db.Column(db.Integer)
     email = db.Column(db.String(42), unique=True)
     idbillet = db.Column(db.Integer, db.ForeignKey('BILLET.idbillet'))
@@ -148,7 +194,7 @@ class Spectateur(db.Model, UserMixin):
     admin = db.Column(db.Boolean)
     
     def __repr__(self):
-        return f"<Spectateur ({self.iduser}) | {self.nomuser}>"
+        return f"<Utilisateur ({self.idUser}) | {self.nomspec}>"
     
     def get_id(self):
         return self.iduser
@@ -168,11 +214,12 @@ class Acceder(db.Model):
 
 class Apprecier(db.Model):
     __tablename__ = "APPRECIER"
-    idgroupe = db.Column(db.Integer, db.ForeignKey('GROUPE.idgroupe'), primary_key=True)
-    iduser = db.Column(db.Integer, db.ForeignKey('UTILISATEUR.iduser'), primary_key=True)
-    spectateur = db.relationship('Spectateur', backref=db.backref("appreciations", lazy="dynamic"))
+    idgroupe = db.Column(db.Integer, db.ForeignKey('GROUPE.idgroupe'))
+    idUser = db.Column(db.Integer, db.ForeignKey('Utilisateur.idUser'), primary_key=True)
+    utilisateur = db.relationship('Utilisateur', backref=db.backref("appreciations", lazy="dynamic"))
     groupe = db.relationship('Groupe', backref=db.backref("appreciations", lazy="dynamic"))
     __table_args__ = (db.PrimaryKeyConstraint('idgroupe', 'iduser'),)
+
 
 
 class Avoir(db.Model):
@@ -245,7 +292,6 @@ class Participer(db.Model):
     dact = db.relationship('ActiviteAnnexe', foreign_keys=[dateact], back_populates='participation')
     __table_args__ = (db.PrimaryKeyConstraint('idgroupe', 'idact', 'dateact'),)
 
-
 class Regarder(db.Model):
     __tablename__ = "REGARDER"
     idact = db.Column(db.Integer, db.ForeignKey('ACTIVITE_ANNEXE.idact'), primary_key=True)
@@ -263,6 +309,10 @@ class Similaire(db.Model):
     idgroupe_1 = db.Column(db.Integer, db.ForeignKey('GROUPE.idgroupe'), primary_key=True)
     __table_args__ = (db.PrimaryKeyConstraint('idgroupe', 'idgroupe_1'),)
 
+class Posseder(db.Model):
+    __tablename__ = "POSSEDER"
+    idbillet = db.Column(db.Integer, db.ForeignKey('BILLET.idbillet'), primary_key=True)
+    idUser = db.Column(db.Integer, db.ForeignKey('UTILISATEUR.idUser'), primary_key=True)
 
 # Define foreign key relationships
 db.ForeignKeyConstraint(['idgroupe', 'jour', 'datedebutc', 'idconcert'], ['CONTRIBUER.idgroupe', 'CONTRIBUER.jour', 'CONTRIBUER.datedebutc', 'CONTRIBUER.idconcert'])
@@ -280,9 +330,15 @@ db.ForeignKeyConstraint(['idbillet', 'idact', 'dateact'], ['ACTIVITE_ANNEXE.idac
 db.ForeignKeyConstraint(['idreseau', 'idgroupe'], ['GROUPE.idgroupe', 'PARTAGER.idreseau'])
 db.ForeignKeyConstraint(['idact', 'dateact'], ['ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
 db.ForeignKeyConstraint(['idgroupe', 'idact', 'dateact'], ['GROUPE.idgroupe', 'ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
-db.ForeignKeyConstraint(['idbillet', 'idact', 'dateact'], ['regarder.idbillet', 'ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
+db.ForeignKeyConstraint(['idbillet', 'idact', 'dateact'], ['REGARDER.idbillet', 'ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
 db.ForeignKeyConstraint(['idgroupe_1'], ['GROUPE.idgroupe'])
-db.ForeignKeyConstraint(['idgroupe'], ['GROUPE.idgroupe'])
+
 
 if __name__ == '__main__':
     db.create_all()
+
+
+
+
+
+

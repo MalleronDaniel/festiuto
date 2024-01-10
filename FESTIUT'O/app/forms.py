@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import DateField, FileField, StringField, HiddenField, PasswordField, SelectField, RadioField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, NumberRange
-from .models import Spectateur
+from .models import UTILISATEUR
 
 "Formulaires de l'application"
 
@@ -10,7 +10,7 @@ class BilletForm(FlaskForm):
     pass
 
 class SpectateurForm(FlaskForm):
-    """Formulaire pour ajouter un spectateur"""
+    """Formulaire pour ajouter un UTILISATEUR"""
     pass
 
 class LoginForm(FlaskForm):

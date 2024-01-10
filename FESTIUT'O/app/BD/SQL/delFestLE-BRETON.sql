@@ -13,6 +13,7 @@ drop table `RESEAUX`;
 drop table `CONTENIR`;
 drop table `PHOTOS`;
 drop table `LIEU`; 
+drop table `POSSEDER`;
 drop table `UTILISATEUR`;  
 drop table `BILLET`;
 drop table `JOUER`;
