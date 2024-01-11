@@ -6,10 +6,12 @@
 {% block content %}
     <h2>Vendredi</h2>
     {% for concert in concerts_vendredi %}
-        <p>{{ concert.idconcert }}</p>
+        <a href="{{url_for('details_concert', id=concert.idconcert)}}">
+            <p>{{ concert.idconcert }}</p>
         {% for groupe in concert.get_groupe_concert() %}
             <p>{{ groupe.nomgroupe }}</p>
         {% endfor %}
+        </a>
     {% endfor %}
     <h2>Samedi</h2>
     {% for c in concerts_samedi %}
