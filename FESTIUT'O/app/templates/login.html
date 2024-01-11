@@ -1,19 +1,44 @@
-<h1>Connexion</h1>
-<form class="form-horizontal" role="form" method="POST" action="{{ url_for('login') }}">
-    {{ form.hidden_tag() }}
-    <div class="form-group">
-        <label for="email" class="col-sm-2 control-label">{{ form.email.label }}</label>
-        <div class="col-sm-10">{{ form.email(size=50, class_="form-control", placeholder="") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="mdp" class="col-sm-2 control-label">{{ form.mdp.label }}</label>
-        <div class="col-sm-10">{{ form.mdp(size=50, class_="form-control", placeholder="") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="mdp_incorrect" class="error">{{ form.mdp_incorrect }}</label>
-        <div class="col-sm-offset-2 col-sm-10" id="div_connexion">
-            <button id="Connexion" type="submit" class="button" name="submit_button" value="connexion">Se connecter</button>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% block head %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/login.css')}}">
+    {% endblock %}
+    <title>Login - Festiut'O</title>
+    {% endblock %}
+</head>
+<body>
+
+    <div class="connexion">
+        <div class="logo">
+            <a aria-current="page" href="{{ url_for('accueil') }}">
+                <img src="{{ url_for('static', filename='img/logo_rose.png') }}" alt="Logo">
+            </a>
         </div>
+        <h1>Connexion</h1>
+        <form class="form-horizontal" role="form" method="POST" action="{{ url_for('login') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <label for="email">{{ form.email.label }}</label>
+                {{ form.email(size=50, class_="form-control", placeholder="") }}
+            </div>
+            <div class="form-group">
+                <label for="mdp">{{ form.mdp.label }}</label>
+                {{ form.mdp(size=50, class_="form-control", placeholder="") }}
+            </div>
+            <div class="form-group">
+                <div class="button-container">
+                    <button id="Inscription" type="submit" class="button" name="submit_button" value="inscription">Inscription</button>
+                    <button id="Connexion" type="submit" class="button" name="submit_button" value="connexion">Se connecter</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <button id="mdp" type="submit" class="mdp" name="submit_button" value="mdp">Mot de passe oublié ?</button>
-</form>
+</body>
+</html>
