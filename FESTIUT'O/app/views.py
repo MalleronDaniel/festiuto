@@ -14,11 +14,15 @@ from datetime import datetime
 def home():
     s = Utilisateur.query.all()
     a = Artiste.query.all()
-    return render_template("home.html", spectateurs=s, artistes=a)
+    return render_template("accueil.html", spectateurs=s, artistes=a)
 
 @app.route("/admin/")
 def admin_home():
     return render_template("admin.html")
+
+@app.route("/accueil/")
+def accueil():
+    return render_template("accueil.html")
 
 @app.route("/login/", methods = ("GET","POST",))
 def login():

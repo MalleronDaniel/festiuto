@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
@@ -13,10 +14,18 @@ login_manager.login_view = "login"
 # host = 'localhost'
 # database = 'BD'
 
-username = 'rooot'
-password = 'root'
+# username = 'rooot'
+# password = 'root'
+# host = 'localhost'
+# database = 'festiuto2'
+
+username = 'root'
+password = ''
 host = 'localhost'
-database = 'festiuto2'
+database = 'cours'
+
+app.config['BOOTSTRAP_SERVE_LOCAL'] = True
+bootstrap = Bootstrap5(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://'+username+':'+password+'@'+host+'/'+database
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
