@@ -1,0 +1,25 @@
+<h1>Inscription</h1>
+<form class="form-horizontal" role="form" method="POST" action="{{ url_for('save_inscription') }}">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        <label for="nomuser" class="col-sm-2 control-label">{{ form.nomuser.label }}</label>
+        <div class="col-sm-10">{{ form.nomuser(size=50, class_="form-control", placeholder="") }}</div>
+    </div>
+    <div class="form-group">
+        <label for="ddn" class="col-sm-2 control-label">{{ form.ddn.label }}</label>
+        <div class="col-sm-10">{{ form.ddn(size=50, class_="form-control", placeholder="") }}</div>
+    </div>
+    <div class="form-group">
+        <label for="email" class="col-sm-2 control-label">{{ form.email.label }}</label>
+        <div class="col-sm-10">{{ form.email(size=50, class_="form-control", placeholder="") }}</div>
+    </div>
+    <div class="form-group">
+        <label for="mdp" class="col-sm-2 control-label">{{ form.mdp.label }}</label>
+        <div class="col-sm-10">{{ form.mdp(size=50, class_="form-control", placeholder="") }}</div>
+    </div>
+    <div class="form-group">
+        <label for="admin" class="col-sm-2 control-label">{{ form.admin.label }}</label>
+        <div class="col-sm-10">{{ form.admin(size=50, class_="form-control", placeholder="") }}</div>
+    </div>
+    <button id="mdp" type="submit" class="mdp" name="submit_button" value="mdp">Confirmer</button>
+</form>

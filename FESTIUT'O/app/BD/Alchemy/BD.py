@@ -93,13 +93,14 @@ class SOUS_STYLE(Base):
 class UTILISATEUR(Base):
     __tablename__ = 'UTILISATEUR'
 
+
     iduser = Column(Integer, primary_key=True)
     nomuser = Column(String(42))
     age = Column(Integer)
     email = Column(String(42))
     idbillet = Column(Integer, ForeignKey('BILLET.idbillet'))
     billet = relationship('BILLET', back_populates='spectateurs')
-    appreciations = relationship('APPRECIER', back_populates='spectateur')
+    appreciations = relationship('APPRECIER', back_populates='UTILISATEUR')
 
 class ACTIVITE_ANNEXE(Base):
     __tablename__ = 'ACTIVITE_ANNEXE'

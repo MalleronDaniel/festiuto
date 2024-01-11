@@ -9,7 +9,7 @@ CREATE TABLE `ARTISTE` (
   `idartiste` int(3),
   `nomartiste` VARCHAR(42),
   `prenomartiste` VARCHAR(42),
-  `age` int(3),
+  `ddn` date,
   `descriptiona` VARCHAR(42),
   `idgroupe` int(3),
   PRIMARY KEY (`idartiste`)
@@ -81,7 +81,7 @@ CREATE TABLE `SOUS_STYLE` (
 CREATE TABLE `UTILISATEUR` (
   `iduser` int(3),
   `nomuser` VARCHAR(42),
-  `age` int(3),
+  `ddn` date,
   `email` VARCHAR(42),
   `idbillet` int(3),
   `mdp` VARCHAR(42),
@@ -143,6 +143,11 @@ CREATE TABLE `PARTICIPER` (
   `dateact` DATETIME,
   PRIMARY KEY (`idgroupe`, `idact`, `dateact`)
 );
+CREATE TABLE `POSSEDER`(
+  `iduser` int(3),
+  `idBillet` int(3),
+  PRIMARY KEY (`iduser`, `idBillet`)
+);
 CREATE TABLE `REGARDER` (
   `idact` int(3),
   `dateact` DATETIME,
@@ -181,6 +186,8 @@ ALTER TABLE `SIMILAIRE` ADD FOREIGN KEY (`idgroupe_1`) REFERENCES `GROUPE` (`idg
 ALTER TABLE `SIMILAIRE` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `HEBERGER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `HEBERGER` ADD FOREIGN KEY (`idh`) REFERENCES `HEBERGEMENT` (`idh`);
+ALTER TABLE `POSSEDER` ADD FOREIGN KEY (`iduser`) REFERENCES `UTILISATEUR` (`iduser`);
+ALTER TABLE `POSSEDER` ADD FOREIGN KEY (`idBillet`) REFERENCES `BILLET` (`idbillet`);
 
 -- FONCTIONS 
 
