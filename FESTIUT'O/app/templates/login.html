@@ -17,7 +17,9 @@
 
     <div class="connexion">
         <div class="logo">
-            <img src="{{ url_for('static', filename='img/logo_rose.png') }}" alt="Logo">
+            <a aria-current="page" href="{{ url_for('accueil') }}">
+                <img src="{{ url_for('static', filename='img/logo_rose.png') }}" alt="Logo">
+            </a>
         </div>
         <h1>Connexion</h1>
         <form class="form-horizontal" role="form" method="POST" action="{{ url_for('login') }}">
@@ -31,7 +33,8 @@
                 {{ form.mdp(size=50, class_="form-control", placeholder="") }}
             </div>
             <div class="form-group">
-                <div id="div_connexion">
+                <div class="button-container">
+                    <button id="Inscription" type="submit" class="button" name="submit_button" value="inscription">Inscription</button>
                     <button id="Connexion" type="submit" class="button" name="submit_button" value="connexion">Se connecter</button>
                 </div>
             </div>
