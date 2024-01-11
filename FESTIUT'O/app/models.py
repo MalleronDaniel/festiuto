@@ -115,6 +115,10 @@ class Groupe(db.Model):
     
     def __repr__(self):
         return f"<Groupe ({self.idgroupe}) | {self.nomgroupe}>"
+    
+    def get_artistes_groupe(self):
+        """Retourne les artistes d'un groupe"""
+        return Artiste.query.filter(Artiste.idgroupe == self.idgroupe).all()
 
 
 class Hebergement(db.Model):

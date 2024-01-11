@@ -69,3 +69,17 @@ def details_concert(id):
     c = Concert.query.get(id)
     return render_template("details-concert.html", 
     concert=c)
+
+@app.route("/details-groupe/<int:id>")
+def details_groupe(id):
+    g = Groupe.query.get(id)
+    return render_template("details-groupe.html", 
+    groupe=g)
+
+@app.route("/details-artiste/<int:id>")
+def details_artiste(id):
+    a = Artiste.query.get(id)
+    groupe = Groupe.query.get(a.groupe_id)
+    return render_template("details-artiste.html", 
+    artiste=a,
+    groupe=groupe)
