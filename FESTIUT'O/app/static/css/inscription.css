@@ -53,12 +53,7 @@ label {
     border-radius: 4px;
 }
 
-.button-container {
-    display: flex;
-    justify-content: space-around;
-}
-
-.button {
+.mdp {
     cursor: pointer;
     display: inline-block;
     padding: 2% 3% 2% 3%;
@@ -72,23 +67,18 @@ label {
     font-weight: bold;
 }
 
-button:hover {
+.mdp:hover {
     background-color: white;
     color: black;
 }
 
-.mdp {
-    background: none;
-    border: none;
-    color: #333;
-    text-decoration: underline;
-    cursor: pointer;
+.admin-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
-a {
-    cursor: pointer;
-}
-
-form {
-    margin-bottom: 10%;
+.admin-button input {
+    align-self: center;
 }

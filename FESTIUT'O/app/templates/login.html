@@ -31,18 +31,9 @@
             <div class="form-group">
                 <label for="mdp">{{ form.mdp.label }}</label>
                 {{ form.mdp(size=50, class_="form-control", placeholder="") }}
-            </div>
-            <div class="form-group">
-                <div class="button-container">
-                    <button id="Inscription" type="submit" class="button" name="submit_button" value="inscription">Inscription</button>
-                    <button id="Connexion" type="submit" class="button" name="submit_button" value="connexion">Se connecter</button>
-                </div>
-            </div>
+            </div><button id="Connexion" type="submit" class="button" name="submit_button" value="connexion">Se connecter</button>
         </form>
+        <p>Pas encore de compte ? <a href="{{ url_for('inscription') }}">S'inscrire</a></p>
     </div>
-</form>
-<p>Pas encore de compte ?</p>
-<a href="{{ url_for('inscription') }}"><button>S'inscrire</button></a>
 </body>
 </html>
-

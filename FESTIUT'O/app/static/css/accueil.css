@@ -8,7 +8,7 @@ a {
 .head {
     display: flex;
     flex-wrap: wrap;
-    background-color: #191818;
+    background-color: #FF7373;
     align-items: center;
     justify-content: space-between;
     
@@ -17,7 +17,7 @@ a {
 .left a, .right a {
     cursor: pointer;
     background-color: #F5DF4D;
-    color: black;
+    color: #FE4D4D;
     text-decoration: none;
     border: 3px solid #F5DF4D;
     border-radius: 30px;
@@ -25,15 +25,20 @@ a {
 }
 
 .left a:hover, .right a:hover {
-    background-color: #FF7373;
-    border: 3px solid #FF7373;
+    background-color: #FE4D4D;
+    border: 3px solid #FE4D4D;
     border-radius: 30px;
-    color: white;
+    color: #F5DF4D;
 }
 
 .left, .right{
-    flex-basis: 35%;
+    flex-basis: 32%;
     flex-grow: 0;
+
+}
+
+.left {
+    margin-left: 2%;
 }
 
 .left a, .right a {
@@ -43,7 +48,7 @@ a {
 
 
 .logo{
-    margin-left: 7%;
+    margin-left: 5%;
     flex-basis: 23%;
     flex-grow: 0;
 }
