@@ -51,7 +51,7 @@ main {
     text-align: center;
 }
 
-.nav a {
+.nav a, .croix a{
     text-decoration: none;
     color: #FF7373;
     font-weight: bold;
@@ -59,7 +59,7 @@ main {
     display: block;
 }
 
-.nav a::after {
+.nav a::after, .croix a::after{
     content: "";
     display: block;
     width: 0;
@@ -68,7 +68,7 @@ main {
     transition: width 0.3s ease;
 }
 
-.nav a:hover::after {
+.nav a:hover::after, .croix a:hover::after{
     width: 100%;
 }
 

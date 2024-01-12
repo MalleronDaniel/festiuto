@@ -1,17 +1,20 @@
+/* Reset CSS */
 body {
     font-family: Arial, sans-serif;
 }
 
+/* Global Styles */
 a {
     cursor: pointer;
 }
+
+/* Header Styles */
 .head {
     display: flex;
     flex-wrap: wrap;
     background-color: #FF7373;
     align-items: center;
     justify-content: space-between;
-    
 }
 
 .left a, .right a, .menu-burger a {
@@ -32,30 +35,14 @@ a {
     transition: width 0.3s ease;
 }
 
-.left a:hover::after, .right a:hover::after,
- .menu-burger a:hover::after{
+.left a:hover::after, .right a:hover::after, .menu-burger a:hover::after {
     width: 100%;
 }
 
-.left{
-    flex-basis: 32%;
-    flex-grow: 0;
+.left, .right, .menu-burger {
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.right{
-    flex-basis: 20%;
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.menu-burger{
-    flex-basis: 10%;
-    flex-grow: 0;
 }
 
 .left div, .right div {
@@ -65,6 +52,7 @@ a {
 }
 
 .left {
+    flex-basis: 32%;
     margin-left: 2%;
 }
 
@@ -76,16 +64,11 @@ a {
     margin: 5% 55% 5% 5%;
 }
 
-.logo{
+.logo {
     margin-left: 5%;
     flex-basis: 23%;
     flex-grow: 0;
 }
-
-.logo {
-    padding: 2% 5% 2% 5%;
-}
-
 
 .logo img {
     width: 50%;
@@ -97,25 +80,11 @@ a {
     height: 90%;
 }
 
-/* Fixed Navigation Bar */
-
-.head {
-    box-shadow: 0px 3px 30px #FF7373;
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    z-index: 1;
-}
-
-
-/* PARTIE INFO */
-
-
+/* Info Section Styles */
 .info {
     display: flex;
     flex-wrap: wrap;
     padding: 5%;
-    margin-top: 7%;
 }
 
 .info div {
@@ -134,16 +103,6 @@ a {
     color: #FF7373;
 }
 
-@keyframes rotateText {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-
 .info h2:hover {
     color: #FF7373;
     transition: color 0.3s ease;
@@ -151,28 +110,22 @@ a {
 
 .info h2 {
     margin: 5% 10% 5% 10%;
-    
 }
-
 
 .info img {
     width: 50%;
     height: 50%;
 }
 
-
-/* PARTIE PROGRAMME  */
-
-
-
+/* Programme Section Styles */
 .journee {
     padding: 5% 10% 3% 10%;
 }
 
-.journee h2, .journee h3, .journee h5{
+.journee h2, .journee h3, .journee h5 {
     text-align: center;
     padding: 0% 3% 0% 3%;
-} 
+}
 
 .journee > h2 {
     padding-bottom: 3%;
@@ -180,7 +133,6 @@ a {
 
 .journee img {
     flex-basis: 35%;
-    /* margin: 2%; */
 }
 
 .programme > h4 {
@@ -207,29 +159,25 @@ a {
     color: black;
 }
 
-
-.concert{
+.concert {
     border: 25px solid #FFB1AA;
-    border-radius: 30px; 
+    border-radius: 30px;
     display: flex;
     flex-wrap: nowrap;
 }
 
-.concert h5{
+.concert h5 {
     padding: 1%;
 }
 
-.concert div{
+.concert div {
     padding-top: 5%;
     flex-basis: 65%;
-    flex-grow:1;
+    flex-grow: 1;
 }
 
-
-/* PARTIE BILLETTERIE */
-
-
-.block h4, .info-billet h3, .info-billet h4, .info-billet a{
+/* Billetterie Section Styles */
+.block h4, .info-billet h3, .info-billet h4, .info-billet a {
     text-align: center;
 }
 
@@ -247,6 +195,7 @@ a {
     border-top: 1px solid black;
     margin: 0% 10% 5% 10%;
 }
+
 .info-billet h3 {
     margin-top: 5%;
     flex-basis: 90%;
@@ -265,8 +214,7 @@ a {
     flex-grow: 0;
 }
 
-
-.billet{
+.billet {
     margin: 5%;
     flex-grow: 1;
 }
@@ -274,15 +222,6 @@ a {
 .block {
     margin: 0% 5% 2% 5%;
     flex-grow: 1;
-}
-
-.block h4 {
-    margin-bottom: 2%;
-}
-
-.billet {
-    border: 25px solid #FFB1AA;
-    border-radius: 30px;
 }
 
 .acheter {
@@ -307,7 +246,7 @@ a {
     background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
-/* Animation */
+/* Slider Styles */
 @keyframes scroll {
     0% {
         transform: translateX(0);
@@ -318,7 +257,6 @@ a {
     }
 }
 
-/* Styling */
 .slider {
     background: #FE4D4D;
     box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.125);
@@ -362,63 +300,8 @@ a {
     font-size: 150%;
 }
 
-
-
-
-
-
-
-/* Footer */
-
-
-/* Ajout de styles pour la partie droite */
-.aside {
-    flex: 1; /* Prend tout l'espace disponible */
-    text-align: center;
-    margin-right: 5%;
-}
-
-/* Styles pour la navette à gauche */
-.nav {
-    text-align: left;
-    margin-right: 20px;
-}
-
-.nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    width: 100%;
-}
-
-.nav li {
-    margin: 10% 3% 5% 0%;
-    text-align: center;
-}
-
-.nav a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    display: block;
-}
-
-.nav a::after {
-    content: "";
-    display: block;
-    width: 0;
-    height: 2px;
-    background-color: white;
-    transition: width 0.3s ease;
-}
-
-.nav a:hover::after {
-    width: 100%;
-}
-
-footer {
+/* Footer Styles */
+.footer {
     background-color: #FF7373;
     display: flex;
 }
@@ -457,5 +340,5 @@ footer {
 }
 
 .social a {
-    margin-right:5%;
+    margin-right: 5%;
 }
