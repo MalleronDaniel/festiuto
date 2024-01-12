@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% block head %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+    <link rel="icon" href="{{ url_for('static', filename='img/logo_jaune') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/burger.css')}}">
+    {% endblock %}
+    <title>Festiut'O</title>
+    {% endblock %}
+</head>
+
+<body>
+
+    <main class="flex-shrink-0">
+        <section class="section-nav">
+            <nav class="nav">
+                <ul>
+                    <li>
+                        <a href="{{ url_for('accueil') }}">ACCUEIL</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('accueil') }}">MON PROFIL</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('accueil') }}">PROGRAMME</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('accueil') }}">BILLETTERIE</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('accueil') }}">LES GROUPES</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('accueil') }}">LE FESTIVAL</a>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+        <section class="aside">
+            <div class="croix">
+                <a aria-current="page" href="{{ url_for('accueil') }}">
+                    <img src="{{ url_for('static', filename='img/reseaux/fermeture_burger.png') }}" alt="Retour">
+                </a>
+            </div>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='img/logo_rose.png') }}" alt="Logo">
+                
+            </div>
+            <div class="social">
+                <div class="partie1">
+                    <a href="https://open.spotify.com/intl-fr">
+                        <img src="{{ url_for('static', filename='img/reseaux/spotify.png') }}" alt="Logo Spotify">
+                    </a>
+                    <a class="img_milieu" href="https://instagram.com">
+                        <img src="{{ url_for('static', filename='img/reseaux/instagram.webp') }}" alt="Logo Instagram">
+                    </a>
+                    <a href="https://www.tiktok.com">
+                        <img src="{{ url_for('static', filename='img/reseaux/tiktok.webp') }}" alt="Logo Tiktok">
+                    </a>
+                </div>
+                <div class="partie2">
+                    <a href="https://www.x.com">
+                        <img src="{{ url_for('static', filename='img/reseaux/x.webp') }}" alt="Logo x">
+                    </a>
+                    <a class="img_milieu" href="https://www.youtube.com">
+                        <img src="{{ url_for('static', filename='img/reseaux/youtube.png') }}" alt="Logo Youtube">
+                    </a>
+                    <a href="https://www.facebook.com">
+                        <img src="{{ url_for('static', filename='img/reseaux/facebook.png') }}" alt="Logo Facebook">
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

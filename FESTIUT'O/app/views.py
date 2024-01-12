@@ -24,6 +24,10 @@ def admin_home():
 def accueil():
     return render_template("accueil.html")
 
+@app.route("/burger/")
+def burger():
+    return render_template("burger.html")
+
 @app.route("/login/", methods = ("GET","POST",))
 def login():
     f = LoginForm()
