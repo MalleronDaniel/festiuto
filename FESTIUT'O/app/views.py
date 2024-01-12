@@ -107,3 +107,28 @@ def details_artiste(id):
     return render_template("details-artiste.html", 
     artiste=a,
     groupe=groupe)
+
+@app.route("/inputFavoris/<int:id_groupe>", methods=["POST"])
+@login_required
+def inputFavoris(id_groupe):
+    # Vérifie si le groupe est déjà en favori pour l'utilisateur
+    est_favori = Apprecier.query.filter_by(iduser=current_user.username, idgroupe=id_groupe).first()
+    
+    if est_favori:
+        # Si le groupe est déjà en favori, le supprimer
+        db.session.delete(est_favori)
+        db.session.commit()
+    else:
+        # Sinon, l'ajouter en favori
+        favori = Apprecier(iduser=current_user.username, idgroupe=id_groupe)
+        db.session.add(favori)
+        db.session.commit()
+
+    #Permet de récupérer la page précédente
+    page_precedente = request.referrer if request.referrer else url_for('accueil')
+    return redirect(page_precedente)
+
+
+
+#Fonction utile
+
