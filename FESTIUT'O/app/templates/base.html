@@ -1,32 +1,114 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
+<head>
     {% block head %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% block styles %}
     {% endblock %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <title>Fest'IUTO</title>
     {% endblock %}
-  </head>
-  <body>
-    <header>
-      {% block header %}
-      <h1>FEST'IUTO</span></h1>
-      <a href="{{ url_for('logout') }}"><button>Déconnexion</button></a>
-      {% endblock %}
+</head>
+<body>
+    <header class="head">
+        <div class="logo">
+            <a aria-current="page" href="{{ url_for('accueil') }}">
+                <img src="{{ url_for('static', filename='img/logo_jaune.png') }}" alt="Logo">
+            </a>
+        </div>
+
+        <nav class="nav-top">
+          <ul>
+            <li>
+                <div>
+                    <a aria-current="page" href="{{ url_for('accueil') }}">ACCUEIL</a>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <a aria-current="page" href="{{ url_for('accueil') }}">BILLETTERIE</a>
+                </div>
+            </li>
+            {% if current_user.is_authenticated %}
+                <li>
+                    <div>
+                        <a href="{{ url_for('accueil') }}">{{ current_user.username }}</a>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <a href="{{ url_for('logout') }}">
+                            <span class="glyphicon glyphicon-log-out" title="Logout"></span>
+                            SE DECONNECTER
+                        </a>
+                    </div>
+                </li>
+            {% else %}
+                <li>
+                    <div>
+                        <a aria-current="page" href="{{ url_for('login') }}">Se connecter</a>
+                    </div>
+                </li>
+            {% endif %}
+            <li>
+                <div class="menu-burger">
+                    <a aria-current="page" href="{{ url_for('burger') }}">
+                        <img src="{{ url_for('static', filename='img/burger.png') }}" alt="Menu Burger">
+                    </a>
+                </div>
+            </li>
+          </ul>
+        </nav>
     </header>
+
     <main class="flex-shrink-0">
-      <div class="container">
-        {% block content %}
-        {% endblock %}
-      </div>
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
     </main>
-    <footer>
-      <p>Groupe BLM 2023-2024</p>
+
+    <footer class="footer">
+        <div class="logo-footer">
+            <img src="{{ url_for('static', filename='img/logo_jaune.png') }}" alt="Logo"> 
+        </div>
+        <section class="footer-right">
+            <section class="section-nav">
+                <nav class="nav">
+                    <ul>
+                        <li><a href="{{ url_for('accueil') }}">ACCUEIL</a></li>
+                        <li><a href="{{ url_for('accueil') }}">MON PROFIL</a></li>
+                        <li><a href="{{ url_for('accueil') }}">PROGRAMME</a></li>
+                        <li><a href="{{ url_for('accueil') }}">BILLETTERIE</a></li>
+                        <li><a href="{{ url_for('accueil') }}">LES GROUPES</a></li>
+                        <li><a href="{{ url_for('accueil') }}">LE FESTIVAL</a></li>
+                    </ul>
+                </nav>
+            </section>
+            <section class="aside">
+                <div class="social">
+                    <div><a href="https://open.spotify.com/intl-fr">
+                            <img src="{{ url_for('static', filename='img/reseaux/spotify.png') }}" alt="Logo Spotify">
+                        </a></div>
+                    <div><a class="img_milieu" href="https://instagram.com">
+                            <img src="{{ url_for('static', filename='img/reseaux/instagram.webp') }}" alt="Logo Instagram">
+                        </a></div>
+                    <div><a href="https://www.tiktok.com">
+                            <img src="{{ url_for('static', filename='img/reseaux/tiktok.webp') }}" alt="Logo Tiktok">
+                        </a></div>
+                    <div><a href="https://www.x.com">
+                            <img src="{{ url_for('static', filename='img/reseaux/x.webp') }}" alt="Logo x">
+                        </a></div>
+                    <div><a class="img_milieu" href="https://www.youtube.com">
+                            <img src="{{ url_for('static', filename='img/reseaux/youtube.png') }}" alt="Logo Youtube">
+                        </a></div>
+                    <div><a href="https://www.facebook.com">
+                            <img src="{{ url_for('static', filename='img/reseaux/facebook.png') }}" alt="Logo Facebook">
+                        </a></div>
+                </div>
+            </section>
+        </section>
     </footer>
-    {% block scripts %}
-    {% endblock %}
-  </body>
+</body>
 </html>

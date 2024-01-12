@@ -1,0 +1,189 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+a {
+    cursor: pointer;
+}
+.head {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #FF7373;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+.nav-top {
+    flex-basis: 50%;
+    flex-grow: 1;
+}
+
+.nav-top ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-top li {
+    flex-basis: 20%;
+    flex-grow: 1;
+}
+
+.nav-top a {
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+}
+
+.nav-top a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+.nav-top a:hover::after {
+    width: 100%;
+}
+
+.logo{
+    margin-left: 5%;
+    flex-basis: 23%;
+    flex-grow: 0;
+}
+
+.logo {
+    padding: 2% 5% 2% 5%;
+}
+
+
+.logo img {
+    width: 50%;
+    height: 50%;
+}
+
+.menu-burger img {
+    width: 50%;
+    height: 50%;
+}
+
+/* Fixed Navigation Bar */
+
+.head {
+    box-shadow: 0px 3px 30px #FF7373;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+
+
+/* PARTIE page */
+
+main {
+    margin-top: 15%;
+}
+
+
+
+/* Footer */
+
+
+/* Ajout de styles pour la partie droite */
+.aside {
+    flex: 1; /* Prend tout l'espace disponible */
+    text-align: center;
+    margin-right: 5%;
+}
+
+/* Styles pour la navette à gauche */
+.nav {
+    text-align: left;
+    margin-right: 20px;
+}
+
+.nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    width: 100%;
+}
+
+.nav li {
+    margin: 10% 3% 5% 0%;
+    text-align: center;
+}
+
+.nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+}
+
+.nav a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+.nav a:hover::after {
+    width: 100%;
+}
+
+footer {
+    background-color: #FF7373;
+    display: flex;
+}
+
+.logo-footer img {
+    width: 50%;
+    height: 50%;
+    display: block;
+    margin: 0 auto 20px;
+    padding: 20%;
+}
+
+.logo-footer {
+    flex-basis: 25%;
+    margin-left: 5%;
+}
+
+.footer-right {
+    flex-basis: 65%;
+    margin-left: 5%;
+}
+
+.social {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.social img {
+    width: 30%;
+    height: 30%;
+}
+
+.social div {
+    flex-basis: 15%;
+}
+
+.social a {
+    margin-right:5%;
+}
