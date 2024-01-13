@@ -28,6 +28,17 @@ def accueil():
 def burger():
     return render_template("burger.html")
 
+@app.route("/billetterie/")
+def billetterie():
+    c = Concert.query.all()
+    jourConcerts = Concert.query.with_entities(Concert.jour).distinct().all();
+    jourConcertsDistinct = [jour[0] for jour in jourConcerts];
+    concerts_vendredi = Concert.query.filter(Concert.jour == "Vendredi").order_by(Concert.datedebutc).all();
+    concerts_samedi = Concert.query.filter((Concert.jour) == "Samedi").order_by(Concert.datedebutc).all();
+    concerts_dimanche = Concert.query.filter((Concert.jour) == "Dimanche").order_by(Concert.datedebutc).all();
+    
+    return render_template("billetterie/base_billetterie.html", joursConcerts = jourConcertsDistinct, concerts_vendredi=concerts_vendredi, concerts_samedi=concerts_samedi, concerts_dimanche=concerts_dimanche, c = c)
+
 @app.route("/login/", methods = ("GET","POST",))
 def login():
     f = LoginForm()
