@@ -48,7 +48,7 @@ def inscription():
     f = UtilisateurForm()
     return render_template("inscription.html", form=f)
     
-@app.route("/save/util/", methods=("POST",))
+@app.route("/save/inscription/", methods=("POST",))
 def save_inscription():
     f = UtilisateurForm()
     u = Utilisateur(
@@ -63,15 +63,23 @@ def save_inscription():
     db.session.commit()
     return redirect(url_for('login'))
 
-@app.route("/admin/ajout-billet/")
-def ajout_billet():
+@login_required
+@app.route("/billeterie/")
+def billeterie():
     f = BilletForm()
-    return render_template("ajout-billet.html", form=f)
+    return render_template("billeterie.html", form=f)
 
-@app.route("/admin/ajout-UTILISATEUR/")
-def ajout_spectateur():
-    f = UtilisateurForm()
-    return render_template("ajout-billet.html", form=f)
+@app.route("/save/billeterie/",  methods=("POST",))
+def save_billeterie():
+    f = BilletForm()
+    p = Posseder(
+        typebillet = f.typebillet.data[0],
+        iduser = current_user.iduser
+    )
+    db.session.add(p)
+    db.session.commit()
+    flash(f'Félicitations ! Votre achat de billet "{Billet.query.get(f.typebillet.data).descbillet}" a été effectué avec succès.')
+    return redirect(url_for('billeterie'))
 
 @app.route("/programme/")
 def programme():

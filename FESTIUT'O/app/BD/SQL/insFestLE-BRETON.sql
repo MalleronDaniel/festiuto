@@ -13,14 +13,13 @@ values
 
 -- insertion des types de billets
 
-insert into BILLET (idbillet, typebillet, prixbillet, nbjoursbillet)
+insert into BILLET (typebillet, descbillet, prixbillet)
 values
-(1, 'Billet VIP 1 Jour', 150.00, 1),
-(2, 'Billet VIP 3 Jours', 325.00, 3),
-(3, 'Billet VIP 1 Semaine', 550.00, 7),
-(4, 'Billet 1 Jour', 50.00, 1),
-(5, 'Billet 3 Jours', 125.00, 3),
-(6, 'Billet 1 Semaine', 250.00, 7);
+(1, 'Billet Un Jour Vendredi', 50.00),
+(2, 'Billet Un Jour Samedi', 50.00),
+(3, 'Billet Un Jour Dimanche', 50.00),
+(4, 'Billet Totalité', 129.00),
+(5, 'Billet Totalité + VIP', 199.00);
 
 
 -------
@@ -170,14 +169,28 @@ values
 
 -- insertion des utilisateurs
 
-insert into UTILISATEUR (iduser, nomuser, ddn, email, idbillet, mdp, admin)
+insert into UTILISATEUR (iduser, nomuser, ddn, email, mdp, admin)
 values
-(1, 'Daniel Malleron', '2004-09-13', 'danyyyy@gmail.com', 1, 'mdp', true),
-(2, 'Kevin Le Breton', '2004-09-13', 'kevin.le.breton@gmail.com', 2, 'mdp', false),
-(3, 'Adam Daniel', '2004-09-13', 'dadam@gmail.com', 3, 'mdp', false),
-(4, 'Alicia Romero', '2004-09-13', 'alicia.romero@gmail.com', 4, 'mdp', false),
-(5, 'Jordan Zebo', '2004-09-13', 'jojo5sec@gmail.com', 5, 'mdp', false),
-(6, 'Cyril Doumbe', '2004-09-13', 'jordanTmort@gmail.com', 6, 'mdp', false);
+(1, 'Daniel Malleron', '2004-09-13', 'danyyyy@gmail.com', 'mdp', true),
+(2, 'Kevin Le Breton', '2004-09-13', 'kevin.le.breton@gmail.com', 'mdp', false),
+(3, 'Adam Daniel', '2004-09-13', 'dadam@gmail.com', 'mdp', false),
+(4, 'Alicia Romero', '2004-09-13', 'alicia.romero@gmail.com', 'mdp', false),
+(5, 'Jordan Zebo', '2004-09-13', 'jojo5sec@gmail.com', 'mdp', false),
+(6, 'Cyril Doumbe', '2004-09-13', 'jordanTmort@gmail.com', 'mdp', false);
+
+
+-------
+
+-- insertion des instance POSSEDER (UTILISATEUR-BILLET)
+
+insert into POSSEDER(iduser, typebillet)
+values
+(1,1),
+(2,2),
+(3,3),
+(4,4),
+(5,5),
+(6,2);
 
 
 -------
@@ -329,14 +342,14 @@ values
 
 -- insertion dans la table participer
 
-insert into REGARDER (idact, dateact, idbillet)
+insert into REGARDER (idact, dateact, typebillet)
 values
 (1, '2023-09-20 15:00:00', 1),
 (1, '2023-09-20 15:00:00', 2),
 (1, '2023-09-20 15:00:00', 3),
 (2, '2023-09-21 14:30:00', 4),
 (2, '2023-09-21 14:30:00', 5),
-(3, '2023-09-22 16:45:00', 6);
+(3, '2023-09-22 16:45:00', 1);
 
 
 -------
@@ -356,7 +369,7 @@ values
 
 -- insertion des acceder
 
-insert into ACCEDER (jour, datedebutc, idconcert, idbillet)
+insert into ACCEDER (jour, datedebutc, idconcert, typebillet)
 values
 ('Vendredi', '2023-09-22 18:00:00', 1, 1),
 ('Vendredi', '2023-09-22 19:30:00', 2, 2),

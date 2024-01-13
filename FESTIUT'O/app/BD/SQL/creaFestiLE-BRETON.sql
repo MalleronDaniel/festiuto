@@ -15,11 +15,10 @@ CREATE TABLE `ARTISTE` (
   PRIMARY KEY (`idartiste`)
 );
 CREATE TABLE `BILLET` (
-  `idbillet` int(3),
-  `typebillet` VARCHAR(42),
+  `typebillet` int(3),
+  `descbillet` VARCHAR(42),
   `prixbillet` float(6),
-  `nbjoursbillet` int(2),
-  PRIMARY KEY (`idbillet`)
+  PRIMARY KEY (`typebillet`)
 );
 CREATE TABLE `CONCERT` (
   `jour` ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'),
@@ -83,7 +82,6 @@ CREATE TABLE `UTILISATEUR` (
   `nomuser` VARCHAR(42),
   `ddn` date,
   `email` VARCHAR(42),
-  `idbillet` int(3),
   `mdp` VARCHAR(42),
   `admin` boolean,
   PRIMARY KEY (`iduser`)
@@ -92,9 +90,9 @@ CREATE TABLE `ACCEDER` (
   `jour` ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'),
   `datedebutc` datetime,
   `idconcert` int(3),
-  `idbillet` int(3),
+  `typebillet` int(3),
   `preinscription` boolean,
-  PRIMARY KEY (`jour`, `datedebutc`, `idconcert`, `idbillet`)
+  PRIMARY KEY (`jour`, `datedebutc`, `idconcert`, `typebillet`)
 );
 CREATE TABLE `APPRECIER` (
   `idgroupe` int(3),
@@ -145,14 +143,14 @@ CREATE TABLE `PARTICIPER` (
 );
 CREATE TABLE `POSSEDER`(
   `iduser` int(3),
-  `idBillet` int(3),
-  PRIMARY KEY (`iduser`, `idBillet`)
+  `typebillet` int(3),
+  PRIMARY KEY (`iduser`, `typebillet`)
 );
 CREATE TABLE `REGARDER` (
   `idact` int(3),
   `dateact` DATETIME,
-  `idbillet` int(3),
-  PRIMARY KEY (`idact`, `dateact`, `idbillet`)
+  `typebillet` int(3),
+  PRIMARY KEY (`idact`, `dateact`, `typebillet`)
 );
 CREATE TABLE `SIMILAIRE` (
   `idgroupe` int(3),
@@ -161,8 +159,7 @@ CREATE TABLE `SIMILAIRE` (
 );
 ALTER TABLE `ARTISTE` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `CONCERT` ADD FOREIGN KEY (`noml`) REFERENCES `LIEU` (`noml`);
-ALTER TABLE `UTILISATEUR` ADD FOREIGN KEY (`idbillet`) REFERENCES `BILLET` (`idbillet`);
-ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`idbillet`) REFERENCES `BILLET` (`idbillet`);
+ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`typebillet`) REFERENCES `BILLET` (`typebillet`);
 ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`jour`, `datedebutc`, `idconcert`) REFERENCES `CONCERT` (`jour`, `datedebutc`, `idconcert`);
 ALTER TABLE `APPRECIER` ADD FOREIGN KEY (`iduser`) REFERENCES `UTILISATEUR` (`iduser`);
 ALTER TABLE `APPRECIER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
@@ -180,14 +177,14 @@ ALTER TABLE `PARTAGER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgrou
 ALTER TABLE `PARTAGER` ADD FOREIGN KEY (`idreseau`) REFERENCES `RESEAUX` (`idreseau`);
 ALTER TABLE `PARTICIPER` ADD FOREIGN KEY (`idact`, `dateact`) REFERENCES `ACTIVITE_ANNEXE` (`idact`, `dateact`);
 ALTER TABLE `PARTICIPER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
-ALTER TABLE `REGARDER` ADD FOREIGN KEY (`idbillet`) REFERENCES `BILLET` (`idbillet`);
+ALTER TABLE `REGARDER` ADD FOREIGN KEY (`typebillet`) REFERENCES `BILLET` (`typebillet`);
 ALTER TABLE `REGARDER` ADD FOREIGN KEY (`idact`, `dateact`) REFERENCES `ACTIVITE_ANNEXE` (`idact`, `dateact`);
 ALTER TABLE `SIMILAIRE` ADD FOREIGN KEY (`idgroupe_1`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `SIMILAIRE` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `HEBERGER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `HEBERGER` ADD FOREIGN KEY (`idh`) REFERENCES `HEBERGEMENT` (`idh`);
 ALTER TABLE `POSSEDER` ADD FOREIGN KEY (`iduser`) REFERENCES `UTILISATEUR` (`iduser`);
-ALTER TABLE `POSSEDER` ADD FOREIGN KEY (`idBillet`) REFERENCES `BILLET` (`idbillet`);
+ALTER TABLE `POSSEDER` ADD FOREIGN KEY (`typebillet`) REFERENCES `BILLET` (`typebillet`);
 
 -- FONCTIONS 
 
