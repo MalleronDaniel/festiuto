@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/programme.css') }}">
+{% endblock %}
+{% block content %}
+    <a href="{{ url_for('programme') }}">
+        <h1>Programmation</h1>
+    </a>
+    <nav class="filtre">
+        <ul>
+            {% for jours in joursConcerts %}
+                <li>
+                    <a href="{{ url_for('programme') ~ jours }}">{{jours}}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+
+    {% set concerts_vendredi = concerts_vendredi %}
+    {% set concerts_samedi = concerts_samedi %}
+    {% set concerts_dimanche = concerts_dimanche %}
+    {% include 'programme/programme.html' %}
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'programme/base_programme.html' %}
+
+{% block content %}
+    <a href="{{ url_for('programme') }}">
+        <h1>Programmation</h1>
+    </a>
+    <nav class="filtre">
+        <ul>
+            {% for jours in joursConcerts %}
+                <li>
+                    <a href="{{ url_for('programme') ~ jours }}">{{jours}}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+
+    <h2 class="second-titre">Tout le programme du samedi 21 février :</h2>
+    <div class="jours">
+        {% for concert in concerts_samedi %}
+            <div class="concert">
+                <img src="{{ url_for('static', filename='img/artistes/daft_punk.jpeg') }}" class="d-block w-100" alt="daft punk">
+                <div>
+                    <p>{{ concert.noml }}</p>
+                    <p>{{ concert.idconcert }}</p>
+                    <p>{{ concert.datedebutc }}</p>
+                    {% for groupe in concert.get_groupe_concert() %}
+                        <p>{{ groupe.nomgroupe }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

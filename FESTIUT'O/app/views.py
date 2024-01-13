@@ -84,8 +84,37 @@ def ajout_spectateur():
 @app.route("/programme/")
 def programme():
     c = Concert.query.all()
+    jourConcerts = Concert.query.with_entities(Concert.jour).distinct().all();
+    jourConcertsDistinct = [jour[0] for jour in jourConcerts];
     concerts_vendredi = Concert.query.filter(Concert.jour == "Vendredi").order_by(Concert.datedebutc).all();
     concerts_samedi = Concert.query.filter((Concert.jour) == "Samedi").order_by(Concert.datedebutc).all();
     concerts_dimanche = Concert.query.filter((Concert.jour) == "Dimanche").order_by(Concert.datedebutc).all();
     
-    return render_template("programme.html", concerts_vendredi=concerts_vendredi, concerts_samedi=concerts_samedi, concerts_dimanche=concerts_dimanche, c = c)
+    return render_template("programme/base_programme.html", joursConcerts = jourConcertsDistinct, concerts_vendredi=concerts_vendredi, concerts_samedi=concerts_samedi, concerts_dimanche=concerts_dimanche, c = c)
+
+@app.route("/programme/Vendredi")
+def programme_vendredi():
+    c = Concert.query.all()
+    jourConcerts = Concert.query.with_entities(Concert.jour).distinct().all();
+    jourConcertsDistinct = [jour[0] for jour in jourConcerts];
+    concerts_vendredi = Concert.query.filter(Concert.jour == "Vendredi").order_by(Concert.datedebutc).all();
+    
+    return render_template("programme/programme_vendredi.html", joursConcerts = jourConcertsDistinct, concerts_vendredi= concerts_vendredi, c = c)
+
+@app.route("/programme/Samedi")
+def programme_samedi():
+    c = Concert.query.all()
+    jourConcerts = Concert.query.with_entities(Concert.jour).distinct().all();
+    jourConcertsDistinct = [jour[0] for jour in jourConcerts];
+    concerts_samedi = Concert.query.filter((Concert.jour) == "Samedi").order_by(Concert.datedebutc).all();
+    
+    return render_template("programme/programme_samedi.html", joursConcerts = jourConcertsDistinct, concerts_samedi= concerts_samedi, c = c)
+
+@app.route("/programme/Dimanche")
+def programme_dimanche():
+    c = Concert.query.all()
+    jourConcerts = Concert.query.with_entities(Concert.jour).distinct().all();
+    jourConcertsDistinct = [jour[0] for jour in jourConcerts];
+    concerts_dimanche = Concert.query.filter((Concert.jour) == "Dimanche").order_by(Concert.datedebutc).all();
+    
+    return render_template("programme/programme_samedi.html", joursConcerts = jourConcertsDistinct, concerts_dimanche = concerts_dimanche, c = c)
