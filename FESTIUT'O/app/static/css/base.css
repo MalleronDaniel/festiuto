@@ -10,8 +10,7 @@ a {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    
+    justify-content: space-between; 
 }
 
 .nav-top {
@@ -31,6 +30,7 @@ a {
 .nav-top li {
     flex-basis: 20%;
     flex-grow: 1;
+    text-align: center;
 }
 
 .nav-top a {
@@ -56,6 +56,7 @@ a {
 }
 
 .logo{
+    margin-top: 3%;
     margin-left: 5%;
     flex-basis: 23%;
     flex-grow: 0;
@@ -67,12 +68,12 @@ a {
 
 
 .logo img {
-    width: 50%;
+    width: 70%;
     height: auto;
 }
 
 .menu-burger {
-    margin-right: 80%;
+    margin: 0 60% 0 20%;
 }
 
 .menu-burger img {

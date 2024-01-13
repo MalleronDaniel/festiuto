@@ -91,6 +91,7 @@ class Concert(db.Model):
     def __repr__(self):
         return f"<Concert ({self.idconcert}) | {self.datedebutc} | {self.jour}>"
 
+
     #GETTERS
     def get_groupe_concert(self):
         """Retourne l'id des groupe d'un concert"""
