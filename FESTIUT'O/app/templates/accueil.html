@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    {% block head %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/accueil.css')}}">
+    {% endblock %}
+    <title>Festiut'O</title>
+    {% endblock %}
+</head>
+
+<body>
+    <header class="head">
+        {% if current_user.is_authenticated %}
+            
+            <div class="left">
+                <a href="{{ url_for('accueil') }}">{{ current_user.username }}</a>
+                <a href="{{ url_for('logout') }}">
+                    <span class="glyphicon glyphicon-log-out" title="Logout"></span>
+                    Se deconnecter
+                </a>
+            </div>
+
+        {% else %}
+
+            <div class="left">
+                <a aria-current="page" href="{{ url_for('login') }}">Se connecter</a>
+            </div>
+                    
+        {% endif %}
+
+
+
+        <div class="logo">
+            <a aria-current="page" href="{{ url_for('accueil') }}">
+                <img src="{{ url_for('static', filename='img/logo_jaune.png') }}" alt="Logo">
+            </a>
+        </div>
+
+        <div class="right">
+            <a aria-current="page" href="{{ url_for('accueil') }}">BILLETTERIE</a>
+            <a aria-current="page" href="{{ url_for('accueil') }}">PROGRAMMATION</a>
+            <a aria-current="page" href="{{ url_for('accueil') }}">
+                <img src="{{ url_for('static', filename='img/burger.png') }}" alt="Menu Burger">
+            </a>
+        </div>
+
+    </header>
+
+
+
+
+
+    <!-- Your page content -->
+    <main class="flex-shrink-0">
+
+        <div class="info">
+            <div>
+                <h1>FESTIUT'O</h1>
+                <h3>Un festival pas comme les autres,</h3>
+                <h3>Incontournables des étudiants,</h3>
+                <h3>À l’université d’Orléans.</h3>
+                <h2>Le 22, 23 et 24 MARS 2024</h2>
+            </div>
+            <img src="{{ url_for('static', filename='img/accueil/img2.jpeg') }}" alt="image du festival">
+            
+        </div>
+
+        <div class ="programme">
+            <div class="bandeau programme">
+                <div class="slider">
+                    <div class="slide-track">
+                        <div class="slide">
+                            <p>PROGRAMME - PROGRAMME - PROGRAMME - PROGRAMME - PROGRAMME - PROGRAMME -</p>
+                        </div>
+                        <div class="slide">
+                            <p>PROGRAMME - PROGRAMME - PROGRAMME - PROGRAMME - PROGRAMME - PROGRAMME -</p>
+                        </div>
+                        <div class="slide">
+                            <p>PROGRAMME - PROGRAMME - PROGRAMME - PROGRAMME - PROGRAMME - PROGRAMME -</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="journee">
+                <H2>à changer (getJour)</H2>
+                <div class="concert">
+                    <img src="{{ url_for('static', filename='img/artistes/daft_punk.jpeg') }}" class="d-block w-100" alt="daft punk">
+                    <div>
+                        <h3>getConcert()</h3>
+                        <h5> getDate() + getHeure()</h5>
+                        <h2> (getArtistes()), DAFT PUNK - BOOBA - KAARIS</h2>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Pour accéder à la programation :</h4>
+
+            <a class="voir-plus" href="{{ url_for('accueil') }}">CLIQUER ICI</a>
+        </div>
+
+
+        <div>
+            <div class="bandeau billetterie">
+                <div class="slider">
+                    <div class="slide-track">
+                        <div class="slide">
+                            <p>BILLETERIE - BILLETERIE - BILLETERIE - BILLETERIE - BILLETERIE - </p>
+                        </div>
+                        <div class="slide">
+                            <p>BILLETERIE - BILLETERIE - BILLETERIE - BILLETERIE - BILLETERIE - </p>
+                        </div>
+                        <div class="slide">
+                            <p>BILLETERIE - BILLETERIE - BILLETERIE - BILLETERIE - BILLETERIE - </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="billetterie">
+                <div class="billet">
+                    <img src="{{ url_for('static', filename='img/accueil/billet.png') }}" alt="billet">
+                    <div class="info-billet">
+                        <h3>getDate()</h3>
+                        <h4>getPrix()</h4>
+                        <a class="acheter" href="{{ url_for('accueil') }}">ACHETER</a>
+                    </div>
+                </div>
+    
+                <div class="billet">
+                    <img src="{{ url_for('static', filename='img/accueil/billet.png') }}" alt="billet">
+                    <div class="info-billet">
+                        <h3>getDate()</h3>
+                        <h4>getPrix()</h4>
+                        <a class="acheter" href="{{ url_for('accueil') }}">ACHETER</a>
+                    </div>
+                </div>
+    
+                <div class="block">
+                    <h4>Pour accéder à la billetterie : </h4>
+                    <a class="voir-plus" href="{{ url_for('accueil') }}">CLIQUER ICI</a>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted"> &copy Ce site a été fait par Malleron Daniel, Bin Zulkornain Adam et Le Breton Kévin.</span>
+        </div>
+    </footer>
+</body>
+</html>

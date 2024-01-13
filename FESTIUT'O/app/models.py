@@ -85,7 +85,7 @@ class Concert(db.Model):
     duree = db.Column(db.Float)
     noml = db.Column(db.String(42), db.ForeignKey('LIEU.noml'))
     lieu = db.relationship('Lieu', backref=db.backref("concerts", lazy="dynamic"))
-    __table_args__ = (db.PrimaryKeyConstraint('jour', 'datedebutc', 'idconcert'),)
+    __table_args__ = (db.PrimaryKeyConstraint('idconcert'),)
     
     def __repr__(self):
         return f"<Concert ({self.idconcert}) | {self.datedebutc} | {self.jour}>"
@@ -114,6 +114,10 @@ class Groupe(db.Model):
     
     def __repr__(self):
         return f"<Groupe ({self.idgroupe}) | {self.nomgroupe}>"
+    
+    def get_artistes_groupe(self):
+        """Retourne les artistes d'un groupe"""
+        return Artiste.query.filter(Artiste.idgroupe == self.idgroupe).all()
 
 
 class Hebergement(db.Model):
@@ -203,14 +207,12 @@ class Utilisateur(db.Model, UserMixin):
 
 class Acceder(db.Model):
     __tablename__ = "ACCEDER"
-    jour = db.Column(db.Enum('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'))
-    datedebutc = db.Column(db.DateTime, nullable=False)
     idconcert = db.Column(db.Integer, db.ForeignKey('CONCERT.idconcert'))
     concert = db.relationship('Concert', backref=db.backref("acces", lazy="dynamic"))
     typebillet = db.Column(db.Integer, db.ForeignKey('BILLET.typebillet'))
     preinscription = db.Column(db.Boolean)
     billet = db.relationship('Billet', backref=db.backref("acces", lazy="dynamic"))
-    __table_args__ = (db.PrimaryKeyConstraint('jour', 'datedebutc', 'idconcert','typebillet'),)
+    __table_args__ = (db.PrimaryKeyConstraint('idconcert','typebillet'),)
 
 
 class Apprecier(db.Model):
@@ -245,13 +247,11 @@ class Contribuer(db.Model):
     __tablename__ = "CONTRIBUER"
     idgroupe = db.Column(db.Integer, db.ForeignKey('GROUPE.idgroupe'), primary_key=True)
     groupe = db.relationship('Groupe', backref=db.backref("contribution", lazy="dynamic"))
-    jour = db.Column(db.Enum('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'), primary_key=True)
-    datedebutc = db.Column(db.DateTime, nullable=False, primary_key=True)
     idconcert = db.Column(db.Integer, db.ForeignKey('CONCERT.idconcert'), primary_key=True)
     concert = db.relationship('Concert', backref=db.backref("contribution", lazy="dynamic"))
     tempsdemontage = db.Column(db.Float)
     tempsmontage = db.Column(db.Float)
-    __table_args__ = (db.PrimaryKeyConstraint('idgroupe', 'jour', 'datedebutc', 'idconcert'),)
+    __table_args__ = (db.PrimaryKeyConstraint('idgroupe', 'idconcert'),)
 
 
 class Geolocaliser(db.Model):
@@ -316,7 +316,7 @@ class Posseder(db.Model):
     iduser = db.Column(db.Integer, db.ForeignKey('UTILISATEUR.iduser'), primary_key=True)
 
 # Define foreign key relationships
-db.ForeignKeyConstraint(['idgroupe', 'jour', 'datedebutc', 'idconcert'], ['CONTRIBUER.idgroupe', 'CONTRIBUER.jour', 'CONTRIBUER.datedebutc', 'CONTRIBUER.idconcert'])
+db.ForeignKeyConstraint(['idgroupe', 'idconcert'], ['CONTRIBUER.idgroupe','CONTRIBUER.idconcert'])
 db.ForeignKeyConstraint(['idact', 'dateact'], ['ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
 db.ForeignKeyConstraint(['typebillet'], ['BILLET.typebillet'])
 db.ForeignKeyConstraint(['idphoto'], ['PHOTOS.idphoto'])

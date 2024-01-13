@@ -14,11 +14,15 @@ from datetime import datetime
 def home():
     s = Utilisateur.query.all()
     a = Artiste.query.all()
-    return render_template("home.html", spectateurs=s, artistes=a)
+    return render_template("accueil.html", spectateurs=s, artistes=a)
 
 @app.route("/admin/")
 def admin_home():
     return render_template("admin.html")
+
+@app.route("/accueil/")
+def accueil():
+    return render_template("accueil.html")
 
 @app.route("/login/", methods = ("GET","POST",))
 def login():
@@ -83,9 +87,31 @@ def save_billeterie():
 
 @app.route("/programme/")
 def programme():
-    c = Concert.query.all()
     concerts_vendredi = Concert.query.filter(Concert.jour == "Vendredi").order_by(Concert.datedebutc).all();
     concerts_samedi = Concert.query.filter((Concert.jour) == "Samedi").order_by(Concert.datedebutc).all();
     concerts_dimanche = Concert.query.filter((Concert.jour) == "Dimanche").order_by(Concert.datedebutc).all();
     
-    return render_template("programme.html", concerts_vendredi=concerts_vendredi, concerts_samedi=concerts_samedi, concerts_dimanche=concerts_dimanche, c = c)
+    return render_template("programme.html", 
+                           concerts_vendredi=concerts_vendredi,
+                           concerts_samedi=concerts_samedi,
+                           concerts_dimanche=concerts_dimanche)
+
+@app.route("/details-concert/<int:id>")
+def details_concert(id):
+    c = Concert.query.get(id)
+    return render_template("details-concert.html", 
+    concert=c)
+
+@app.route("/details-groupe/<int:id>")
+def details_groupe(id):
+    g = Groupe.query.get(id)
+    return render_template("details-groupe.html", 
+    groupe=g)
+
+@app.route("/details-artiste/<int:id>")
+def details_artiste(id):
+    a = Artiste.query.get(id)
+    groupe = Groupe.query.get(a.groupe_id)
+    return render_template("details-artiste.html", 
+    artiste=a,
+    groupe=groupe)

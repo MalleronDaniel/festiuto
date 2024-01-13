@@ -21,12 +21,12 @@ CREATE TABLE `BILLET` (
   PRIMARY KEY (`typebillet`)
 );
 CREATE TABLE `CONCERT` (
+  `idconcert` int(3),
   `jour` ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'),
   `datedebutc` datetime,
-  `idconcert` int(3),
   `duree` float,
   `noml` VARCHAR(42),
-  PRIMARY KEY (`jour`, `datedebutc`, `idconcert`)
+  PRIMARY KEY (`idconcert`)
 );
 CREATE TABLE `GROUPE` (
   `idgroupe` int(3),
@@ -87,12 +87,10 @@ CREATE TABLE `UTILISATEUR` (
   PRIMARY KEY (`iduser`)
 );
 CREATE TABLE `ACCEDER` (
-  `jour` ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'),
-  `datedebutc` datetime,
   `idconcert` int(3),
   `typebillet` int(3),
   `preinscription` boolean,
-  PRIMARY KEY (`jour`, `datedebutc`, `idconcert`, `typebillet`)
+  PRIMARY KEY (`idconcert`, `typebillet`)
 );
 CREATE TABLE `APPRECIER` (
   `idgroupe` int(3),
@@ -111,12 +109,10 @@ CREATE TABLE `CONTENIR` (
 );
 CREATE TABLE `CONTRIBUER` (
   `idgroupe` int(3),
-  `jour` ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'),
-  `datedebutc` datetime,
   `idconcert` int(3),
   `tempsdemontage` float,
   `tempsmontage` float,
-  PRIMARY KEY (`idgroupe`, `jour`, `datedebutc`, `idconcert`)
+  PRIMARY KEY (`idgroupe`, `idconcert`)
 );
 
 CREATE TABLE `GEOLOCALISER` (
@@ -160,14 +156,14 @@ CREATE TABLE `SIMILAIRE` (
 ALTER TABLE `ARTISTE` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `CONCERT` ADD FOREIGN KEY (`noml`) REFERENCES `LIEU` (`noml`);
 ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`typebillet`) REFERENCES `BILLET` (`typebillet`);
-ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`jour`, `datedebutc`, `idconcert`) REFERENCES `CONCERT` (`jour`, `datedebutc`, `idconcert`);
+ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`idconcert`) REFERENCES `CONCERT` (`idconcert`);
 ALTER TABLE `APPRECIER` ADD FOREIGN KEY (`iduser`) REFERENCES `UTILISATEUR` (`iduser`);
 ALTER TABLE `APPRECIER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `AVOIR` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `AVOIR` ADD FOREIGN KEY (`ids`) REFERENCES `SOUS_STYLE` (`ids`);
 ALTER TABLE `CONTENIR` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `CONTENIR` ADD FOREIGN KEY (`idphoto`) REFERENCES `PHOTOS` (`idphoto`);
-ALTER TABLE `CONTRIBUER` ADD FOREIGN KEY (`jour`, `datedebutc`, `idconcert`) REFERENCES `CONCERT` (`jour`, `datedebutc`, `idconcert`);
+ALTER TABLE `CONTRIBUER` ADD FOREIGN KEY (`idconcert`) REFERENCES `CONCERT` (`idconcert`);
 ALTER TABLE `CONTRIBUER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `GEOLOCALISER` ADD FOREIGN KEY (`noml`) REFERENCES `LIEU` (`noml`);
 ALTER TABLE `GEOLOCALISER` ADD FOREIGN KEY (`idact`, `dateact`) REFERENCES `ACTIVITE_ANNEXE` (`idact`, `dateact`);
@@ -198,7 +194,7 @@ BEGIN
 
     SELECT MIN(dateEvenement) INTO prochaineDate FROM (
         SELECT MIN(datedebutc) as dateEvenement
-        FROM CONTRIBUER
+        FROM CONTRIBUER NATURAL JOIN CONCERT
         WHERE idgroupe = idGr AND datedebutc > heure
 
         UNION ALL
@@ -225,7 +221,7 @@ BEGIN
 
     -- Trouver la dernière date de concert
     SELECT MAX(datedebutc) INTO dernierConcert 
-    FROM CONTRIBUER
+    FROM CONTRIBUER NATURAL JOIN CONCERT
     WHERE idgroupe = idGr AND datedebutc < heure;
 
     -- Trouver la dernière date d'activité annexe
@@ -273,13 +269,17 @@ BEGIN
     DECLARE dernierEvenement datetime;
     DECLARE prochainEvenement datetime;
     DECLARE dureeConcert float;
+    DECLARE dateConcert datetime;
     DECLARE mes varchar(100);
 
+    -- Récupérer la date du concert
+    SELECT datedebutc FROM CONCERT WHERE idconcert = NEW.idconcert INTO dateConcert;
+
     -- Récupérer la dernière date d'événement du groupe
-    SET dernierEvenement = derniereDateEvenementGroupe(NEW.idgroupe, NEW.datedebutc);
+    SET dernierEvenement = derniereDateEvenementGroupe(NEW.idgroupe, dateConcert);
 
     -- Récupérer la prochaine date d'événement du groupe
-    SET prochainEvenement = prochaineDateEvenementGroupe(NEW.idgroupe, NEW.datedebutc);
+    SET prochainEvenement = prochaineDateEvenementGroupe(NEW.idgroupe, dateConcert);
 
     -- Récupérer la durée du concert
     SELECT duree
@@ -288,12 +288,12 @@ BEGIN
     WHERE idconcert = NEW.idconcert;
 
     -- Vérifier la disponibilité pour le concert
-    IF dernierEvenement IS NOT NULL AND dernierEvenement > NEW.datedebutc THEN
+    IF dernierEvenement IS NOT NULL AND dernierEvenement > dateConcert THEN
         SET mes = CONCAT('Insertion impossible : temps de démontage trop proche du dernier événement du groupe ', NEW.idgroupe);
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = mes;
     END IF;
 
-    IF prochainEvenement IS NOT NULL AND ADDTIME(ADDTIME(NEW.datedebutc, CONCAT(dureeConcert, ':00:00')), CONCAT(NEW.tempsmontage, ':00:00')) > prochainEvenement THEN
+    IF prochainEvenement IS NOT NULL AND ADDTIME(ADDTIME(dateConcert, CONCAT(dureeConcert, ':00:00')), CONCAT(NEW.tempsmontage, ':00:00')) > prochainEvenement THEN
         SET mes = CONCAT('Insertion impossible : concert trop proche du prochain événement du groupe ', NEW.idgroupe);
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = mes;
     END IF;
@@ -361,15 +361,15 @@ begin
 
         if new.jour=jourC and new.noml=nomlC then
             if new.datedebutc>=dateDebC and newConcertFin<=ADDDATE(dateDebC, INTERVAL dureeC MINUTE) then
-                set msg = "INSERTION IMPOSSIBLE: nouveau concert se chevauche";
+                set msg = "INSERTION IMPOSSIBLE: lieu déjà utilisé impossible de créer un nouveau concert";
                 signal SQLSTATE '45000' set MESSAGE_TEXT=msg;
             end if;
             if new.datedebutc<ADDDATE(dateDebC, INTERVAL dureeC MINUTE) and new.datedebutc>=dateDebC then
-                set msg = "INSERTION IMPOSSIBLE: nouveau concert se chevauche";
+                set msg = "INSERTION IMPOSSIBLE: lieu déjà utilisé impossible de créer un nouveau concert";
                 signal SQLSTATE '45000' set MESSAGE_TEXT=msg;
             end if;
             if newConcertFin>dateDebC and newConcertFin<ADDDATE(dateDebC, INTERVAL dureeC MINUTE) then
-                set msg = "INSERTION IMPOSSIBLE: nouveau concert se chevauche";
+                set msg = "INSERTION IMPOSSIBLE: lieu déjà utilisé impossible de créer un nouveau concert";
                 signal SQLSTATE '45000' set MESSAGE_TEXT=msg;
             end if;
         end if;
@@ -377,6 +377,7 @@ begin
     close lesConcerts;
 end |
 DELIMITER ;
+
 
 -- Bloquer l'insertion d'une activité annexe si le lieu est déjà utilisé pour le moment
 DELIMITER |
@@ -402,15 +403,15 @@ begin
     while not fini do
         fetch lesActivites into dateactA, dureeactA, nomlA;
         if new.dateact>=dateactA and newActiviteFin<=ADDDATE(dateactA, INTERVAL dureeactA HOUR) then
-            set msg = "INSERTION IMPOSSIBLE: nouvelle activité se chevauche";
+            set msg = "INSERTION IMPOSSIBLE: lieu déjà utilisé impossible de créer une nouvelle activité";
             signal SQLSTATE '45000' set MESSAGE_TEXT=msg;
         end if;
         if new.dateact<ADDDATE(dateactA, INTERVAL dureeactA HOUR) and new.dateact>=dateactA then
-            set msg = "INSERTION IMPOSSIBLE: nouvelle activité se chevauche";
+            set msg = "INSERTION IMPOSSIBLE: lieu déjà utilisé impossible de créer une nouvelle activité";
             signal SQLSTATE '45000' set MESSAGE_TEXT=msg;
         end if;
         if newActiviteFin>dateactA and newActiviteFin<ADDDATE(dateactA, INTERVAL dureeactA HOUR) then
-            set msg = "INSERTION IMPOSSIBLE: nouvelle activité se chevauche";
+            set msg = "INSERTION IMPOSSIBLE: lieu déjà utilisé impossible de créer une nouvelle activité";
             signal SQLSTATE '45000' set MESSAGE_TEXT=msg;
         end if;
     end while;
@@ -425,8 +426,8 @@ begin
     declare capaciteLieu int;
     declare msg varchar(100);
 
-    select count(*) into nbDejaPreinsc from ACCEDER where jour=new.jour and datedebutc=new.datedebutc and idconcert=new.idconcert;
-    select distinct capacite into capaciteLieu from ACCEDER natural join CONCERT natural join LIEU where jour=new.jour and datedebutc=new.datedebutc and idconcert=new.idconcert;
+    select count(*) into nbDejaPreinsc from ACCEDER where idconcert=new.idconcert;
+    select distinct capacite into capaciteLieu from ACCEDER natural join CONCERT natural join LIEU where idconcert=new.idconcert;
 
     if nbDejaPreinsc+1>capaciteLieu then
         set msg = "INSERTION IMPOSSIBLE: dépassement de capacité de lieu";

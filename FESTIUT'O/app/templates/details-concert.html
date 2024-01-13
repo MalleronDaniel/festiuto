@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+{% block content %}
+    <p>{{concert.idconcert}}</p>
+    <p>{{concert.jour}}</p>
+    <p>{{concert.datedebutc}}</p>
+    {% for groupe in concert.get_groupe_concert() %}
+            <a href="{{url_for('details_groupe', id=groupe.idgroupe)}}">{{ groupe.nomgroupe }}</a>
+    {% endfor %}
+{% endblock %}
