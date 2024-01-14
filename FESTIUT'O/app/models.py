@@ -67,16 +67,15 @@ class Artiste(db.Model):
 
 class Billet(db.Model):
     __tablename__ = "BILLET"
-    idbillet = db.Column(db.Integer, primary_key=True)
-    typebillet = db.Column(db.String(42))
+    typebillet = db.Column(db.Integer, primary_key=True)
+    descbillet = db.Column(db.String(42))
     prixbillet = db.Column(db.Float(6))
-    nbjoursbillet = db.Column(db.Integer)
     
     def __repr__(self):
-        return f"({self.idbillet}) {self.typebillet} - €{self.prixbillet}"
+        return f"({self.typebillet}) {self.descbillet} - €{self.prixbillet}"
     
     def __repr__(self):
-        return f"<Billet ({self.idbillet}) | {self.typebillet}>"
+        return f"<{self.typebillet}>"
 
 
 class Concert(db.Model):
@@ -219,8 +218,6 @@ class Utilisateur(db.Model, UserMixin):
     nomuser = db.Column(db.String(42))
     ddn = db.Column(db.Date, nullable=False)
     email = db.Column(db.String(42), unique=True)
-    idbillet = db.Column(db.Integer, db.ForeignKey('BILLET.idbillet'))
-    billet = db.relationship('Billet', backref=db.backref("utilisateur", lazy="dynamic"))
     mdp = db.Column(db.String(42))
     admin = db.Column(db.Boolean)
     
@@ -235,10 +232,10 @@ class Acceder(db.Model):
     __tablename__ = "ACCEDER"
     idconcert = db.Column(db.Integer, db.ForeignKey('CONCERT.idconcert'))
     concert = db.relationship('Concert', backref=db.backref("acces", lazy="dynamic"))
-    idbillet = db.Column(db.Integer, db.ForeignKey('BILLET.idbillet'))
+    typebillet = db.Column(db.Integer, db.ForeignKey('BILLET.typebillet'))
     preinscription = db.Column(db.Boolean)
     billet = db.relationship('Billet', backref=db.backref("acces", lazy="dynamic"))
-    __table_args__ = (db.PrimaryKeyConstraint('idconcert','idbillet'),)
+    __table_args__ = (db.PrimaryKeyConstraint('idconcert','typebillet'),)
 
 
 class Apprecier(db.Model):
@@ -325,9 +322,9 @@ class Regarder(db.Model):
     act = db.relationship('ActiviteAnnexe', foreign_keys=[idact], backref=db.backref("regard", lazy="dynamic"))
     dateact = db.Column(db.DateTime, db.ForeignKey('ACTIVITE_ANNEXE.dateact'), primary_key=True)
     dact = db.relationship('ActiviteAnnexe', foreign_keys=[dateact], back_populates='regard')
-    idbillet = db.Column(db.Integer, db.ForeignKey('BILLET.idbillet'), primary_key=True)
+    typebillet = db.Column(db.Integer, db.ForeignKey('BILLET.typebillet'), primary_key=True)
     billet = db.relationship('Billet', backref=db.backref("regard", lazy="dynamic"))
-    __table_args__ = (db.PrimaryKeyConstraint('idact', 'dateact', 'idbillet'),)
+    __table_args__ = (db.PrimaryKeyConstraint('idact', 'dateact', 'typebillet'),)
 
 
 class Similaire(db.Model):
@@ -338,13 +335,13 @@ class Similaire(db.Model):
 
 class Posseder(db.Model):
     __tablename__ = "POSSEDER"
-    idbillet = db.Column(db.Integer, db.ForeignKey('BILLET.idbillet'), primary_key=True)
+    typebillet = db.Column(db.Integer, db.ForeignKey('BILLET.typebillet'), primary_key=True)
     iduser = db.Column(db.Integer, db.ForeignKey('UTILISATEUR.iduser'), primary_key=True)
 
 # Define foreign key relationships
 db.ForeignKeyConstraint(['idgroupe', 'idconcert'], ['CONTRIBUER.idgroupe','CONTRIBUER.idconcert'])
 db.ForeignKeyConstraint(['idact', 'dateact'], ['ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
-db.ForeignKeyConstraint(['idbillet'], ['BILLET.idbillet'])
+db.ForeignKeyConstraint(['typebillet'], ['BILLET.typebillet'])
 db.ForeignKeyConstraint(['idphoto'], ['PHOTOS.idphoto'])
 db.ForeignKeyConstraint(['idreseau'], ['RESEAUX.idreseau'])
 db.ForeignKeyConstraint(['iduser'], ['UTILISATEUR.iduser'])
@@ -353,11 +350,11 @@ db.ForeignKeyConstraint(['idinstrument'], ['INSTRUMENTS.idinstrument'])
 db.ForeignKeyConstraint(['idartiste'], ['ARTISTE.idartiste'])
 db.ForeignKeyConstraint(['idh'], ['HEBERGEMENT.idh'])
 db.ForeignKeyConstraint(['noml'], ['LIEU.noml'])
-db.ForeignKeyConstraint(['idbillet', 'idact', 'dateact'], ['ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact', 'ACTIVITE_ANNEXE.idbillet'])
+db.ForeignKeyConstraint(['typebillet', 'idact', 'dateact'], ['ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact', 'ACTIVITE_ANNEXE.typebillet'])
 db.ForeignKeyConstraint(['idreseau', 'idgroupe'], ['GROUPE.idgroupe', 'PARTAGER.idreseau'])
 db.ForeignKeyConstraint(['idact', 'dateact'], ['ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
 db.ForeignKeyConstraint(['idgroupe', 'idact', 'dateact'], ['GROUPE.idgroupe', 'ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
-db.ForeignKeyConstraint(['idbillet', 'idact', 'dateact'], ['REGARDER.idbillet', 'ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
+db.ForeignKeyConstraint(['typebillet', 'idact', 'dateact'], ['REGARDER.typebillet', 'ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
 db.ForeignKeyConstraint(['idgroupe_1'], ['GROUPE.idgroupe'])
 
 

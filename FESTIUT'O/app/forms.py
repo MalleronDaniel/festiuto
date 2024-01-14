@@ -1,14 +1,18 @@
 from flask import current_app
 from flask_wtf import FlaskForm
-from wtforms import DateField, FileField, StringField, HiddenField, PasswordField, SelectField, RadioField, IntegerField, TextAreaField, EmailField, BooleanField
-from wtforms.validators import DataRequired, NumberRange
+
+from wtforms import DateField, FileField, StringField, HiddenField, PasswordField, SelectField, RadioField, IntegerField, TextAreaField, EmailField, BooleanField, FloatField
+from wtforms.validators import DataRequired, NumberRange, Length
 from .models import Utilisateur, Groupe
+
 
 "Formulaires de l'application"
 
 class BilletForm(FlaskForm):
     """Formulaire pour ajouter un billet"""
-    pass
+    typebillet = SelectField('Type Billet', validators=[DataRequired()], choices=[(1, 'Un jour Vendredi'), (2, 'Un jour Samedi'), (3, 'Un jour Dimanche'), (4, 'Totalité'), (5, 'Totalité + VIP')])
+    prixbillet = FloatField('Prix Billet', validators=[DataRequired()], render_kw={'readonly': True})
+    # jours = SelectField('Type Billet', validators=[DataRequired()], choices=[(1, 'Samedi'), (2, 'Dimanche'), (3, 'Lundi')])
 
 class UtilisateurForm(FlaskForm):
     """Formulaire pour ajouter un UTILISATEUR"""
@@ -21,7 +25,7 @@ class UtilisateurForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     """Formulaire pour se connecter"""
-    email = StringField('Email')
+    email = StringField('Email', validators=[DataRequired()])
     mdp = PasswordField('Password')
     mdp_incorrect = ""
     next = HiddenField()
