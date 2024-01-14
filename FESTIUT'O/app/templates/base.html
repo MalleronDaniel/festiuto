@@ -27,7 +27,12 @@
             </li>
             <li>
                 <div>
-                    <a aria-current="page" href="{{ url_for('accueil') }}">BILLETTERIE</a>
+                    <a aria-current="page" href="{{ url_for('billetterie') }}">BILLETTERIE</a>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <a aria-current="page" href="{{ url_for('programme') }}">PROGRAMMATION</a>
                 </div>
             </li>
             {% if current_user.is_authenticated %}
@@ -80,7 +85,7 @@
                         <li><a href="{{ url_for('accueil') }}">ACCUEIL</a></li>
                         <li><a href="{{ url_for('accueil') }}">MON PROFIL</a></li>
                         <li><a href="{{ url_for('programme') }}">PROGRAMME</a></li>
-                        <li><a href="{{ url_for('accueil') }}">BILLETTERIE</a></li>
+                        <li><a href="{{ url_for('billetterie') }}">BILLETTERIE</a></li>
                         <li><a href="{{ url_for('accueil') }}">LES GROUPES</a></li>
                         <li><a href="{{ url_for('accueil') }}">LE FESTIVAL</a></li>
                     </ul>

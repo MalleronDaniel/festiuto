@@ -28,6 +28,21 @@ def accueil():
 def burger():
     return render_template("burger.html")
 
+@app.route("/festiut'o/")
+def festival():
+    return render_template("festival.html")
+
+@app.route("/billetterie/")
+def billetterie():
+    c = Concert.query.all()
+    jourConcerts = Concert.query.with_entities(Concert.jour).distinct().all();
+    jourConcertsDistinct = [jour[0] for jour in jourConcerts];
+    concerts_vendredi = Concert.query.filter(Concert.jour == "Vendredi").order_by(Concert.datedebutc).all();
+    concerts_samedi = Concert.query.filter((Concert.jour) == "Samedi").order_by(Concert.datedebutc).all();
+    concerts_dimanche = Concert.query.filter((Concert.jour) == "Dimanche").order_by(Concert.datedebutc).all();
+    
+    return render_template("billetterie/base_billetterie.html", joursConcerts = jourConcertsDistinct, concerts_vendredi=concerts_vendredi, concerts_samedi=concerts_samedi, concerts_dimanche=concerts_dimanche, c = c)
+
 @app.route("/login/", methods = ("GET","POST",))
 def login():
     f = LoginForm()
@@ -74,12 +89,24 @@ def save_inscription():
 @app.route("/admin/ajout-billet/")
 def ajout_billet():
     f = BilletForm()
-    return render_template("ajout-billet.html", form=f)
+    return render_template("admin/ajout_billet.html", form=f)
 
 @app.route("/admin/ajout-UTILISATEUR/")
 def ajout_spectateur():
     f = UtilisateurForm()
-    return render_template("ajout-billet.html", form=f)
+    return render_template("admin/ajout_utilisateur.html", form=f)
+
+@app.route("/admin/ajout-concert/")
+def ajout_concert():
+    return render_template("admin/ajout_concert.html")
+
+@app.route("/admin/ajout-groupe/")
+def ajout_groupe():
+    return render_template("admin/ajout_groupe.html")
+
+@app.route("/admin/ajout-artiste/")
+def ajout_artiste():
+    return render_template("admin/ajout_artiste.html")
 
 @app.route("/programme/")
 def programme():
