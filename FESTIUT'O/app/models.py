@@ -1,6 +1,7 @@
 """Lien avec la bd"""
 
-import datetime   
+import datetime
+import random   
 from sqlalchemy import func
 from .app import db, login_manager #, login_manager
 from flask_login import UserMixin
@@ -120,7 +121,29 @@ class Groupe(db.Model):
         """Retourne les artistes d'un groupe"""
         return Artiste.query.filter(Artiste.idgroupe == self.idgroupe).all()
 
+    def groupes_par_style(style_musical):
+        """Retourne les groupes d'un style musical donné."""
+        return Groupe.query.filter_by(stylemusical=style_musical).all()
 
+
+    def groupes_similaires_aleatoires(self, nombre=3):
+        """Retourne une liste de groupes similaires choisis aléatoirement.
+
+        Args:
+            nombre (int): Le nombre de groupes similaires à retourner.
+
+        Returns:
+            List[Groupe]: Liste des groupes similaires choisis aléatoirement.
+        """
+        groupes_similaires = Groupe.query.filter(Groupe.stylemusical == self.stylemusical, Groupe.idgroupe != self.idgroupe).all()
+
+        # Assurez-vous que le nombre de groupes demandé n'est pas supérieur au nombre total de groupes similaires
+        nombre = min(nombre, len(groupes_similaires))
+
+        # Choisissez aléatoirement 'nombre' groupes parmi les groupes similaires
+        groupes_aleatoires = random.sample(groupes_similaires, nombre)
+
+        return groupes_aleatoires
 class Hebergement(db.Model):
     __tablename__ = "HEBERGEMENT"
     idh = db.Column(db.Integer, primary_key=True)
