@@ -1,25 +1,48 @@
-<h1>Inscription</h1>
-<form class="form-horizontal" role="form" method="POST" action="{{ url_for('save_inscription') }}">
-    {{ form.hidden_tag() }}
-    <div class="form-group">
-        <label for="nomuser" class="col-sm-2 control-label">{{ form.nomuser.label }}</label>
-        <div class="col-sm-10">{{ form.nomuser(size=50, class_="form-control", placeholder="") }}</div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/inscription.css')}}">
+    <title>Inscription - Festiut'O</title>
+</head>
+<body>
+
+    <div class="connexion">
+        <div class="logo">
+            <a aria-current="page" href="{{ url_for('accueil') }}">
+                <img src="{{ url_for('static', filename='img/logo_rose.png') }}" alt="Logo">
+            </a>
+        </div>
+        <h1>Inscription</h1>
+        <form class="form-horizontal" role="form" method="POST" action="{{ url_for('save_inscription') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <label for="nomuser">{{ form.nomuser.label }}</label>
+                {{ form.nomuser(size=50, class_="form-control", placeholder="") }}
+            </div>
+            <div class="form-group">
+                <label for="ddn">{{ form.ddn.label }}</label>
+                {{ form.ddn(size=50, class_="form-control", placeholder="") }}
+            </div>
+            <div class="form-group">
+                <label for="email">{{ form.email.label }}</label>
+                {{ form.email(size=50, class_="form-control", placeholder="") }}
+            </div>
+            <div class="form-group">
+                <label for="mdp">{{ form.mdp.label }}</label>
+                {{ form.mdp(size=50, class_="form-control", placeholder="") }}
+            </div>
+            <div class="form-group">
+                <label for="admin">{{ form.admin.label }}</label>
+                <div class="admin-button">
+                    {{ form.admin(size=50, class_="form-control", placeholder="") }}
+                </div>
+            </div>
+                
+            <button id="mdp" type="submit" class="mdp" name="submit_button" value="mdp">Confirmer</button>
+        </form>
     </div>
-    <div class="form-group">
-        <label for="ddn" class="col-sm-2 control-label">{{ form.ddn.label }}</label>
-        <div class="col-sm-10">{{ form.ddn(size=50, class_="form-control", placeholder="") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="email" class="col-sm-2 control-label">{{ form.email.label }}</label>
-        <div class="col-sm-10">{{ form.email(size=50, class_="form-control", placeholder="") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="mdp" class="col-sm-2 control-label">{{ form.mdp.label }}</label>
-        <div class="col-sm-10">{{ form.mdp(size=50, class_="form-control", placeholder="") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="admin" class="col-sm-2 control-label">{{ form.admin.label }}</label>
-        <div class="col-sm-10">{{ form.admin(size=50, class_="form-control", placeholder="") }}</div>
-    </div>
-    <button id="mdp" type="submit" class="mdp" name="submit_button" value="mdp">Confirmer</button>
-</form>
+
+</body>
+</html>

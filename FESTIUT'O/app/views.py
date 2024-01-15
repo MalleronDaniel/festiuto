@@ -25,6 +25,25 @@ def admin_home():
 def accueil():
     return render_template("accueil.html")
 
+@app.route("/burger/")
+def burger():
+    return render_template("burger.html")
+
+@app.route("/festiut'o/")
+def festival():
+    return render_template("festival.html")
+
+@app.route("/billetterie/")
+def billetterie():
+    c = Concert.query.all()
+    jourConcerts = Concert.query.with_entities(Concert.jour).distinct().all();
+    jourConcertsDistinct = [jour[0] for jour in jourConcerts];
+    concerts_vendredi = Concert.query.filter(Concert.jour == "Vendredi").order_by(Concert.datedebutc).all();
+    concerts_samedi = Concert.query.filter((Concert.jour) == "Samedi").order_by(Concert.datedebutc).all();
+    concerts_dimanche = Concert.query.filter((Concert.jour) == "Dimanche").order_by(Concert.datedebutc).all();
+    
+    return render_template("billetterie/base_billetterie.html", joursConcerts = jourConcertsDistinct, concerts_vendredi=concerts_vendredi, concerts_samedi=concerts_samedi, concerts_dimanche=concerts_dimanche, c = c)
+
 @app.route("/login/", methods = ("GET","POST",))
 def login():
     f = LoginForm()
@@ -74,6 +93,28 @@ def billeterie():
     f = BilletForm()
     return render_template("billeterie.html", form=f)
 
+@app.route("/admin/ajout_billet/")
+def ajout_billet():
+    f = BilletForm()
+    return render_template("ajout_billet.html", form=f)
+
+@app.route("/admin/ajout-UTILISATEUR/")
+def ajout_spectateur():
+    f = UtilisateurForm()
+    return render_template("admin/ajout_utilisateur.html", form=f)
+
+@app.route("/admin/ajout-concert/")
+def ajout_concert():
+    return render_template("admin/ajout_concert.html")
+
+@app.route("/admin/ajout-groupe/")
+def ajout_groupe():
+    return render_template("admin/ajout_groupe.html")
+
+@app.route("/admin/ajout-artiste/")
+def ajout_artiste():
+    return render_template("admin/ajout_artiste.html")
+
 @app.route("/save/billeterie/",  methods=("POST",))
 def save_billeterie():
     f = BilletForm()
@@ -88,14 +129,18 @@ def save_billeterie():
 
 @app.route("/programme/")
 def programme():
+    c = Concert.query.all()
+    jourConcerts = Concert.query.with_entities(Concert.jour).distinct().all();
+    jourConcertsDistinct = [jour[0] for jour in jourConcerts];
     concerts_vendredi = Concert.query.filter(Concert.jour == "Vendredi").order_by(Concert.datedebutc).all();
     concerts_samedi = Concert.query.filter((Concert.jour) == "Samedi").order_by(Concert.datedebutc).all();
     concerts_dimanche = Concert.query.filter((Concert.jour) == "Dimanche").order_by(Concert.datedebutc).all();
     
-    return render_template("programme.html", 
+    return render_template("programme/base_programme.html", joursConcerts = jourConcertsDistinct, 
                            concerts_vendredi=concerts_vendredi,
                            concerts_samedi=concerts_samedi,
-                           concerts_dimanche=concerts_dimanche)
+                           concerts_dimanche=concerts_dimanche,
+                           c=c)
 
 @app.route("/details-concert/<int:id>")
 def details_concert(id):
@@ -163,3 +208,31 @@ def groupes():
 
 #Fonction utile
 
+
+
+@app.route("/programme/Vendredi")
+def programme_vendredi():
+    c = Concert.query.all()
+    jourConcerts = Concert.query.with_entities(Concert.jour).distinct().all();
+    jourConcertsDistinct = [jour[0] for jour in jourConcerts];
+    concerts_vendredi = Concert.query.filter(Concert.jour == "Vendredi").order_by(Concert.datedebutc).all();
+    
+    return render_template("programme/programme_vendredi.html", joursConcerts = jourConcertsDistinct, concerts_vendredi= concerts_vendredi, c = c)
+
+@app.route("/programme/Samedi")
+def programme_samedi():
+    c = Concert.query.all()
+    jourConcerts = Concert.query.with_entities(Concert.jour).distinct().all();
+    jourConcertsDistinct = [jour[0] for jour in jourConcerts];
+    concerts_samedi = Concert.query.filter((Concert.jour) == "Samedi").order_by(Concert.datedebutc).all();
+    
+    return render_template("programme/programme_samedi.html", joursConcerts = jourConcertsDistinct, concerts_samedi= concerts_samedi, c = c)
+
+@app.route("/programme/Dimanche")
+def programme_dimanche():
+    c = Concert.query.all()
+    jourConcerts = Concert.query.with_entities(Concert.jour).distinct().all();
+    jourConcertsDistinct = [jour[0] for jour in jourConcerts];
+    concerts_dimanche = Concert.query.filter((Concert.jour) == "Dimanche").order_by(Concert.datedebutc).all();
+    
+    return render_template("programme/programme_samedi.html", joursConcerts = jourConcertsDistinct, concerts_dimanche = concerts_dimanche, c = c)

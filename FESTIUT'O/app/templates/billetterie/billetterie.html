@@ -1,0 +1,63 @@
+{% block vendredi %}
+    <div class="jours">
+        <h2>VENDREDI 21 FEVRIER</h2>
+        {% for concert in concerts_vendredi[:1] %}
+            <div class="concert">
+                <img src="{{ url_for('static', filename='img/artistes/daft_punk.jpeg') }}" class="d-block w-100" alt="daft punk">
+                <div>
+                    <p>{{ concert.noml }}</p>
+                    <p>{{ concert.datedebutc}}</p>
+                    {% for groupe in concert.get_groupe_concert() %}
+                        <p>{{ groupe.nomgroupe }}</p>
+                    {% endfor %}
+                </div>
+                
+            </div>
+        {% endfor %}
+        <div class="button">
+            <a href="{{ url_for('programme_vendredi') }}">Voir tout le programme du vendredi</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block samedi %}
+    <div class="jours">
+        <h2>SAMEDI 22 FEVRIER</h2>
+        {% for concert in concerts_samedi[:1] %}
+            <div class="concert">
+                <img src="{{ url_for('static', filename='img/artistes/daft_punk.jpeg') }}" class="d-block w-100" alt="daft punk">
+                <div>
+                    <p>{{ concert.noml }}</p>
+                    <p>{{ concert.datedebutc}}</p>
+                    {% for groupe in concert.get_groupe_concert() %}
+                        <p>{{ groupe.nomgroupe }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="button">
+            <a href="{{ url_for('programme_samedi') }}">Voir tout le programme du samedi</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block dimanche %}
+    <div class="jours">
+        <h2>DIMANCHE 23 FEVRIER</h2>
+        {% for concert in concerts_dimanche[:1] %}
+            <div class="concert">
+                <img src="{{ url_for('static', filename='img/artistes/daft_punk.jpeg') }}" class="d-block w-100" alt="daft punk">
+                <div>
+                    <p>{{ concert.noml }}</p>
+                    <p>{{ concert.datedebutc}}</p>
+                    {% for groupe in concert.get_groupe_concert() %}
+                        <p>{{ groupe.nomgroupe }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="button">
+            <a href="{{ url_for('programme_dimanche') }}">Voir tout le programme du dimanche</a>
+        </div>
+    </div>
+{% endblock %}

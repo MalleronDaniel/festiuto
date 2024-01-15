@@ -1,0 +1,122 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FF7373;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #FF7373;
+}
+
+main {
+    background-color: white;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    padding-left: 10%;
+    padding-right: 7.5%;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.section-nav {
+    margin-right: 5%;
+}
+
+/* Ajout de styles pour la partie droite */
+.aside {
+    flex: 1; /* Prend tout l'espace disponible */
+    text-align: center;
+    margin-left: 2.5%;
+}
+
+/* Styles pour la navette à gauche */
+.nav {
+    text-align: left;
+    margin-right: 20px;
+}
+
+.nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav li {
+    margin-bottom: 10%;
+    text-align: center;
+}
+
+.nav a, .croix a{
+    text-decoration: none;
+    color: #FF7373;
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+}
+
+.nav a::after, .croix a::after{
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: #FF7373;
+    transition: width 0.3s ease;
+}
+
+.nav a:hover::after, .croix a:hover::after{
+    width: 100%;
+}
+
+/* Styles pour la partie gauche */
+.logo img {
+    width: 50%;
+    height: 50%;
+    display: block;
+    margin: 0 auto 20px;
+    padding: 5%;
+}
+
+.social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.social .partie1,
+.social .partie2 {
+    display: flex;
+    width: 100%;
+    margin-left: 50%;
+}
+
+.social img {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+.partie1 {
+    margin-bottom: 5%;
+}
+
+.img_milieu{
+    margin: 0 10% 0 10%;
+}
+
+.croix img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.croix a {
+    margin-left: 90%;
+}
+
+
