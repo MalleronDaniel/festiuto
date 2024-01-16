@@ -13,14 +13,13 @@ values
 
 -- insertion des types de billets
 
-insert into BILLET (idbillet, typebillet, prixbillet, nbjoursbillet)
+insert into BILLET (typebillet, descbillet, prixbillet)
 values
-(1, 'Billet VIP 1 Jour', 150.00, 1),
-(2, 'Billet VIP 3 Jours', 325.00, 3),
-(3, 'Billet VIP 1 Semaine', 550.00, 7),
-(4, 'Billet 1 Jour', 50.00, 1),
-(5, 'Billet 3 Jours', 125.00, 3),
-(6, 'Billet 1 Semaine', 250.00, 7);
+(1, 'Billet Un Jour Vendredi', 50.00),
+(2, 'Billet Un Jour Samedi', 50.00),
+(3, 'Billet Un Jour Dimanche', 50.00),
+(4, 'Billet Totalité', 129.00),
+(5, 'Billet Totalité + VIP', 199.00);
 
 
 -------
@@ -41,13 +40,13 @@ values
 
 -- insertion des concerts
 
-insert into CONCERT (jour, datedebutc, idconcert, duree, noml)
+insert into CONCERT (idconcert, jour, datedebutc, duree, noml)
 values
-('Vendredi', '2023-09-22 18:00:00', 1, 120, 'Main Stage'),
-('Vendredi', '2023-09-22 19:30:00', 2, 150, 'Outdoor Arena'),
-('Vendredi', '2023-09-22 20:15:00', 3, 105, 'Intimate Hall'),
-('Vendredi', '2023-09-22 21:00:00', 4, 120, 'Club Venue'),
-('Vendredi', '2023-09-22 22:45:00', 5, 135, 'Open Air Park');
+(1, 'Vendredi', '2023-09-22 18:00:00', 120, 'Main Stage'),
+(2, 'Vendredi', '2023-09-22 19:30:00', 150, 'Outdoor Arena'),
+(3, 'Vendredi', '2023-09-22 20:15:00', 105, 'Intimate Hall'),
+(4, 'Vendredi', '2023-09-22 21:00:00', 120, 'Club Venue'),
+(5, 'Vendredi', '2023-09-22 22:45:00', 135, 'Open Air Park');
 
 
 ------
@@ -170,14 +169,28 @@ values
 
 -- insertion des utilisateurs
 
-insert into UTILISATEUR (iduser, nomuser, ddn, email, idbillet, mdp, admin)
+insert into UTILISATEUR (iduser, nomuser, ddn, email, mdp, admin)
 values
-(1, 'Daniel Malleron', '2004-09-13', 'danyyyy@gmail.com', 1, 'mdp', true),
-(2, 'Kevin Le Breton', '2004-09-13', 'kevin.le.breton@gmail.com', 2, 'mdp', false),
-(3, 'Adam Daniel', '2004-09-13', 'dadam@gmail.com', 3, 'mdp', false),
-(4, 'Alicia Romero', '2004-09-13', 'alicia.romero@gmail.com', 4, 'mdp', false),
-(5, 'Jordan Zebo', '2004-09-13', 'jojo5sec@gmail.com', 5, 'mdp', false),
-(6, 'Cyril Doumbe', '2004-09-13', 'jordanTmort@gmail.com', 6, 'mdp', false);
+(1, 'Daniel Malleron', '2004-09-13', 'danyyyy@gmail.com', 'mdp', true),
+(2, 'Kevin Le Breton', '2004-09-13', 'kevin.le.breton@gmail.com', 'mdp', false),
+(3, 'Adam Daniel', '2004-09-13', 'dadam@gmail.com', 'mdp', false),
+(4, 'Alicia Romero', '2004-09-13', 'alicia.romero@gmail.com', 'mdp', false),
+(5, 'Jordan Zebo', '2004-09-13', 'jojo5sec@gmail.com', 'mdp', false),
+(6, 'Cyril Doumbe', '2004-09-13', 'jordanTmort@gmail.com', 'mdp', false);
+
+
+-------
+
+-- insertion des instance POSSEDER (UTILISATEUR-BILLET)
+
+insert into POSSEDER(iduser, typebillet)
+values
+(1,1),
+(2,2),
+(3,3),
+(4,4),
+(5,5),
+(6,2);
 
 
 -------
@@ -329,50 +342,50 @@ values
 
 -- insertion dans la table participer
 
-insert into REGARDER (idact, dateact, idbillet)
+insert into REGARDER (idact, dateact, typebillet)
 values
 (1, '2023-09-20 15:00:00', 1),
 (1, '2023-09-20 15:00:00', 2),
 (1, '2023-09-20 15:00:00', 3),
 (2, '2023-09-21 14:30:00', 4),
 (2, '2023-09-21 14:30:00', 5),
-(3, '2023-09-22 16:45:00', 6);
+(3, '2023-09-22 16:45:00', 1);
 
 
 -------
 
 -- insertion dans la table contenir
 
-insert into CONTRIBUER (idgroupe, jour, datedebutc, idconcert, tempsdemontage, tempsmontage)
+insert into CONTRIBUER (idgroupe, idconcert, tempsdemontage, tempsmontage)
 values
-(1, 'Vendredi', '2023-09-22 18:00:00', 1, 0.75, 0.5),
-(2, 'Vendredi', '2023-09-22 19:30:00', 2, 1, 0.5),
-(3, 'Vendredi', '2023-09-22 20:15:00', 3, 1.25, 0.75),
-(4, 'Vendredi', '2023-09-22 21:00:00', 4, 1, 0.5),
-(7, 'Vendredi', '2023-09-22 22:45:00', 5, 1, 0.5);
+(1, 1, 0.75, 0.5),
+(2, 2, 1, 0.5),
+(3, 3, 1.25, 0.75),
+(4, 4, 1, 0.5),
+(7, 5, 1, 0.5);
 
 
 -------
 
 -- insertion des acceder
 
-insert into ACCEDER (jour, datedebutc, idconcert, idbillet)
+insert into ACCEDER (idconcert, typebillet, preinscription)
 values
-('Vendredi', '2023-09-22 18:00:00', 1, 1),
-('Vendredi', '2023-09-22 19:30:00', 2, 2),
-('Vendredi', '2023-09-22 20:15:00', 3, 3);
+(1, 1, false),
+(2, 2, false),
+(3, 3, false);
 
 
 
 -- Test trigger groupeDisponibleConcert
 
 -- Test 1: Insertion d'un concert avec un événement précédent trop proche en temps
-INSERT INTO CONTRIBUER (idgroupe, jour, datedebutc, idconcert, tempsdemontage, tempsmontage)
-VALUES (1, 'Vendredi', '2023-09-22 19:30:00', 2, 0.75, 0.5);
+INSERT INTO CONTRIBUER (idgroupe, idconcert, tempsdemontage, tempsmontage)
+VALUES (1, 2, 0.75, 0.5);
 
 -- Test 2: Insertion d'un concert avec un événement suivant trop proche en temps
-INSERT INTO CONTRIBUER (idgroupe, jour, datedebutc, idconcert, tempsdemontage, tempsmontage)
-VALUES (2, 'Vendredi', '2023-09-22 18:00:00', 1, 0.75, 0.5);
+INSERT INTO CONTRIBUER (idgroupe, idconcert, tempsdemontage, tempsmontage)
+VALUES (2, 1, 0.75, 0.5);
 
 --Test trigger groupeDisponibleActiviteAnnexe
 
@@ -386,24 +399,21 @@ VALUES (2, 5, '2023-09-22 17:00:00');
 
 -- test trigger lieuUtiliseConcert
 
-INSERT INTO CONCERT values('Vendredi', '2023-09-22 18:00:00', 6, 100, 'Main Stage');
+INSERT INTO CONCERT values('6','Vendredi','2023-09-22 18:00:00', 100, 'Main Stage');
 
 
 --  test trigger lieuUtiliseAnnexe
 
 INSERT INTO ACTIVITE_ANNEXE values(2, '2023-09-20 14:30:00', 'Entretien avec les artistes', 2);
 INSERT INTO GEOLOCALISER values(2, '2023-09-20 14:30:00', 'Main Stage');
-delete from ACTIVITE_ANNEXE where typeact='Entretien avec les artistes';
 
 -- test trigger nbPreinscrip
 
 insert into LIEU values('test', 5, 0);
-insert into CONCERT values('Lundi', '2023-08-16 10:15:00', 600, 100, 'test');
-insert into ACCEDER values('Lundi', '2023-08-16 10:15:00', 600, 1, 0);
-insert into ACCEDER values('Lundi', '2023-08-16 10:15:00', 600, 2, 0);
-insert into ACCEDER values('Lundi', '2023-08-16 10:15:00', 600, 3, 0);
-insert into ACCEDER values('Lundi', '2023-08-16 10:15:00', 600, 4, 0);
-insert into ACCEDER values('Lundi', '2023-08-16 10:15:00', 600, 5, 0);
-insert into ACCEDER values('Lundi', '2023-08-16 10:15:00', 600, 6, 0);
-delete from CONCERT where noml='test';
-delete from LIEU where noml='test';
+insert into CONCERT values(600, 'Lundi', '2023-08-16 10:15:00', 100, 'test');
+insert into ACCEDER values(600, 1, 0);
+insert into ACCEDER values(600, 2, 0);
+insert into ACCEDER values(600, 3, 0);
+insert into ACCEDER values(600, 4, 0);
+insert into ACCEDER values(600, 5, 0);
+insert into ACCEDER values(600, 6, 0);

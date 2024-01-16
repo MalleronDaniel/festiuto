@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+{% block content %}
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<form method="post" action="{{ url_for('groupes') }}" id="styleForm">
+    {{ form.hidden_tag() }}
+    {{ form.choix_style_musical.label }} {{ form.choix_style_musical }}
+    {{ form.recherche_groupe.label }} {{ form.recherche_groupe }}
+    <input type="submit" value="Filtrer">
+</form>
+
+
+<ul id="listeGroupes">
+    {% for groupe in groupes %}
+        <li>{{ groupe.nomgroupe }}</li>
+    {% endfor %}
+</ul>
+<script>
+    // Gestionnaire d'événements pour le changement de style musical
+    $(document).ready(function () {
+        $("#styleForm").submit(function (event) {
+            // Empêche la soumission du formulaire par défaut
+            event.preventDefault();
+
+            // Récupère les données du formulaire
+            var formData = $("#styleForm").serialize();
+
+            // Met à jour la liste des groupes avec la réponse de la requête
+            $.ajax({
+                type: "POST",
+                url: "{{ url_for('groupes') }}",
+                data: formData,
+                success: function (data) {
+                    // Affiche les noms des groupes dans la liste
+                    $("#listeGroupes").html(data.groupes.join(', '));
+                },
+                error: function () {
+                    console.log("Erreur lors de la requête AJAX");
+                }
+            });
+        });
+    });
+</script>
+
+
+
+{% endblock %}
