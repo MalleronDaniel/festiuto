@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/festival.css') }}">
+{% endblock %}
+{% block content %}
+    <h1>Profil {{user.nomuser}}</h1>
+{% endblock %}
