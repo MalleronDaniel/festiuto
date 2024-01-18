@@ -1,29 +1,4 @@
 
--- insertion des activités annexes
-
-insert into ACTIVITE_ANNEXE (idact, dateact, typeact, dureeact)
-values
-(1, '2023-09-20 15:00:00', 'Séance photo avec les artiste', 2),
-(2, '2023-09-21 14:30:00', 'spectateurs qui monte sur scène', 1),
-(3, '2023-09-22 16:45:00', 'tir à la corde', 1.5),
-(4, '2023-09-21 13:45:00', 'dégustation de fromages', 1),
-(5, '2023-09-22 17:00:00', 'dégustation de vins', 1.5);
-
--------
-
--- insertion des types de billets
-
-insert into BILLET (typebillet, descbillet, prixbillet)
-values
-(1, 'Billet un jour Vendredi', 50.00),
-(2, 'Billet un jour Samedi', 50.00),
-(3, 'Billet un jour Dimanche', 50.00),
-(4, 'Billet Totalité', 129.00),
-(5, 'Billet Totalité + VIP', 199.00);
-
-
--------
-
 -- insertion des lieux
 
 insert into LIEU (noml, capacite, scene)
@@ -35,6 +10,29 @@ values
 ('Open Air Park', 8000, true);
 
 
+-- insertion des activités annexes
+
+insert into ACTIVITE_ANNEXE (idact, dateact, typeact, dureeact, noml)
+values
+
+(1, '2023-09-20 15:00:00', 'Séance photo avec les artiste', 2, 'Main Stage'),
+(2, '2023-09-21 14:30:00', 'spectateurs qui monte sur scène', 1, 'Outdoor Arena'),
+(3, '2023-09-22 16:45:00', 'tir à la corde', 1.5, 'Intimate Hall'),
+(4, '2023-09-21 13:45:00', 'dégustation de fromages', 1, 'Club Venue'),
+(5, '2023-09-22 17:00:00', 'dégustation de vins', 1.5, 'Open Air Park');
+
+-------
+
+-- insertion des types de billets
+
+insert into BILLET (idbillet, typebillet, descbillet, prixbillet)
+values
+(1, 1, 'Billet Un Jour Vendredi', 50.00),
+(2, 2, 'Billet Un Jour Samedi', 50.00),
+(3, 3, 'Billet Un Jour Dimanche', 50.00),
+(4, 4, 'Billet Totalité', 129.00),
+(5, 5, 'Billet Totalité + VIP', 199.00);
+
 
 -------
 
@@ -42,11 +40,24 @@ values
 
 insert into CONCERT (idconcert, jour, datedebutc, duree, noml)
 values
-(1, 'Vendredi', '2023-09-22 18:00:00', 120, 'Main Stage'),
-(2, 'Vendredi', '2023-09-22 19:30:00', 150, 'Outdoor Arena'),
-(3, 'Vendredi', '2023-09-22 20:15:00', 105, 'Intimate Hall'),
-(4, 'Vendredi', '2023-09-22 21:00:00', 120, 'Club Venue'),
-(5, 'Vendredi', '2023-09-22 22:45:00', 135, 'Open Air Park');
+(1, 'Vendredi', '2024-03-22 18:00:00', 120, 'Main Stage'),
+(2, 'Vendredi', '2024-03-22 19:30:00', 150, 'Outdoor Arena'),
+(3, 'Vendredi', '2024-03-22 20:15:00', 105, 'Intimate Hall'),
+(4, 'Vendredi', '2024-03-22 21:00:00', 120, 'Club Venue'),
+(5, 'Vendredi', '2024-03-22 22:45:00', 135, 'Open Air Park'),
+
+(6, 'Samedi', '2024-03-23 18:00:00', 120, 'Main Stage'),
+(7, 'Samedi', '2024-03-23 19:30:00', 150, 'Outdoor Arena'),
+(8, 'Samedi', '2024-03-23 20:15:00', 105, 'Intimate Hall'),
+(9, 'Samedi', '2024-03-23 21:00:00', 120, 'Club Venue'),
+(10, 'Samedi', '2024-03-23 22:45:00', 135, 'Open Air Park'),
+
+(11, 'Dimanche', '2024-03-24 18:00:00', 120, 'Main Stage'),
+(12, 'Dimanche', '2024-03-24 19:30:00', 150, 'Outdoor Arena'),
+(13, 'Dimanche', '2024-03-24 20:15:00', 105, 'Intimate Hall'),
+(14, 'Dimanche', '2024-03-24 21:00:00', 120, 'Club Venue'),
+(15, 'Dimanche', '2024-03-24 22:45:00', 135, 'Open Air Park');
+
 
 
 ------
@@ -86,6 +97,18 @@ values
 (10, 'S-Crew', 'groupe de pote qui rap', 'youtube.com/S-Crew', 'Rap');
 
 
+INSERT INTO GROUPE (idgroupe, nomgroupe, description, stylemusical)
+VALUES
+    (11,'Les Enfoirés', "Collectif d'artistes pour les Restos du Cœur", 'Variété française'),
+    (12,'Indochine', 'Groupe de rock français', 'Variété française'),
+    (13,'Zaz', 'Chanteuse mêlant jazz, variété et musique du monde', 'Variété française'),
+    (14,'Stromae', 'Auteur-compositeur-interprète belge', 'Variété française'),
+    (15,'Louane', 'Chanteuse révélée dans The Voice et actrice', 'Variété française'),
+    (16,'M. Pokora', 'Chanteur et danseur français', 'Variété française'),
+    (17,'Céline Dion', 'Chanteuse québécoise populaire dans le monde entier', 'Variété française'),
+    (18,'Véronique Sanson', 'Auteure-compositrice-interprète', 'Variété française'),
+    (19,'Soprano', 'Rappeur et chanteur français', 'Variété française'),
+    (20,'Michel Sardou', 'Chanteur de variété française', 'Variété française');
 -------
 
 -- insertion des artistes
@@ -101,7 +124,25 @@ values
 (7, 'White', 'Emily', '1976-09-12', 'Chanteur', 7),
 (8, 'Davis', 'Alex', '1976-09-04', 'Guitare', 8),
 (9, 'Green', 'Sophia', '1989-09-06', 'Piano', 9),
-(10, 'Lee', 'Daniel', '1950-09-19', 'Chanteur', 10);
+(10, 'Lee', 'Daniel', '1950-09-19', 'Chanteur', 10),
+(11, 'Jean-Jacques', 'Goldman', '1951-10-11', 'Chanteur et compositeur français', 11),
+(12, 'Mimie', 'Mathy', '1957-07-08', 'Actrice et humoriste', 11),
+(13, 'Patrick', 'Bruel', '1959-05-14', 'Chanteur et acteur français', 11),
+(14, 'Amel', 'Bent', '1985-06-21', 'Chanteuse française de R&B et de pop', 11),
+(15, 'Michèle', 'Laroque', '1960-06-15', 'Actrice et humoriste', 11),
+(16, 'Nicola', 'Sirkis', '1959-06-22', "Chanteur principal d\'Indochine", 12),
+(17, 'Boris', 'Jardel', '1962-01-01', "Guitariste d\'Indochine", 12),
+(18, 'Oli', 'de Sat', '1970-04-15', "Bassiste d\'Indochine", 12),
+(19, 'Ludwig', ' Dahlberg', '1971-01-01', "Batteur d\'Indochine", 12),
+(20, 'Matu', '', '1971-01-01', "Claviériste d\'Indochine", 12),
+(21, 'Zaz', '', '1980-05-01', 'Chanteuse principale', 13),
+(22, 'Stromae', '', '1985-03-12', 'Auteur-compositeur-interprète belge', 14),
+(23, 'Louane', 'Emera', '1996-11-26', 'Chanteuse et actrice française', 15),
+(24, 'M.Pokora', '', '1985-09-26', 'Chanteur et danseur français', 16),
+(25, 'Céline', 'Dion', '1968-03-30', 'Chanteuse québécoise populaire', 17),
+(26, 'Véronique', 'Sanson', '1949-04-24', 'Auteure-compositrice-interprète', 18),
+(27, 'Soprano', '', '1979-01-14', 'Rappeur et chanteur français', 19),
+(28, 'Michel', 'Sardou', '1947-01-26', 'Chanteur de variété française', 20);
 
 
 ------
@@ -181,20 +222,6 @@ values
 
 -------
 
--- insertion des instance POSSEDER (UTILISATEUR-BILLET)
-
-insert into POSSEDER(iduser, typebillet)
-values
-(1,1),
-(2,2),
-(3,3),
-(4,4),
-(5,5),
-(6,2);
-
-
--------
-
 -- insertion dans la table apprecier
 
 insert into APPRECIER (idgroupe, iduser)
@@ -244,17 +271,6 @@ values
 (10, 10);
 
 -------
-
--- insertion dans la table geolocaliser
-
-insert into GEOLOCALISER (idact, dateact, noml)
-values
-(1, '2023-09-20 15:00:00', 'Main Stage'),
-(2, '2023-09-21 14:30:00', 'Outdoor Arena'),
-(3, '2023-09-22 16:45:00', 'Intimate Hall'),
-(4, '2023-09-21 13:45:00', 'Club Venue'),
-(5, '2023-09-22 17:00:00', 'Club Venue');
-
 
 -------
 
@@ -324,7 +340,7 @@ values
 
 -- insertion dans la table participer
 
-insert into REGARDER (idact, dateact, typebillet)
+insert into REGARDER (idact, dateact, idbillet)
 values
 (1, '2023-09-20 15:00:00', 1),
 (1, '2023-09-20 15:00:00', 2),
@@ -351,11 +367,11 @@ values
 
 -- insertion des acceder
 
-insert into ACCEDER (idconcert, typebillet, preinscription)
+insert into ACCEDER (idconcert, idbillet)
 values
-(1, 1, false),
-(2, 2, false),
-(3, 3, false);
+(1, 1),
+(2, 2),
+(3, 3);
 
 
 
@@ -381,21 +397,20 @@ VALUES (2, 5, '2023-09-22 17:00:00');
 
 -- test trigger lieuUtiliseConcert
 
-INSERT INTO CONCERT values('6','Vendredi','2023-09-22 18:00:00', 100, 'Main Stage');
+INSERT INTO CONCERT values('100','Vendredi','2023-09-22 18:00:00', 100, 'Main Stage');
 
 
 --  test trigger lieuUtiliseAnnexe
 
-INSERT INTO ACTIVITE_ANNEXE values(2, '2023-09-20 14:30:00', 'Entretien avec les artistes', 2);
-INSERT INTO GEOLOCALISER values(2, '2023-09-20 14:30:00', 'Main Stage');
+INSERT INTO ACTIVITE_ANNEXE values(2, '2023-09-20 14:30:00', 'Entretien avec les artistes', 2, 'Main Stage');
 
 -- test trigger nbPreinscrip
 
 insert into LIEU values('test', 5, 0);
-insert into CONCERT values(600, 'Lundi', '2023-08-16 10:15:00', 100, 'test');
-insert into ACCEDER values(600, 1, 0);
-insert into ACCEDER values(600, 2, 0);
-insert into ACCEDER values(600, 3, 0);
-insert into ACCEDER values(600, 4, 0);
-insert into ACCEDER values(600, 5, 0);
-insert into ACCEDER values(600, 6, 0);
+insert into CONCERT values(600, 'Vendredi', '2024-03-21 10:15:00', 100, 'test');
+insert into ACCEDER values(600, 1);
+insert into ACCEDER values(600, 2);
+insert into ACCEDER values(600, 3);
+insert into ACCEDER values(600, 4);
+insert into ACCEDER values(600, 5);
+insert into ACCEDER values(600, 6);

@@ -368,27 +368,27 @@ def inputFavoris(id_groupe):
 @app.route("/groupes/", methods=["GET", "POST"])
 def groupes():
     form = StyleMusiqueForm()
+    style_selectionne = None
+    terme_recherche = None
 
     if form.validate_on_submit():
         style_selectionne = request.form.get("choix_style_musical")
         terme_recherche = form.recherche_groupe.data
 
-        if style_selectionne and style_selectionne != 'Tous':
-            groupes_filtres = Groupe.query.filter_by(stylemusical=style_selectionne).all()
-        else:
-            groupes_filtres = Groupe.query.all()
+    if style_selectionne and style_selectionne != 'Tous':
+        groupes_filtres = Groupe.query.filter_by(stylemusical=style_selectionne).all()
+    else:
+        groupes_filtres = Groupe.query.all()
 
-        if terme_recherche:
-            groupes_filtres = [groupe for groupe in groupes_filtres if terme_recherche.lower() in groupe.nomgroupe.lower()]
+    if terme_recherche:
+        groupes_filtres = [groupe for groupe in groupes_filtres if terme_recherche.lower() in groupe.nomgroupe.lower()]
 
-        if request.method == "POST":
-            noms_groupes = [groupe.nomgroupe for groupe in groupes_filtres]
-            return jsonify({"groupes": noms_groupes})
+    if request.method == "POST":
+        return render_template("groupes.html", groupes=groupes_filtres, form=form)
 
     groupes = Groupe.query.all()
 
     return render_template("groupes.html", groupes=groupes, form=form)
-
 @login_required
 @app.route("/profil")
 def profil():
