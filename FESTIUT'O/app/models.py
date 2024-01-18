@@ -156,6 +156,11 @@ class Groupe(db.Model):
         groupes_aleatoires = random.sample(groupes_similaires, nombre)
 
         return groupes_aleatoires
+    
+    def get_image(self):
+        """Retourne la première image d'un groupe"""
+        return Photos.query.filter(Contenir.idgroupe == self.idgroupe).first()
+
 class Hebergement(db.Model):
     __tablename__ = "HEBERGEMENT"
     idh = db.Column(db.Integer, primary_key=True)
@@ -211,6 +216,7 @@ class Reseaux(db.Model):
     idreseau = db.Column(db.Integer, primary_key=True)
     lienreseau = db.Column(db.String(42))
     nomreseau = db.Column(db.String(42))
+    idgroupe = db.Column(db.Integer, db.ForeignKey('GROUPE.idgroupe'), primary_key=True)
     
     def __repr__(self):
         return f"<Reseaux ({self.idreseau}) | {self.nomreseau}>"
@@ -310,15 +316,6 @@ class Jouer(db.Model):
     __table_args__ = (db.PrimaryKeyConstraint('idinstrument', 'idartiste'),)
 
 
-class Partager(db.Model):
-    __tablename__ = "PARTAGER"
-    idreseau = db.Column(db.Integer, db.ForeignKey('RESEAUX.idreseau'), primary_key=True)
-    reseau = db.relationship('Reseaux', backref=db.backref("partage", lazy="dynamic"))
-    idgroupe = db.Column(db.Integer, db.ForeignKey('GROUPE.idgroupe'), primary_key=True)
-    groupe = db.relationship('Groupe', backref=db.backref("partage", lazy="dynamic"))
-    __table_args__ = (db.PrimaryKeyConstraint('idreseau', 'idgroupe'),)
-
-
 class Participer(db.Model):
     __tablename__ = "PARTICIPER"
     idgroupe = db.Column(db.Integer, db.ForeignKey('GROUPE.idgroupe'), primary_key=True)
@@ -364,7 +361,6 @@ db.ForeignKeyConstraint(['idartiste'], ['ARTISTE.idartiste'])
 db.ForeignKeyConstraint(['idh'], ['HEBERGEMENT.idh'])
 db.ForeignKeyConstraint(['noml'], ['LIEU.noml'])
 db.ForeignKeyConstraint(['typebillet', 'idact', 'dateact'], ['ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact', 'ACTIVITE_ANNEXE.typebillet'])
-db.ForeignKeyConstraint(['idreseau', 'idgroupe'], ['GROUPE.idgroupe', 'PARTAGER.idreseau'])
 db.ForeignKeyConstraint(['idact', 'dateact'], ['ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
 db.ForeignKeyConstraint(['idgroupe', 'idact', 'dateact'], ['GROUPE.idgroupe', 'ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])
 db.ForeignKeyConstraint(['typebillet', 'idact', 'dateact'], ['REGARDER.typebillet', 'ACTIVITE_ANNEXE.idact', 'ACTIVITE_ANNEXE.dateact'])

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/details.css') }}">
+{% endblock %}
+{% block content %}
+    <h1>Profil {{user.nomuser|upper}}</h1>
+
+    <div class="DivProfil">
+        <div class="Info">
+            <h3>Vos informations</h3>
+            <p>Nom d'utilisateur : {{ user.nomuser }}</p>
+            <p>Date de naissance : {{ user.ddn}}</p>
+            <p>Email : {{user.email}}</p>
+            {% if user.admin %}
+                <p>Compte admin</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <h2>Vos tickets</h2>
+            <div class="DivProfil">
+                {% for billet in billets %}
+                <div class="Info">
+                    <img src="{{ url_for('static', filename='img/accueil/billet.png') }}" alt="billet"><br>
+                    <p>{{billet.descbillet}}</p>
+                    <p>{{billet.prixbillet}} €</p>
+                </div>
+                {% endfor %}
+            </div>
+
+    <h2>Vos favoris</h2>
+    <div class="DivProfil">
+        {% for groupe in groupesFavoris %}
+        <div class="Info">
+            <img src="{{ url_for('static', filename='img/artistes/daft_punk.jpeg') }}" alt="billet"><br>
+            <a href="{{url_for('details_groupe', id=groupe.idgroupe)}}">{{groupe.nomgroupe}}</a>
+            <p>{{groupe.stylemusical}}</p>
+        {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
