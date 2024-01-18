@@ -7,8 +7,9 @@ from .forms import *
 from flask import jsonify, render_template, send_from_directory, url_for, redirect, request, flash
 from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.utils import secure_filename
-from datetime import datetime
+from datetime import datetime, time
 from flask import jsonify
+from sqlalchemy.exc import SQLAlchemyError
 # from fpdf import FPDF
 
 @app.route("/")
@@ -93,27 +94,175 @@ def billeterie():
     f = BilletForm()
     return render_template("billeterie.html", form=f)
 
-@app.route("/admin/ajout_billet/")
+@app.route("/admin/ajout-billet/")
 def ajout_billet():
-    f = BilletForm()
-    return render_template("ajout_billet.html", form=f)
+    f = TypeBilletForm()
+    b = db.session.query(Billet).all()
+    return render_template("admin/ajout_billet.html", form=f, billets=b)
 
-@app.route("/admin/ajout-UTILISATEUR/")
-def ajout_spectateur():
+@app.route("/admin/ajout-billet/save/",  methods=("POST",))
+def save_billet():
+    f = TypeBilletForm()
+    b = Billet(
+        typebillet = db.session.query(func.max(Billet.typebillet)).scalar()+1,
+        descbillet = f.descbillet.data,
+        prixbillet = f.prixbillet.data
+    )
+    db.session.add(b)
+    db.session.commit()
+    flash(f'Félicitations ! L\'ajout de billet "<Billet ({b.typebillet}) | {b.typebillet}>" a été effectué avec succès.')
+    return redirect(url_for('ajout_billet'))
+
+@app.route("/admin/delete-billet/<int:typebillet>")
+def delete_billet(typebillet):
+    b = db.session.query(Billet).filter_by(typebillet=typebillet).first()
+    if b:
+        db.session.delete(b)
+        db.session.commit()
+    flash(f'Le type billet "f"<Billet ({b.typebillet}) | {b.typebillet}>"" a été supprimé.')
+    return redirect(url_for('ajout_billet'))
+
+@app.route("/admin/ajout-utilisateur/")
+def ajout_utilisateur():
     f = UtilisateurForm()
-    return render_template("admin/ajout_utilisateur.html", form=f)
+    u = db.session.query(Utilisateur).all()
+    return render_template("admin/ajout_utilisateur.html", form=f, utilisateurs=u)
+
+@app.route("/admin/ajout-utilisateur/save/",  methods=("POST",))
+def save_utilisateur():
+    f = UtilisateurForm()
+    u = Utilisateur(
+        iduser = 1 + db.session.query(db.func.max(Utilisateur.iduser)).scalar(),
+        nomuser = f.nomuser.data,
+        ddn = f.ddn.data,
+        email = f.email.data,
+        mdp = f.mdp.data,
+        admin = f.admin.data
+    )
+    db.session.add(u)
+    db.session.commit()
+    flash(f'Félicitations ! L\'ajout d\'utilisateur "<Billet ({u.iduser}) | {u.nomuser}>" a été effectué avec succès.')
+    return redirect(url_for('ajout_utilisateur'))
+
+@app.route("/admin/delete-utilisateur/<int:iduser>")
+def delete_utilisateur(iduser):
+    u = db.session.query(Utilisateur).filter_by(iduser=iduser).first()
+    if u:
+        db.session.delete(u)
+        db.session.commit()
+    flash(f'L\'utilisateur "<Utilisateur ({u.iduser}) | {u.nomuser}>" a été supprimé.')
+    return redirect(url_for('ajout_utilisateur'))
 
 @app.route("/admin/ajout-concert/")
 def ajout_concert():
-    return render_template("admin/ajout_concert.html")
+    f = ConcertForm()
+    f.set_lieu_choices()
+    c = db.session.query(Concert).all()
+    return render_template("admin/ajout_concert.html", form=f, concerts=c)
+
+@app.route("/admin/ajout-concert/save/",  methods=("POST",))
+def save_concert():
+    f = ConcertForm()
+    f.timec.data = time(12,0,0)
+    datedebutc = datetime.combine(f.datec.data, f.timec.data)
+    c = Concert(
+        jour = f.jour.data,
+        datedebutc = datedebutc,
+        duree = f.duree.data,
+        noml = f.noml.data,
+        idconcert = db.session.query(func.max(Concert.idconcert)).scalar()+1
+    )
+    db.session.add(c)
+    db.session.commit()
+    flash(f'Félicitations ! L\'ajout de concert "<Concert ({c.idconcert}) | {c.datedebutc} | {c.jour}>" a été effectué avec succès.')
+    return redirect(url_for('ajout_concert'))
+
+@app.route("/admin/delete-concert/<int:idconcert>")
+def delete_concert(idconcert):
+    try:
+        c = db.session.query(Concert).filter_by(idconcert=idconcert).first()
+        if c:
+            db.session.delete(c)
+            db.session.commit()
+        flash(f'Le concert "f"<Concert ({c.idconcert}) | {c.noml}>"" a été supprimé.')
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        flash(f"Error deleting concert: {str(e)}", "error")
+        return redirect(url_for('ajout_concert'))
+    return redirect(url_for('ajout_concert'))
 
 @app.route("/admin/ajout-groupe/")
 def ajout_groupe():
-    return render_template("admin/ajout_groupe.html")
+    f = GroupeForm()
+    f.set_stylemusical_choices()
+    f.set_artiste_choices()
+    g = db.session.query(Groupe).all()
+    return render_template("admin/ajout_groupe.html", form=f, groupes=g)
+
+@app.route("/admin/ajout-groupe/save/",  methods=("POST",))
+def save_groupe():
+    f = GroupeForm()
+    new_id = db.session.query(func.max(Groupe.idgroupe)).scalar()+1
+    g = Groupe(
+        nomgroupe = f.nomgroupe.data,
+        description = f.description.data,
+        lienvideo = f.lienvideo.data,
+        stylemusical = f.stylemusical.data,
+        idgroupe = new_id
+    )
+    contenir = Contenir(
+        idphoto = 1,
+        idgroupe = new_id
+    )
+    db.session.add(g)
+    db.session.add(contenir)
+    a = Artiste.query.get(f.artiste.data)
+    a.idgroupe = new_id
+    
+    db.session.commit()
+    flash(f'Félicitations ! L\'ajout du groupe "f"<Groupe ({g.idgroupe}) | {g.nomgroupe}>"" a été effectué avec succès.')
+    return redirect(url_for('ajout_groupe'))
+
+@app.route("/admin/delete-groupe/<int:idgroupe>")
+def delete_groupe(idgroupe):
+    g = db.session.query(Groupe).filter_by(idgroupe=idgroupe).first()
+    if g:
+        db.session.delete(db.session.query(Contenir).filter_by(idgroupe=idgroupe).first())
+        db.session.delete(g)
+        db.session.commit()
+    flash(f'Le groupe "f"<Groupe ({g.idgroupe}) | {g.nomgroupe}>"" a été supprimé.')
+    return redirect(url_for('ajout_groupe'))
+    
 
 @app.route("/admin/ajout-artiste/")
 def ajout_artiste():
-    return render_template("admin/ajout_artiste.html")
+    f = ArtisteForm()
+    a = db.session.query(Artiste).all()
+    return render_template("admin/ajout_artiste.html", form=f, artistes=a)
+
+@app.route("/admin/ajout-artiste/save/",  methods=("POST",))
+def save_artiste():
+    f = ArtisteForm()
+    a = Artiste(
+        nomartiste = f.nomartiste.data,
+        prenomartiste = f.prenomartiste.data,
+        ddn = f.ddn.data,
+        descriptiona = f.description.data,
+        idartiste = db.session.query(func.max(Artiste.idartiste)).scalar()+1
+    )
+    db.session.add(a)
+    db.session.commit()
+    flash(f'Félicitations ! L\'ajout de l\'artiste "f"<Artiste ({a.idartiste}) | {a.prenomartiste} {a.nomartiste}>"" a été effectué avec succès.')
+    return redirect(url_for('ajout_artiste'))
+
+@app.route("/admin/delete-artiste/<int:idartiste>")
+def delete_artiste(idartiste):
+    a = db.session.query(Artiste).filter_by(idartiste=idartiste).first()
+    if a:
+        db.session.delete(a)
+        db.session.commit()
+    flash(f'L\'artiste "f"<Artiste ({a.idartiste}) | {a.prenomartiste} {a.prenomartiste}>"" a été supprimé.')
+    return redirect(url_for('ajout_artiste'))
 
 @app.route("/save/billeterie/",  methods=("POST",))
 def save_billeterie():
