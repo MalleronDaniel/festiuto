@@ -9,78 +9,18 @@ a {
     color: black;
 }
 
-.filtre ul {
-    display: flex;
-    align-items: center;
+.content li {
     list-style-type: none;
-}
-
-.filtre li {
+    display: inline-block;
     margin: 0 5% 5% 5%;
 }
-.filtre a {
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-    font-size: 200%;
-    display: block;
-}
 
-.filtre a::after {
-    content: "";
-    display: block;
-    width: 0;
-    height: 2px;
-    background-color: black;
-    transition: width 0.3s ease;
-}
-
-.filtre a:hover::after {
-    width: 100%;
-}
-
-.jours {
+.content {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin: 0 5%;
 }
-
-
-.jours h2, .jours p{
-    text-align: center;
-    padding: 0% 3% 0% 3%;
-}
-
-.jours h2{
-    margin: 1% 0 5% 0;
-}
-
-.jours h2 {
-    font-size: 250%;
-    flex-basis: 90%;
-    flex-grow: 1;
-}
-
-.concert img {
-    flex-basis: 35%;
-}
-
-.concert{
-    border: 25px solid #FFB1AA;
-    border-radius: 30px; 
-    display: flex;
-    flex-wrap: nowrap;
-    margin: 0% 5% 5% 5%;
-    flex-basis: 60%;
-    flex-grow: 0;
-}
-
-.concert div{
-    padding-top: 5%;
-    flex-basis: 65%;
-    flex-grow:1;
-}
-
 .button {
     flex-basis: 90%;
     flex-grow: 1;
@@ -110,8 +50,63 @@ a {
     width: 100%;
 }
 
-.second-titre {
-    font-size: 250%;
-    margin-bottom: 5%;
+.info-billet {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid black;
+    margin: 0% 10% 5% 10%;
+}
+
+.billet img {
+    margin: 5% 0% 5% 15%;
+    width: 75%;
+}
+
+.info-billet h3 {
+    margin-top: 10%;
+    flex-basis: 90%;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.info-billet a {
+    flex-basis: 45%;
+    flex-grow: 0;
     text-align: center;
 }
+
+.info-billet h4 {
+    margin-top: 10%;
+    flex-basis: 45%;
+    flex-grow: 0;
+    text-align: center;
+}
+
+
+.billet{
+    margin: 5%;
+    flex-grow: 1;
+    border: 25px solid #FFB1AA;
+    border-radius: 30px;
+}
+
+.acheter {
+    cursor: pointer;
+    display: inline-block;
+    padding: 1%;
+    background-color: #FF7373;
+    color: white;
+    text-decoration: none;
+    border: 5px solid #FF7373;
+    border-radius: 30px;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: bold;
+}
+
+.acheter:hover {
+    background-color: white;
+    color: black;
+}
+

@@ -1,0 +1,40 @@
+{% extends 'billetterie/base_billetterie.html' %}
+
+{% block content %}
+    <!-- Ajout de la feuille de style externe -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/achat_billet.css') }}">
+
+    <!-- Lien pour retourner à la page de la billetterie -->
+    <a href="{{ url_for('billetterie') }}">
+        <h1>BILLETTERIE</h1>
+    </a>
+
+    <!-- Section pour l'achat des billets -->
+    <div class="achat">
+        {% for billet in billets %}
+            {% if billet.typebillet == 4 %}
+                <!-- Bloc pour le type du billet -->
+                <div class="titre">
+                    <h3>Type du Billet :</h3>
+                    <h4>{{ billet.descbillet }}</h4>
+                </div>
+
+                <!-- Bloc pour afficher le prix du billet -->
+                <div class="prix">
+                    <h3>Prix du Billet :</h3>
+                    <h4>{{ billet.prixbillet }} €</h4>
+                    
+                <!-- Bloc d'information sur le billet -->
+                <div class="info">
+                    <h3>
+                        Ce billet vous permettra d'accéder au concert pendant toute la durée du festival.
+                    </h3>
+                </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Bouton de confirmation d'achat -->
+        <button type="submit" name="submit_button">CONFIRMER L'ACHAT</button>
+    </div>
+{% endblock %}
