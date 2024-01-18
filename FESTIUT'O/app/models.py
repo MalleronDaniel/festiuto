@@ -80,7 +80,21 @@ class Billet(db.Model):
         return f"({self.idbillet}) {self.descbillet} - €{self.prixbillet}"
     
     def __repr__(self):
+
         return f"<{self.idbillet}>"
+    
+    def get_billet(typebillet: int):
+        """Retourne le billet avec l'id associé
+
+        Args:
+            typebillet : l'id associé
+        """
+        return Billet.query.get(typebillet)
+    
+    def get_types_billets():
+        """  Retourne les types de billets  """
+        return Billet.query.all()
+
 
 
 class Concert(db.Model):
@@ -211,6 +225,7 @@ class Reseaux(db.Model):
     idreseau = db.Column(db.Integer, primary_key=True)
     lienreseau = db.Column(db.String(42))
     nomreseau = db.Column(db.String(42))
+    idgroupe = db.Column(db.Integer, db.ForeignKey('GROUPE.idgroupe'), primary_key=True)
     
     def __repr__(self):
         return f"<Reseaux ({self.idreseau}) | {self.nomreseau}>"
@@ -296,15 +311,6 @@ class Jouer(db.Model):
     idartiste = db.Column(db.Integer, db.ForeignKey('ARTISTE.idartiste'), primary_key=True)
     artiste = db.relationship('Artiste', backref=db.backref("joue", lazy="dynamic"))
     __table_args__ = (db.PrimaryKeyConstraint('idinstrument', 'idartiste'),)
-
-
-class Partager(db.Model):
-    __tablename__ = "PARTAGER"
-    idreseau = db.Column(db.Integer, db.ForeignKey('RESEAUX.idreseau'), primary_key=True)
-    reseau = db.relationship('Reseaux', backref=db.backref("partage", lazy="dynamic"))
-    idgroupe = db.Column(db.Integer, db.ForeignKey('GROUPE.idgroupe'), primary_key=True)
-    groupe = db.relationship('Groupe', backref=db.backref("partage", lazy="dynamic"))
-    __table_args__ = (db.PrimaryKeyConstraint('idreseau', 'idgroupe'),)
 
 
 class Participer(db.Model):

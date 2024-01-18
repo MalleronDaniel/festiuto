@@ -24,6 +24,7 @@ CREATE TABLE `BILLET` (
   PRIMARY KEY (`idbillet`)
 );
 CREATE TABLE `CONCERT` (
+
   `idconcert` int(3) NOT NULL AUTO_INCREMENT,
   `jour` ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche') NOT NULL,
   `datedebutc` datetime NOT NULL,
@@ -70,6 +71,7 @@ CREATE TABLE `PHOTOS`(
   PRIMARY KEY (`idphoto`)
 );
 CREATE TABLE `RESEAUX` (
+
   `idreseau` int(3) NOT NULL AUTO_INCREMENT,
   `lienreseau` VARCHAR(42) NOT NULL,
   `nomreseau` VARCHAR(42) NOT NULL,
@@ -123,11 +125,13 @@ CREATE TABLE `JOUER` (
   `idartiste` int(3) NOT NULL,
   PRIMARY KEY (`idinstrument`, `idartiste`)
 );
+
 CREATE TABLE `PARTAGER` (
   `idreseau` int(3) NOT NULL,
   `idgroupe` int(3) NOT NULL,
   PRIMARY KEY (`idreseau`, `idgroupe`)
 );
+
 CREATE TABLE `PARTICIPER` (
   `idgroupe` int(3) NOT NULL,
   `idact` int(3) NOT NULL,
@@ -159,8 +163,6 @@ ALTER TABLE `CONTRIBUER` ADD FOREIGN KEY (`idconcert`) REFERENCES `CONCERT` (`id
 ALTER TABLE `CONTRIBUER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `JOUER` ADD FOREIGN KEY (`idartiste`) REFERENCES `ARTISTE` (`idartiste`);
 ALTER TABLE `JOUER` ADD FOREIGN KEY (`idinstrument`) REFERENCES `INSTRUMENTS` (`idinstrument`);
-ALTER TABLE `PARTAGER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
-ALTER TABLE `PARTAGER` ADD FOREIGN KEY (`idreseau`) REFERENCES `RESEAUX` (`idreseau`);
 ALTER TABLE `PARTICIPER` ADD FOREIGN KEY (`idact`, `dateact`) REFERENCES `ACTIVITE_ANNEXE` (`idact`, `dateact`);
 ALTER TABLE `PARTICIPER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `REGARDER` ADD FOREIGN KEY (`idbillet`) REFERENCES `BILLET` (`idbillet`);

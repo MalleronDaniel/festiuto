@@ -14,6 +14,7 @@ values
 
 insert into ACTIVITE_ANNEXE (idact, dateact, typeact, dureeact, noml)
 values
+
 (1, '2023-09-20 15:00:00', 'Séance photo avec les artiste', 2, 'Main Stage'),
 (2, '2023-09-21 14:30:00', 'spectateurs qui monte sur scène', 1, 'Outdoor Arena'),
 (3, '2023-09-22 16:45:00', 'tir à la corde', 1.5, 'Intimate Hall'),
@@ -181,18 +182,18 @@ values
 
 -- insertion des réseaux
 
-insert into RESEAUX (idreseau, lienreseau, nomreseau)
+insert into RESEAUX (idreseau, lienreseau, nomreseau, idgroupe)
 values
-(1, 'instagram/Beathles.com', 'Instagram'),
-(2, 'instagram/RollingStones.com', 'Instagram'),
-(3, 'instagram/ACDC.com', 'Instagram'),
-(4, 'facebook/Queen.com', 'Facebook'),
-(5, 'facebook/Nirvana.com', 'Facebook'),
-(6, 'facebook/PNL.com', 'Facebook'),
-(7, 'facebook/Arsenic.com', 'Facebook'),
-(8, 'facebook/FonckyFamily.com', 'Facebook'),
-(9, 'instagram/Casseurs.com', 'Instagram'),
-(10, 'instagram/SCrew.com', 'Instagram');
+(1, 'instagram/Beathles.com', 'Instagram', 1),
+(2, 'instagram/RollingStones.com', 'Instagram', 2),
+(3, 'instagram/ACDC.com', 'Instagram', 3),
+(4, 'facebook/Queen.com', 'Facebook', 4),
+(5, 'facebook/Nirvana.com', 'Facebook', 5),
+(6, 'facebook/PNL.com', 'Facebook', 6),
+(7, 'facebook/Arsenic.com', 'Facebook', 7),
+(8, 'facebook/FonckyFamily.com', 'Facebook', 8),
+(9, 'instagram/Casseurs.com', 'Instagram', 9),
+(10, 'instagram/SCrew.com', 'Instagram', 10);
 
 
 -------
@@ -270,24 +271,6 @@ values
 (10, 10);
 
 -------
-
--------
-
--- insertion dans la table partager
-
-insert into PARTAGER (idreseau, idgroupe)
-values
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8),
-(9, 9),
-(10, 10);
-
 
 -------
 

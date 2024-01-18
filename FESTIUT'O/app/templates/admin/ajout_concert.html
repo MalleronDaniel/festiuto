@@ -4,10 +4,45 @@
 
 <a href="{{ url_for('admin_home')}}"> page admin</a>
 
-<a href="{{ url_for('ajout_spectateur')}}"> ajout UTILISATEUR</a>
+<table>
+    <tr>
+        <th>Jour</th>
+        <th>Date de Début</th>
+        <th>Durée</th>
+        <th>Lieu</th>
+    <tr>
+    {% for c in concerts %}
+    <tr>
+        <td>{{ c.jour }}</td>
+        <td>{{ c.datedebutc }}</td>
+        <td>{{ c.duree }} min</td>
+        <td>{{ c.noml }}</td>
+        <td><a href='{{ url_for("delete_concert", idconcert=c.idconcert)}}' onclick="return confirm('Confirmation')">Supprimer</a><td>
+    </tr>
+    {% endfor %}
+</table>
 
-<a href="{{ url_for('ajout_billet')}}"> ajout billet</a>
-
-<a href="{{ url_for('ajout_artiste')}}"> ajout artiste</a>
-
-<a href="{{ url_for('ajout_groupe')}}"> ajout groupe</a>
+<form class="form-horizontal" role="form" method="POST" action="{{ url_for('save_concert') }}">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        <label for="jour" class="col-sm-2 control-label">{{ form.jour.label }}</label>
+        <div class="col-sm-10">{{ form.jour(class_="form-control", placeholder="Choisir le jour de concert", id="jour") }}</div>
+    </div>
+    <div class="form-group">
+        <label for="datec" class="col-sm-2 control-label">{{ form.datec.label }}</label>
+        <div class="col-sm-10">{{ form.datec(class_="form-control", placeholder="", id="datec") }}</div>
+    </div>
+    <div class="form-group">
+        <label for="timec" class="col-sm-2 control-label">{{ form.timec.label }}</label>
+        <div class="col-sm-10">{{ form.timec(class_="form-control", placeholder="HH:MM:SS", id="timec") }}</div>
+    </div>    
+    <div class="form-group">
+        <label for="duree" class="col-sm-2 control-label">{{ form.duree.label }}</label>
+        <div class="col-sm-10">{{ form.duree(class_="form-control", placeholder="", id="duree") }}</div>
+    </div>
+    <div class="form-group">
+        <label for="noml" class="col-sm-2 control-label">{{ form.noml.label }}</label>
+        <div class="col-sm-10">{{ form.noml(class_="form-control", placeholder="", id="noml") }}</div>
+    </div>
+    <button type="submit" name="submit_button">Ajouter</button>
+</form>
