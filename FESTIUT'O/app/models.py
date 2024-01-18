@@ -76,6 +76,18 @@ class Billet(db.Model):
     
     def __repr__(self):
         return f"<{self.typebillet}>"
+    
+    def get_billet(typebillet: int):
+        """Retourne le billet avec l'id associé
+
+        Args:
+            typebillet : l'id associé
+        """
+        return Billet.query.get(typebillet)
+    
+    def get_types_billets():
+        """  Retourne les types de billets  """
+        return Billet.query.all()
 
 
 class Concert(db.Model):
@@ -144,6 +156,11 @@ class Groupe(db.Model):
         groupes_aleatoires = random.sample(groupes_similaires, nombre)
 
         return groupes_aleatoires
+    
+    def get_image(self):
+        """Retourne la première image d'un groupe"""
+        return Photos.query.filter(Contenir.idgroupe == self.idgroupe).first()
+
 class Hebergement(db.Model):
     __tablename__ = "HEBERGEMENT"
     idh = db.Column(db.Integer, primary_key=True)
