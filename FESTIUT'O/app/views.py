@@ -75,6 +75,9 @@ def inscription():
 @app.route("/save/inscription/", methods=("POST",))
 def save_inscription():
     f = UtilisateurForm()
+    if(Utilisateur.query.filter_by(email=f.email.data).all()):
+        flash(f'Erreur ! Un utilisateur avec cette adresse mail existe déjà.')
+        return redirect(url_for('inscription'))
     u = Utilisateur(
         iduser = 1 + db.session.query(db.func.max(Utilisateur.iduser)).scalar(),
         nomuser = f.nomuser.data,
@@ -162,8 +165,8 @@ def details_artiste(id):
     artiste=a,
     groupe=groupe)
 
-@app.route("/inputFavoris/<int:id_groupe>", methods=["POST"])
 @login_required
+@app.route("/inputFavoris/<int:id_groupe>", methods=["POST"])
 def inputFavoris(id_groupe):
     # Vérifie si le groupe est déjà en favori pour l'utilisateur
     est_favori = Apprecier.query.filter_by(iduser=current_user.username, idgroupe=id_groupe).first()
@@ -205,6 +208,18 @@ def groupes():
     groupes = Groupe.query.all()
 
     return render_template("groupes.html", groupes=groupes, form=form)
+
+@login_required
+@app.route("/profil")
+def profil():
+    if(current_user.is_authenticated == False):
+        return redirect(url_for('login'))
+    user = current_user
+    groupesFavoris = db.session.query(Groupe).join(Apprecier).filter(Apprecier.iduser == user.iduser).all()
+    billets = db.session.query(Billet).join(Posseder).filter(Posseder.iduser == user.iduser).all()
+    return render_template("profil.html", user=user, 
+                           groupesFavoris=groupesFavoris,
+                           billets=billets)
 
 #Fonction utile
 
