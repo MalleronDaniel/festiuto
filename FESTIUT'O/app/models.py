@@ -144,6 +144,11 @@ class Groupe(db.Model):
         groupes_aleatoires = random.sample(groupes_similaires, nombre)
 
         return groupes_aleatoires
+    
+    def get_image(self):
+        """Retourne la première image d'un groupe"""
+        return Photos.query.filter(Contenir.idgroupe == self.idgroupe).first()
+
 class Hebergement(db.Model):
     __tablename__ = "HEBERGEMENT"
     idh = db.Column(db.Integer, primary_key=True)

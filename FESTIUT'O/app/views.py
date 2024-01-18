@@ -215,10 +215,11 @@ def profil():
     if(current_user.is_authenticated == False):
         return redirect(url_for('login'))
     user = current_user
-    groupesFavoris = Apprecier.query.filter_by(iduser=user.iduser).all()
-    tickets = 
+    groupesFavoris = db.session.query(Groupe).join(Apprecier).filter(Apprecier.iduser == user.iduser).all()
+    billets = db.session.query(Billet).join(Posseder).filter(Posseder.iduser == user.iduser).all()
     return render_template("profil.html", user=user, 
-                           groupesFavoris=groupesFavoris)
+                           groupesFavoris=groupesFavoris,
+                           billets=billets)
 
 #Fonction utile
 
