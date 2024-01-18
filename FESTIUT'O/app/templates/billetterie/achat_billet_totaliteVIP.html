@@ -1,63 +1,40 @@
 {% extends 'billetterie/base_billetterie.html' %}
 
 {% block content %}
+    <!-- Ajout de la feuille de style externe -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/achat_billet.css') }}">
+
+    <!-- Lien pour retourner à la page de la billetterie -->
     <a href="{{ url_for('billetterie') }}">
         <h1>BILLETTERIE</h1>
     </a>
 
-    <form class="form-horizontal" role="form" method="POST" action="{{ url_for('save_billeterie') }}">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            <label for="typebillet" class="col-sm-2 control-label">{{ form.typebillet.label }}</label>
-            <div class="col-sm-10">{{ form.typebillet(class_="form-control", placeholder="Choisir un type de billet", id="typebillet") }}</div>
-        </div>
-        <div class="form-group">
-            <label for="prixbillet" class="col-sm-2 control-label">{{ form.prixbillet.label }}</label>
-            <div class="col-sm-10">{{ form.prixbillet(class_="form-control", placeholder="", id="prixbillet_input") }}</div>
-        </div>
+    <!-- Section pour l'achat des billets -->
+    <div class="achat">
+        {% for billet in billets %}
+            {% if billet.typebillet == 5 %}
+                <!-- Bloc pour le type du billet -->
+                <div class="titre">
+                    <h3>Type du Billet :</h3>
+                    <h4>{{ billet.descbillet }}</h4>
+                </div>
 
-        <label for="email">Adresse Mail</label><br/>
-        <input name="email"><br/>
-        <label for="nom">Nom</label><br/>
-        <input name="nom"><br/>
-        <label for="adresse">Adresse D'Expédition</label><br/>
-        <input name="adresse"><br/>
-        <label for="codepostal">Code Postal</label><br/>
-        <input name="codepostal"><br/>
-        <label for="ville">Ville</label><br/>
-        <input name="ville"><br/>
-        <label for="portable">Numéro Portable</label><br/>
-        <input name="portable"><br/>
+                <!-- Bloc pour afficher le prix du billet -->
+                <div class="prix">
+                    <h3>Prix du Billet :</h3>
+                    <h4>{{ billet.prixbillet }} €</h4>
+                    
+                <!-- Bloc d'information sur le billet -->
+                <div class="info">
+                    <h3>
+                        Ce billet vous permettra d'accéder au concert pendant toute la durée du festival en place VIP.
+                    </h3>
+                </div>
+                </div>
+            {% endif %}
+        {% endfor %}
 
-        <button type="submit" name="submit_button">Confirmer</button>
-
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $("#typebillet").change(function () {
-                    var selectedType = $(this).val();
-                    var placeholderText = "";
-                    if (selectedType[0] <= 3) {
-                        placeholderText = "50.00";
-                    } else if (selectedType == 4) {
-                        placeholderText = "129.00";
-                    } else if (selectedType == 5) {
-                        placeholderText = "199.00";
-                    } else {
-                        placeholderText = "";
-                    }
-                    $("#prixbillet_input").attr("placeholder", placeholderText);
-                });
-            });
-        </script>
-
-    </form>
-    {% for mesg in get_flashed_messages() %}
-        <dialog open>
-        <p>{{ mesg }}</p>
-        <form method="dialog" id="form-dialog">
-            <button>OK</button>
-        </form>
-        </dialog>
-    {% endfor %}
+        <!-- Bouton de confirmation d'achat -->
+        <button type="submit" name="submit_button">CONFIRMER L'ACHAT</button>
+    </div>
 {% endblock %}
