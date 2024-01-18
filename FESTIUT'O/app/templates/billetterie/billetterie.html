@@ -1,63 +1,15 @@
-{% block vendredi %}
-    <div class="jours">
-        <h2>VENDREDI 21 FEVRIER</h2>
-        {% for concert in concerts_vendredi[:1] %}
-            <div class="concert">
-                <img src="{{ url_for('static', filename='img/artistes/daft_punk.jpeg') }}" class="d-block w-100" alt="daft punk">
-                <div>
-                    <p>{{ concert.noml }}</p>
-                    <p>{{ concert.datedebutc}}</p>
-                    {% for groupe in concert.get_groupe_concert() %}
-                        <p>{{ groupe.nomgroupe }}</p>
-                    {% endfor %}
-                </div>
-                
+<ul class="content">
+{% for billet in billets %}
+    <li>
+        <div class="billet">
+            <img src="{{ url_for('static', filename='img/accueil/billet.png') }}" alt="billet">
+            <div class="info-billet">
+                <h3>{{ billet.descbillet }}</h3>
+                <h4>{{ billet.prixbillet }} €</h4>
+                <a class="acheter" href="{{ url_for('achat_billet') }}">ACHETER</a>
             </div>
-        {% endfor %}
-        <div class="button">
-            <a href="{{ url_for('programme_vendredi') }}">Voir tout le programme du vendredi</a>
         </div>
-    </div>
-{% endblock %}
+    </li>
+{% endfor %}
+</ul>
 
-{% block samedi %}
-    <div class="jours">
-        <h2>SAMEDI 22 FEVRIER</h2>
-        {% for concert in concerts_samedi[:1] %}
-            <div class="concert">
-                <img src="{{ url_for('static', filename='img/artistes/daft_punk.jpeg') }}" class="d-block w-100" alt="daft punk">
-                <div>
-                    <p>{{ concert.noml }}</p>
-                    <p>{{ concert.datedebutc}}</p>
-                    {% for groupe in concert.get_groupe_concert() %}
-                        <p>{{ groupe.nomgroupe }}</p>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endfor %}
-        <div class="button">
-            <a href="{{ url_for('programme_samedi') }}">Voir tout le programme du samedi</a>
-        </div>
-    </div>
-{% endblock %}
-
-{% block dimanche %}
-    <div class="jours">
-        <h2>DIMANCHE 23 FEVRIER</h2>
-        {% for concert in concerts_dimanche[:1] %}
-            <div class="concert">
-                <img src="{{ url_for('static', filename='img/artistes/daft_punk.jpeg') }}" class="d-block w-100" alt="daft punk">
-                <div>
-                    <p>{{ concert.noml }}</p>
-                    <p>{{ concert.datedebutc}}</p>
-                    {% for groupe in concert.get_groupe_concert() %}
-                        <p>{{ groupe.nomgroupe }}</p>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endfor %}
-        <div class="button">
-            <a href="{{ url_for('programme_dimanche') }}">Voir tout le programme du dimanche</a>
-        </div>
-    </div>
-{% endblock %}

@@ -15,6 +15,7 @@ drop table `PHOTOS`;
 drop table `LIEU`; 
 drop table `POSSEDER`;
 drop table `UTILISATEUR`;  
+drop table `STYLE`;
 drop table `BILLET`;
 drop table `JOUER`;
 drop table `INSTRUMENTS`;

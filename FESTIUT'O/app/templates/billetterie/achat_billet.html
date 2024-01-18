@@ -1,4 +1,5 @@
-<h1>Billeterie</h1>
+{% extends 'programme/base_programme.html' %}
+
 <form class="form-horizontal" role="form" method="POST" action="{{ url_for('save_billeterie') }}">
     {{ form.hidden_tag() }}
     <div class="form-group">

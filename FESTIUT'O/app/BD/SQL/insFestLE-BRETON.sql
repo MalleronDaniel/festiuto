@@ -15,7 +15,7 @@ values
 
 insert into BILLET (typebillet, descbillet, prixbillet)
 values
-(1, 'Billet Un Jour Vendredi', 50.00),
+(1, 'et Un Jour VendrBilledi', 50.00),
 (2, 'Billet Un Jour Samedi', 50.00),
 (3, 'Billet Un Jour Dimanche', 50.00),
 (4, 'Billet Totalité', 129.00),
