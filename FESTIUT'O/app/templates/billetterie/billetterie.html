@@ -1,3 +1,7 @@
+<a href="{{ url_for('billetterie') }}">
+    <h1>BILLETTERIE</h1>
+</a>
+
 <ul class="content">
 {% for billet in billets %}
     <li>
@@ -6,7 +10,7 @@
             <div class="info-billet">
                 <h3>{{ billet.descbillet }}</h3>
                 <h4>{{ billet.prixbillet }} €</h4>
-                <a class="acheter" href="{{ url_for('achat_billet') }}">ACHETER</a>
+                <a class="acheter" href="{{ url_for('billetterie')  ~ billet.typebillet }}">ACHETER</a>
             </div>
         </div>
     </li>

@@ -3,10 +3,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/billetterie.css') }}">
 {% endblock %}
 {% block content %}
-    <a href="{{ url_for('billetterie') }}">
-        <h1>BILLETTERIE</h1>
-    </a>
-
-    {% include 'billetterie/billetterie.html' %}
+{% include 'billetterie/billetterie.html' %}
 
 {% endblock %}
