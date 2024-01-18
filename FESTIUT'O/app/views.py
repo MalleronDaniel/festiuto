@@ -216,7 +216,9 @@ def profil():
         return redirect(url_for('login'))
     user = current_user
     groupesFavoris = Apprecier.query.filter_by(iduser=user.iduser).all()
-    return render_template("profil.html", user=user, groupesFavoris=groupesFavoris)
+    tickets = 
+    return render_template("profil.html", user=user, 
+                           groupesFavoris=groupesFavoris)
 
 #Fonction utile
 

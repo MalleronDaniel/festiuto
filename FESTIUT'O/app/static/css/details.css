@@ -1,0 +1,136 @@
+h1 {
+    font-size: 500%;
+    font-weight: bold;
+    margin: 5% 0 5% 5%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.filtre ul {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+}
+
+.filtre li {
+    margin: 0 5% 5% 5%;
+}
+.filtre a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 200%;
+    display: block;
+}
+
+.filtre a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: black;
+    transition: width 0.3s ease;
+}
+
+.filtre a:hover::after {
+    width: 100%;
+}
+
+.jours {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+.jours h2, .jours p{
+    text-align: center;
+    padding: 0% 3% 0% 3%;
+}
+
+.jours h2{
+    margin: 1% 0 5% 0;
+}
+
+.jours h2 {
+    font-size: 250%;
+    flex-basis: 90%;
+    flex-grow: 1;
+}
+
+.concert img {
+    flex-basis: 35%;
+}
+
+.concert{
+    border: 25px solid #FFB1AA;
+    border-radius: 30px; 
+    display: flex;
+    flex-wrap: nowrap;
+    margin: 0% 5% 5% 5%;
+    flex-basis: 60%;
+    flex-grow: 0;
+}
+
+.concert div{
+    padding-top: 5%;
+    flex-basis: 65%;
+    flex-grow:1;
+}
+
+.button {
+    flex-basis: 90%;
+    flex-grow: 1;
+    margin-bottom: 5%;
+    text-align: center;
+}
+
+.button a {
+    cursor: pointer;
+    text-decoration: none;
+    color: #FF7373;
+    font-weight: bold;
+    font-size: 18px;
+    display: inline-block;
+}
+
+.button a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: #FF7373;
+    transition: width 0.3s ease;
+}
+
+.button a:hover::after {
+    width: 100%;
+}
+
+.second-titre {
+    font-size: 250%;
+    margin-bottom: 5%;
+    text-align: center;
+}
+
+.DivProfil {
+   
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+}
+
+.Info {
+    border: 25px solid #FFB1AA;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin: 1rem;
+}
+
+p, h3 {
+    font-size: 200%;
+    margin: 1rem;
+}

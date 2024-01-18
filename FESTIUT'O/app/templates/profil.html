@@ -1,7 +1,26 @@
 {% extends 'base.html' %}
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/festival.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/details.css') }}">
 {% endblock %}
 {% block content %}
-    <h1>Profil {{user.nomuser}}</h1>
+    <h1>Profil {{user.nomuser|upper}}</h1>
+
+    <div class="DivProfil">
+        <div class="Info">
+            <h3>Vos informations</h3>
+            <p>Nom d'utilisateur : {{ user.nomuser }}</p>
+            <p>Date de naissance : {{ user.ddn}}</p>
+            <p>Email : {{user.email}}</p>
+            {% if user.admin %}
+                <p>Compte admin</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <h2>Vos tickets</h2>
+        {% for }
+
+
+
 {% endblock %}
+
