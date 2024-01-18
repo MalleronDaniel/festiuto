@@ -21,7 +21,7 @@ CREATE TABLE `BILLET` (
   PRIMARY KEY (`typebillet`)
 );
 CREATE TABLE `CONCERT` (
-  `idconcert` int(3),
+  `idconcert` int(3) UNIQUE,
   `jour` ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'),
   `datedebutc` datetime,
   `duree` float,
@@ -70,6 +70,7 @@ CREATE TABLE `RESEAUX` (
   `idreseau` int(3),
   `lienreseau` VARCHAR(42),
   `nomreseau` VARCHAR(42),
+  `idgroupe` int(3),
   PRIMARY KEY (`idreseau`)
 );
 CREATE TABLE `SOUS_STYLE` (
@@ -81,7 +82,7 @@ CREATE TABLE `UTILISATEUR` (
   `iduser` int(3),
   `nomuser` VARCHAR(42),
   `ddn` date,
-  `email` VARCHAR(42),
+  `email` VARCHAR(42) UNIQUE,
   `mdp` VARCHAR(42),
   `admin` boolean,
   PRIMARY KEY (`iduser`)
@@ -126,11 +127,6 @@ CREATE TABLE `JOUER` (
   `idartiste` int(3),
   PRIMARY KEY (`idinstrument`, `idartiste`)
 );
-CREATE TABLE `PARTAGER` (
-  `idreseau` int(3),
-  `idgroupe` int(3),
-  PRIMARY KEY (`idreseau`, `idgroupe`)
-);
 CREATE TABLE `PARTICIPER` (
   `idgroupe` int(3),
   `idact` int(3),
@@ -169,8 +165,6 @@ ALTER TABLE `GEOLOCALISER` ADD FOREIGN KEY (`noml`) REFERENCES `LIEU` (`noml`);
 ALTER TABLE `GEOLOCALISER` ADD FOREIGN KEY (`idact`, `dateact`) REFERENCES `ACTIVITE_ANNEXE` (`idact`, `dateact`);
 ALTER TABLE `JOUER` ADD FOREIGN KEY (`idartiste`) REFERENCES `ARTISTE` (`idartiste`);
 ALTER TABLE `JOUER` ADD FOREIGN KEY (`idinstrument`) REFERENCES `INSTRUMENTS` (`idinstrument`);
-ALTER TABLE `PARTAGER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
-ALTER TABLE `PARTAGER` ADD FOREIGN KEY (`idreseau`) REFERENCES `RESEAUX` (`idreseau`);
 ALTER TABLE `PARTICIPER` ADD FOREIGN KEY (`idact`, `dateact`) REFERENCES `ACTIVITE_ANNEXE` (`idact`, `dateact`);
 ALTER TABLE `PARTICIPER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `REGARDER` ADD FOREIGN KEY (`typebillet`) REFERENCES `BILLET` (`typebillet`);
