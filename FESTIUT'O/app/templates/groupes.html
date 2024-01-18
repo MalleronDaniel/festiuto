@@ -1,25 +1,28 @@
 {% extends 'base.html' %}
 {% block styles %}
 {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/groupes.css') }}">
 {% endblock %}
 {% block content %}
+<a href="{{ url_for('groupes') }}">
+    <h1>LES GROUPES</h1>
+</a>
+<div class="container-content">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <form method="post" action="{{ url_for('groupes') }}" id="styleForm">
+        {{ form.hidden_tag() }}
+        {{ form.choix_style_musical.label }} {{ form.choix_style_musical }}
+        {{ form.recherche_groupe.label }} {{ form.recherche_groupe }}
+        <input type="submit" value="Filtrer">
+    </form>
 
-<form method="post" action="{{ url_for('groupes') }}" id="styleForm">
-    {{ form.hidden_tag() }}
-    {{ form.choix_style_musical.label }} {{ form.choix_style_musical }}
-    {{ form.recherche_groupe.label }} {{ form.recherche_groupe }}
-    <input type="submit" value="Filtrer">
-</form>
-
-
-<ul id="listeGroupes">
-    {% for groupe in groupes %}
-        <li>{{ groupe.nomgroupe }}</li>
-    {% endfor %}
-</ul>
+    <ul id="listeGroupes">
+        {% for groupe in groupes %}
+            <li>{{ groupe.nomgroupe }}</li>
+        {% endfor %}
+    </ul>
+</div>
 <script>
     // Gestionnaire d'événements pour le changement de style musical
     $(document).ready(function () {
