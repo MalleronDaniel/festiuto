@@ -76,6 +76,18 @@ class Billet(db.Model):
     
     def __repr__(self):
         return f"<{self.typebillet}>"
+    
+    def get_billet(typebillet: int):
+        """Retourne le billet avec l'id associé
+
+        Args:
+            typebillet : l'id associé
+        """
+        return Billet.query.get(typebillet)
+    
+    def get_types_billets():
+        """  Retourne les types de billets  """
+        return Billet.query.all()
 
 
 class Concert(db.Model):

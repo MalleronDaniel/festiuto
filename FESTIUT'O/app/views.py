@@ -33,17 +33,6 @@ def burger():
 def festival():
     return render_template("festival.html")
 
-@app.route("/billetterie/")
-def billetterie():
-    c = Concert.query.all()
-    jourConcerts = Concert.query.with_entities(Concert.jour).distinct().all();
-    jourConcertsDistinct = [jour[0] for jour in jourConcerts];
-    concerts_vendredi = Concert.query.filter(Concert.jour == "Vendredi").order_by(Concert.datedebutc).all();
-    concerts_samedi = Concert.query.filter((Concert.jour) == "Samedi").order_by(Concert.datedebutc).all();
-    concerts_dimanche = Concert.query.filter((Concert.jour) == "Dimanche").order_by(Concert.datedebutc).all();
-    
-    return render_template("billetterie/base_billetterie.html", joursConcerts = jourConcertsDistinct, concerts_vendredi=concerts_vendredi, concerts_samedi=concerts_samedi, concerts_dimanche=concerts_dimanche, c = c)
-
 @app.route("/login/", methods = ("GET","POST",))
 def login():
     f = LoginForm()
@@ -87,11 +76,53 @@ def save_inscription():
     db.session.commit()
     return redirect(url_for('login'))
 
+@app.route("/billetterie/1")
 @login_required
-@app.route("/billeterie/")
-def billeterie():
+def achat_billet_vendredi():
+    types_billets = Billet.get_types_billets()
+    billets = Billet.query.all()
     f = BilletForm()
-    return render_template("billeterie.html", form=f)
+    return render_template("billetterie/achat_billet_vendredi.html", form=f, types_billets=types_billets, billets=billets)
+
+@app.route("/billetterie/2")
+@login_required
+def achat_billet_samedi():
+    types_billets = Billet.get_types_billets()
+    billets = Billet.query.all()
+    f = BilletForm()
+    return render_template("billetterie/achat_billet_samedi.html", form=f, types_billets=types_billets, billets=billets)
+
+@app.route("/billetterie/3")
+@login_required
+def achat_billet_dimanche():
+    types_billets = Billet.get_types_billets()
+    billets = Billet.query.all()
+    f = BilletForm()
+    return render_template("billetterie/achat_billet_dimanche.html", form=f, types_billets=types_billets, billets=billets)
+
+@app.route("/billetterie/4")
+@login_required
+def achat_billet_totalite():
+    types_billets = Billet.get_types_billets()
+    billets = Billet.query.all()
+    f = BilletForm()
+    return render_template("billetterie/achat_billet_totalite.html", form=f, types_billets=types_billets, billets=billets)
+
+@app.route("/billetterie/5")
+@login_required
+def achat_billet_totaliteVIP():
+    types_billets = Billet.get_types_billets()
+    billets = Billet.query.all()
+    f = BilletForm()
+    return render_template("billetterie/achat_billet_totaliteVIP.html", form=f, types_billets=types_billets, billets=billets)
+
+@app.route("/billetterie/")
+@login_required
+def billetterie():
+    types_billets = Billet.get_types_billets()
+    billets = Billet.query.all()
+    f = BilletForm()
+    return render_template("billetterie/base_billetterie.html", form=f, types_billets=types_billets, billets=billets)
 
 @app.route("/admin/ajout_billet/")
 def ajout_billet():

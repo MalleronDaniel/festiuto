@@ -1,40 +1,58 @@
 {% extends 'base.html' %}
+
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/festival.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/accueil.css') }}">
 {% endblock %}
+
 {% block content %}
-    <a href="{{ url_for('festival') }}">
-        <h1>FESTIUT'O</h1>
-    </a>
+    <div id="header">
+        <a href="{{ url_for('festival') }}">
+            <h1>FESTIUT'O</h1>
+        </a>
+    </div>
 
-    <p>
-        Bienvenue à Festiut'O !
+    <div id="main-content">
+        <div id="welcome-section">
+            <h2>Bienvenue à Festiut'O !</h2>
+            <p>
+                Plongez au cœur d'une expérience unique où la musique, la culture et la créativité fusionnent pour créer des souvenirs inoubliables. Festiut'O, notre festival passionnément conçu, est le rendez-vous incontournable des esprits libres et des amoureux de l'art.
+            </p>
+        </div>
 
-Plongez au cœur d'une expérience unique où la musique, la culture et la créativité fusionnent pour créer des souvenirs inoubliables. Festiut'O, notre festival passionnément conçu, est le rendez-vous incontournable des esprits libres et des amoureux de l'art.
+        <div id="event-details-section">
+            <h2>Détails de l'événement</h2>
+            <p>
+                Dates: [Indiquez les dates du festival]<br>
+                Lieu: [Précisez le lieu du festival]
+            </p>
+        </div>
 
-Dates: [Indiquez les dates du festival]
-Lieu: [Précisez le lieu du festival]
+        <div id="music-section">
+            <h2>Vivez l'Émotion Musicale</h2>
+            <p>
+                Festiut'O réunit des artistes exceptionnels, des talents émergents et des légendes confirmées pour vous offrir une expérience musicale époustouflante. Que vous soyez fan de rock, de pop, d'électro ou de world music, notre programmation variée saura satisfaire toutes les oreilles.
+            </p>
+        </div>
 
-Vivez l'Émotion Musicale :
-Festiut'O réunit des artistes exceptionnels, des talents émergents et des légendes confirmées pour vous offrir une expérience musicale époustouflante. Que vous soyez fan de rock, de pop, d'électro ou de world music, notre programmation variée saura satisfaire toutes les oreilles.
+        <div id="culture-section">
+            <h2>Une Célébration de la Culture</h2>
+            <p>
+                Explorez un univers culturel riche à travers des expositions artistiques, des performances théâtrales et des installations visuelles éblouissantes. Festiut'O célèbre la diversité et l'expression artistique sous toutes ses formes.
+            </p>
+        </div>
 
-Une Célébration de la Culture :
-Explorez un univers culturel riche à travers des expositions artistiques, des performances théâtrales et des installations visuelles éblouissantes. Festiut'O célèbre la diversité et l'expression artistique sous toutes ses formes.
+        <!-- Ajoutez d'autres sections au besoin -->
 
-Épicurisme Culinaire :
-Savourez une expérience gastronomique exceptionnelle avec une sélection exquise de stands culinaires, mettant en vedette la cuisine locale et internationale. Découvrez des saveurs uniques qui raviront vos papilles.
+        <div id="festive-moment-section">
+            <h2>Vivez l'Instant Festif</h2>
+            <p>
+                Festiut'O n'est pas seulement un festival, c'est une célébration de la vie, de la joie et de la communauté. Partagez des moments magiques avec vos amis et rencontrez de nouvelles personnes qui partagent votre passion pour la musique et la culture.
+            </p>
+        </div>
 
-Éco-responsabilité :
-Chez Festiut'O, nous sommes fiers de notre engagement envers la durabilité. Nous mettons en place des initiatives éco-responsables pour minimiser notre impact sur l'environnement et inspirer un changement positif.
-
-Vivez l'Instant Festif :
-Festiut'O n'est pas seulement un festival, c'est une célébration de la vie, de la joie et de la communauté. Partagez des moments magiques avec vos amis et rencontrez de nouvelles personnes qui partagent votre passion pour la musique et la culture.
-
-Rejoignez-nous pour une aventure sensorielle où chaque note, chaque couleur et chaque saveur vous emmèneront dans un voyage inédit. Festiut'O, plus qu'un festival, une expérience qui restera gravée dans vos souvenirs.
-
-Achetez vos billets dès maintenant et préparez-vous à vivre l'inoubliable Festiut'O !
-
-N'hésitez pas à personnaliser ce texte en fonction des détails spécifiques de votre festival.
-    </p>
-
+        <p>
+            Achetez vos billets dès maintenant et préparez-vous à vivre l'inoubliable Festiut'O !
+            N'hésitez pas à personnaliser ce texte en fonction des détails spécifiques de votre festival.
+        </p>
+    </div>
 {% endblock %}
