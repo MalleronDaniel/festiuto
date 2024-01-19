@@ -1,56 +1,105 @@
-<h1>ADMIN ajout activité annexe</h1>
+<!doctype html>
+<html lang="fr">
+<head>
+    {% block head %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+    <link rel="icon" href="{{ url_for('static', filename='img/logo_jaune.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo_jaune.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/accueil.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/admin.css')}}">
+    {% endblock %}
+    <title>Festiut'O</title>
+    {% endblock %}
+</head>
+<body>
+    <header class="head">
+            
+        <div class="left">
+                <div>
+                    <a href="{{ url_for('logout') }}">
+                        <span class="glyphicon glyphicon-log-out" title="Logout"></span>
+                        SE DECONNECTER
+                    </a>
+                </div>
+        </div>
+        <div class="logo">
+            <a aria-current="page" href="{{ url_for('admin_home') }}">
+                <img src="{{ url_for('static', filename='img/logo_jaune.png') }}" alt="Logo">
+            </a>
+        </div>
+        
+        <div class="menu-burger">
+            <div>
+                <a aria-current="page" href="{{ url_for('burger') }}">
+                    <img src="{{ url_for('static', filename='img/burger.png') }}" alt="Menu Burger">
+                </a>
+            </div>
+            
+        </div>
 
-<a href="{{ url_for('logout') }}"><button>Déconnexion</button></a>
+    </header>
+    <main id="page">
+        <div>
+            <h1>ADMIN ajout artiste</h1>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Durée</th>
+                    <th>Lieu</th>
+                <tr>
+                {% for aa in activites %}
+                <tr>
+                    <td>{{ aa.dateact }}</td>
+                    <td>{{ aa.typeact }}</td>
+                    <td>{{ aa.dureeact }}</td>
+                    <td>{{ aa.noml }}</td>
+                    <td><a href='{{ url_for("delete_activite_annexe", idact=aa.idact)}}' onclick="return confirm('Confirmation')">Supprimer</a><td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div>
 
-<a href="{{ url_for('admin_home')}}"> page admin</a>
+            <form class="form-horizontal" role="form" method="POST" action="{{ url_for('save_activite_annexe') }}">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    <label for="dateact" class="col-sm-2 control-label">{{ form.dateact.label }}</label>
+                    <div class="col-sm-10">{{ form.dateact(class_="form-control", placeholder="", id="dateact") }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="timeact" class="col-sm-2 control-label">{{ form.timeact.label }}</label>
+                    <div class="col-sm-10">{{ form.timeact(class_="form-control", placeholder="", id="timeact") }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="typeact" class="col-sm-2 control-label">{{ form.typeact.label }}</label>
+                    <div class="col-sm-10">{{ form.typeact(class_="form-control", placeholder="", id="typeact") }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="dureeact" class="col-sm-2 control-label">{{ form.dureeact.label }}</label>
+                    <div class="col-sm-10">{{ form.dureeact(class_="form-control", placeholder="", id="dureeact") }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="noml" class="col-sm-2 control-label">{{ form.noml.label }}</label>
+                    <div class="col-sm-10">{{ form.noml(class_="form-control", placeholder="", id="noml") }}</div>
+                </div>
+                <button type="submit" name="submit_button">Ajouter</button>
+            </form>
+            {% for mesg in get_flashed_messages() %}
+                <dialog open>
+                <p>{{ mesg }}</p>
+                <form method="dialog" id="form-dialog">
+                    <button>OK</button>
+                </form>
+                </dialog>
+            {% endfor %}
 
-<table>
-    <tr>
-        <th>Date</th>
-        <th>Type</th>
-        <th>Durée</th>
-        <th>Lieu</th>
-    <tr>
-    {% for aa in activites %}
-    <tr>
-        <td>{{ aa.dateact }}</td>
-        <td>{{ aa.typeact }}</td>
-        <td>{{ aa.dureeact }}</td>
-        <td>{{ aa.noml }}</td>
-        <td><a href='{{ url_for("delete_activite_annexe", idact=aa.idact)}}' onclick="return confirm('Confirmation')">Supprimer</a><td>
-    </tr>
-    {% endfor %}
-</table>
-
-<form class="form-horizontal" role="form" method="POST" action="{{ url_for('save_activite_annexe') }}">
-    {{ form.hidden_tag() }}
-    <div class="form-group">
-        <label for="dateact" class="col-sm-2 control-label">{{ form.dateact.label }}</label>
-        <div class="col-sm-10">{{ form.dateact(class_="form-control", placeholder="", id="dateact") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="timeact" class="col-sm-2 control-label">{{ form.timeact.label }}</label>
-        <div class="col-sm-10">{{ form.timeact(class_="form-control", placeholder="", id="timeact") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="typeact" class="col-sm-2 control-label">{{ form.typeact.label }}</label>
-        <div class="col-sm-10">{{ form.typeact(class_="form-control", placeholder="", id="typeact") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="dureeact" class="col-sm-2 control-label">{{ form.dureeact.label }}</label>
-        <div class="col-sm-10">{{ form.dureeact(class_="form-control", placeholder="", id="dureeact") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="noml" class="col-sm-2 control-label">{{ form.noml.label }}</label>
-        <div class="col-sm-10">{{ form.noml(class_="form-control", placeholder="", id="noml") }}</div>
-    </div>
-    <button type="submit" name="submit_button">Ajouter</button>
-</form>
-{% for mesg in get_flashed_messages() %}
-    <dialog open>
-      <p>{{ mesg }}</p>
-      <form method="dialog" id="form-dialog">
-        <button>OK</button>
-      </form>
-    </dialog>
-{% endfor %}
+            </div>
+    </main>
+</body>
+</html>

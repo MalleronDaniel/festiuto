@@ -1,58 +1,107 @@
-<h1>ADMIN ajout utilisateur</h1>
 
-<a href="{{ url_for('logout') }}"><button>Déconnexion</button></a>
+<!doctype html>
+<html lang="fr">
+<head>
+    {% block head %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+    <link rel="icon" href="{{ url_for('static', filename='img/logo_jaune.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo_jaune.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/accueil.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/admin.css')}}">
+    {% endblock %}
+    <title>Festiut'O</title>
+    {% endblock %}
+</head>
+<body>
+    <header class="head">
+            
+        <div class="left">
+                <div>
+                    <a href="{{ url_for('logout') }}">
+                        <span class="glyphicon glyphicon-log-out" title="Logout"></span>
+                        SE DECONNECTER
+                    </a>
+                </div>
+        </div>
+        <div class="logo">
+            <a aria-current="page" href="{{ url_for('admin_home') }}">
+                <img src="{{ url_for('static', filename='img/logo_jaune.png') }}" alt="Logo">
+            </a>
+        </div>
+        
+        <div class="menu-burger">
+            <div>
+                <a aria-current="page" href="{{ url_for('burger') }}">
+                    <img src="{{ url_for('static', filename='img/burger.png') }}" alt="Menu Burger">
+                </a>
+            </div>
+            
+        </div>
 
-<a href="{{ url_for('admin_home')}}"> page admin</a>
+    </header>
+    <main id="page">
+        <div>
+            <h1>ADMIN ajout utilisateur</h1>
 
-<table>
-    <tr>
-        <th>Nom</th>
-        <th>Date de Naissance</th>
-        <th>Email</th>
-        <th>Mot de Passe</th>
-        <th>Admin</th>
-    <tr>
-    {% for u in utilisateurs %}
-    <tr>
-        <td>{{ u.nomuser }}</td>
-        <td>{{ u.ddn }}</td>
-        <td>{{ u.email }}</td>
-        <td>{{ u.mdp }}</td>
-        <td>{{ u.admin }}</td>
-        <td><a href='{{ url_for("delete_utilisateur", iduser=u.iduser)}}' onclick="return confirm('Confirmation')">Supprimer</a><td>
-    </tr>
-    {% endfor %}
-</table>
-
-<form class="form-horizontal" role="form" method="POST" action="{{ url_for('save_utilisateur') }}">
-    {{ form.hidden_tag() }}
-    <div class="form-group">
-        <label for="nomuser" class="col-sm-2 control-label">{{ form.nomuser.label }}</label>
-        <div class="col-sm-10">{{ form.nomuser(class_="form-control", placeholder="", id="nomuser") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="ddn" class="col-sm-2 control-label">{{ form.ddn.label }}</label>
-        <div class="col-sm-10">{{ form.ddn(class_="form-control", placeholder="", id="ddn") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="email" class="col-sm-2 control-label">{{ form.email.label }}</label>
-        <div class="col-sm-10">{{ form.email(class_="form-control", placeholder="", id="email") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="mdp" class="col-sm-2 control-label">{{ form.mdp.label }}</label>
-        <div class="col-sm-10">{{ form.mdp(class_="form-control", placeholder="", id="mdp") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="admin" class="col-sm-2 control-label">{{ form.admin.label }}</label>
-        <div class="col-sm-10">{{ form.admin(class_="form-control", placeholder="", id="admin") }}</div>
-    </div>
-    <button type="submit" name="submit_button">Ajouter</button>
-</form>
-{% for mesg in get_flashed_messages() %}
-    <dialog open>
-      <p>{{ mesg }}</p>
-      <form method="dialog" id="form-dialog">
-        <button>OK</button>
-      </form>
-    </dialog>
-{% endfor %}
+            <table>
+                <tr>
+                    <th>Nom</th>
+                    <th>Date de Naissance</th>
+                    <th>Email</th>
+                    <th>Mot de Passe</th>
+                    <th>Admin</th>
+                <tr>
+                {% for u in utilisateurs %}
+                <tr>
+                    <td>{{ u.nomuser }}</td>
+                    <td>{{ u.ddn }}</td>
+                    <td>{{ u.email }}</td>
+                    <td>{{ u.mdp }}</td>
+                    <td>{{ u.admin }}</td>
+                    <td><a href='{{ url_for("delete_utilisateur", iduser=u.iduser)}}' onclick="return confirm('Confirmation')">Supprimer</a><td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div>
+            <form class="form-horizontal" role="form" method="POST" action="{{ url_for('save_utilisateur') }}">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    <label for="nomuser" class="col-sm-2 control-label">{{ form.nomuser.label }}</label>
+                    <div class="col-sm-10">{{ form.nomuser(class_="form-control", placeholder="", id="nomuser") }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="ddn" class="col-sm-2 control-label">{{ form.ddn.label }}</label>
+                    <div class="col-sm-10">{{ form.ddn(class_="form-control", placeholder="", id="ddn") }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label">{{ form.email.label }}</label>
+                    <div class="col-sm-10">{{ form.email(class_="form-control", placeholder="", id="email") }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="mdp" class="col-sm-2 control-label">{{ form.mdp.label }}</label>
+                    <div class="col-sm-10">{{ form.mdp(class_="form-control", placeholder="", id="mdp") }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="admin">{{ form.admin.label }}</label>
+                    <div>{{ form.admin(placeholder="", id="admin") }}</div>
+                </div>
+                <button type="submit" name="submit_button">Ajouter</button>
+            </form>
+            {% for mesg in get_flashed_messages() %}
+                <dialog open>
+                <p>{{ mesg }}</p>
+                <form method="dialog" id="form-dialog">
+                    <button>OK</button>
+                </form>
+                </dialog>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>
