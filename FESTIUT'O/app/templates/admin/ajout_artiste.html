@@ -1,59 +1,106 @@
-<h1>ADMIN ajout artiste</h1>
 
-<a href="{{ url_for('logout') }}"><button>Déconnexion</button></a>
+<!doctype html>
+<html lang="fr">
+<head>
+    {% block head %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+    <link rel="icon" href="{{ url_for('static', filename='img/logo_jaune.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo_jaune.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/accueil.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/admin.css')}}">
+    {% endblock %}
+    <title>Festiut'O</title>
+    {% endblock %}
+</head>
+<body>
+    <header class="head">
+            
+        <div class="left">
+                <div>
+                    <a href="{{ url_for('logout') }}">
+                        <span class="glyphicon glyphicon-log-out" title="Logout"></span>
+                        SE DECONNECTER
+                    </a>
+                </div>
+        </div>
+        <div class="logo">
+            <a aria-current="page" href="{{ url_for('admin_home') }}">
+                <img src="{{ url_for('static', filename='img/logo_jaune.png') }}" alt="Logo">
+            </a>
+        </div>
+        
+        <div class="menu-burger">
+            <div>
+                <a aria-current="page" href="{{ url_for('burger') }}">
+                    <img src="{{ url_for('static', filename='img/burger.png') }}" alt="Menu Burger">
+                </a>
+            </div>
+            
+        </div>
 
-<a href="{{ url_for('admin_home')}}"> page admin</a>
-
-<table>
-    <tr>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Date de Naissance</th>
-        <th>Description</th>
-        <th>Groupe</th>
-    <tr>
-    {% for a in artistes %}
-    <tr>
-        <td>{{ a.nomartiste }}</td>
-        <td>{{ a.prenomartiste }}</td>
-        <td>{{ a.ddn }}</td>
-        <td>{{ a.descriptiona }}</td>
-        <td>{{ a.groupe.nomgroupe }}</td>
-        <td><a href='{{ url_for("delete_artiste", idartiste=a.idartiste)}}' onclick="return confirm('Confirmation')">Supprimer</a><td>
-    </tr>
-    {% endfor %}
-</table>
-
-<form class="form-horizontal" role="form" method="POST" action="{{ url_for('save_artiste') }}">
-    {{ form.hidden_tag() }}
-    <div class="form-group">
-        <label for="nomartiste" class="col-sm-2 control-label">{{ form.nomartiste.label }}</label>
-        <div class="col-sm-10">{{ form.nomartiste(class_="form-control", placeholder="", id="nomartiste") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="prenomartiste" class="col-sm-2 control-label">{{ form.prenomartiste.label }}</label>
-        <div class="col-sm-10">{{ form.prenomartiste(class_="form-control", placeholder="", id="prenomartiste") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="ddn" class="col-sm-2 control-label">{{ form.ddn.label }}</label>
-        <div class="col-sm-10">{{ form.ddn(class_="form-control", placeholder="", id="ddn") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="description" class="col-sm-2 control-label">{{ form.description.label }}</label>
-        <div class="col-sm-10">{{ form.description(class_="form-control", placeholder="instrument joué, ...", id="description") }}</div>
-    </div>
-    <div class="form-group">
-        <label for="groupe" class="col-sm-2 control-label">{{ form.groupe.label }}</label>
-        <div class="col-sm-10">{{ form.groupe(class_="form-control", placeholder="instrument joué, ...", id="groupe") }}</div>
-    </div>
-    </div>
-    <button type="submit" name="submit_button">Ajouter</button>
-</form>
-{% for mesg in get_flashed_messages() %}
-    <dialog open>
-      <p>{{ mesg }}</p>
-      <form method="dialog" id="form-dialog">
-        <button>OK</button>
-      </form>
-    </dialog>
-{% endfor %}
+    </header>
+    <main id="page">
+        <div>
+            <h1>ADMIN ajout artiste</h1>
+            <table>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Date de Naissance</th>
+                    <th>Description</th>
+                    <th>Groupe</th>
+                <tr>
+                {% for a in artistes %}
+                <tr>
+                    <td>{{ a.nomartiste }}</td>
+                    <td>{{ a.prenomartiste }}</td>
+                    <td>{{ a.ddn }}</td>
+                    <td>{{ a.descriptiona }}</td>
+                    <td>{{ a.groupe.nomgroupe }}</td>
+                    <td><a href='{{ url_for("delete_artiste", idartiste=a.idartiste)}}' onclick="return confirm('Confirmation')">Supprimer</a><td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div>
+            <form class="form-horizontal" role="form" method="POST" action="{{ url_for('save_artiste') }}">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    <label for="nomartiste" class="col-sm-2 control-label">{{ form.nomartiste.label }}</label>
+                    <div class="col-sm-10">{{ form.nomartiste(class_="form-control", placeholder="", id="nomartiste") }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="prenomartiste" class="col-sm-2 control-label">{{ form.prenomartiste.label }}</label>
+                    <div class="col-sm-10">{{ form.prenomartiste(class_="form-control", placeholder="", id="prenomartiste") }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="ddn" class="col-sm-2 control-label">{{ form.ddn.label }}</label>
+                    <div class="col-sm-10">{{ form.ddn(class_="form-control", placeholder="", id="ddn") }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="col-sm-2 control-label">{{ form.description.label }}</label>
+                    <div class="col-sm-10">{{ form.description(class_="form-control", placeholder="instrument joué, ...", id="description") }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="groupe" class="col-sm-2 control-label">{{ form.groupe.label }}</label>
+                    <div class="col-sm-10">{{ form.groupe(class_="form-control", placeholder="instrument joué, ...", id="groupe") }}</div>
+                </div>
+                <button type="submit" name="submit_button">Ajouter</button>
+            </form>
+            {% for mesg in get_flashed_messages() %}
+                <dialog open>
+                <p>{{ mesg }}</p>
+                <form method="dialog" id="form-dialog">
+                    <button>OK</button>
+                </form>
+                </dialog>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>
