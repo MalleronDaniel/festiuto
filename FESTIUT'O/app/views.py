@@ -110,7 +110,7 @@ def confirm_achatbillet(type):
     )
     db.session.add(b)
     db.session.commit()
-    return render_template("profil.html", user=current_user)
+    return redirect(url_for('accueil'))
 
 @app.route("/admin/ajout-billet/")
 def ajout_billet():
@@ -367,9 +367,11 @@ def details_concert(id):
 
 @app.route("/details-groupe/<int:id>")
 def details_groupe(id):
+    est_favori = Apprecier.query.filter_by(iduser=current_user.iduser, idgroupe=id).first()
     g = Groupe.query.get(id)
     return render_template("details/details-groupe.html", 
-    groupe=g)
+    groupe=g,
+    est_favoris=est_favori)
 
 @app.route("/details-artiste/<int:id>")
 def details_artiste(id):
@@ -383,7 +385,7 @@ def details_artiste(id):
 @app.route("/inputFavoris/<int:id_groupe>", methods=["POST"])
 def inputFavoris(id_groupe):
     # Vérifie si le groupe est déjà en favori pour l'utilisateur
-    est_favori = Apprecier.query.filter_by(iduser=current_user.username, idgroupe=id_groupe).first()
+    est_favori = Apprecier.query.filter_by(iduser=current_user.iduser, idgroupe=id_groupe).first()
     
     if est_favori:
         # Si le groupe est déjà en favori, le supprimer
@@ -391,13 +393,12 @@ def inputFavoris(id_groupe):
         db.session.commit()
     else:
         # Sinon, l'ajouter en favori
-        favori = Apprecier(iduser=current_user.username, idgroupe=id_groupe)
+        favori = Apprecier(iduser=current_user.iduser, idgroupe=id_groupe)
         db.session.add(favori)
         db.session.commit()
 
-    #Permet de récupérer la page précédente
-    page_precedente = request.referrer if request.referrer else url_for('accueil')
-    return redirect(page_precedente)
+    
+    return redirect(url_for('details_groupe', id=id_groupe))
 
 @app.route("/groupes/", methods=["GET", "POST"])
 def groupes():

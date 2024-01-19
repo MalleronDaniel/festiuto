@@ -2,7 +2,7 @@
 {% block styles %}
 {{ super() }}
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/details.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profil.css') }}">
 {% endblock %}
 {% block content %}
 
@@ -18,19 +18,17 @@
         <input type="submit" value="Filtrer">
     </form>
 
-    <ul id="listeGroupes">
+    <div class="DivProfil">
         {% for groupe in groupes %}
-        <div>
-            <li>{{ groupe.nomgroupe }}</li>
-            <li>{{ groupe.description }}</li>
-            <li>{{ groupe.stylemusical }}</li>
-            <li>{{ groupe.lienvideo }}</li>
-            <li>
-                <a href="{{url_for('details_groupe', id=groupe.idgroupe)}}">Voir plus sur le groupe</a>
-            </li>
+        <div class ="Info">
+            <p>{{ groupe.nomgroupe }}</p>
+            <p>{{ groupe.description }}</p>
+            <p>{{ groupe.stylemusical }}</p>
+            <p>{{ groupe.lienvideo }}</p>
+            <a href="{{url_for('details_groupe', id=groupe.idgroupe)}}">Voir plus sur le groupe</a>
         </div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
 
 
