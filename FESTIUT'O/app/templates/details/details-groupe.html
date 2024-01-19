@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/details.css') }}">
+{% endblock %}
+{% block content %}
+    <a href="{{ url_for('groupes') }}">
+        <h1>LES GROUPES</h1>
+    </a>
+    <div class="cadre">
+        <div>
+            <h2>{{groupe.nomgroupe}}</h2>
+            <p>{{groupe.description}}</p>
+        </div>
+        <div>
+            <h3>Style Musical :</h3>
+            <p>{{groupe.stylemusical}}</p>
+        </div>
+        <div>
+            <h3>Réseaux :</h3>
+            <p>{{groupe.lienvideo}}</p>
+        </div>
+        <div>
+            <h3>Artistes :</h3>
+            <div class="artiste">
+                {% for artiste in groupe.get_artistes_groupe() %}
+                    <a href="{{url_for('details_artiste', id=artiste.idartiste)}}">{{ artiste.nomartiste }}</a>
+                {% endfor %}
+            </div>
+            
+        </div>
+    </div>
+{% endblock %}

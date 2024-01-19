@@ -176,20 +176,20 @@ def programme():
 @app.route("/details-concert/<int:id>")
 def details_concert(id):
     c = Concert.query.get(id)
-    return render_template("details-concert.html", 
+    return render_template("details/details-concert.html", 
     concert=c)
 
 @app.route("/details-groupe/<int:id>")
 def details_groupe(id):
     g = Groupe.query.get(id)
-    return render_template("details-groupe.html", 
+    return render_template("details/details-groupe.html", 
     groupe=g)
 
 @app.route("/details-artiste/<int:id>")
 def details_artiste(id):
     a = Artiste.query.get(id)
     groupe = Groupe.query.get(a.idgroupe)
-    return render_template("details-artiste.html", 
+    return render_template("details/details-artiste.html", 
     artiste=a,
     groupe=groupe)
 
