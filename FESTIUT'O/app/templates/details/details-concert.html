@@ -1,0 +1,38 @@
+<!-- template concert.html -->
+
+{% extends 'base.html' %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/details.css') }}">
+{% endblock %}
+{% block content %}
+    <a href="{{ url_for('accueil') }}">
+        <h1>LES CONCERTS</h1>
+    </a>
+    <div class="cadre">
+        <div>
+            <h2>Concert au : {{concert.noml}}</h2>
+        </div>
+        <div>
+            <h3>Jour :</h3>
+            <p>{{concert.jour}}</p>
+        </div>
+        <div>
+            <h3>Date de début :</h3>
+            <p>{{concert.datedebutc}}</p>
+        </div>
+        <div>
+            <h3>Durrée :</h3>
+            <p>{{concert.duree}} minutes</p>
+        </div>
+
+        <div>
+            <h3>Groupes :</h3>
+            <div class="groupe">
+                {% for groupe in concert.get_groupe_concert() %}
+                    <a href="{{url_for('details_groupe', id=groupe.idgroupe)}}">{{ groupe.nomgroupe }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -6,22 +6,32 @@
 {% endblock %}
 {% block content %}
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<a href="{{ url_for('groupes') }}">
+    <h1>LES GROUPES</h1>
+</a>
+<div class="container-content">
 
-<form method="post" action="{{ url_for('groupes') }}" id="styleForm">
-    {{ form.hidden_tag() }}
-    {{ form.choix_style_musical.label }} {{ form.choix_style_musical }}
-    {{ form.recherche_groupe.label }} {{ form.recherche_groupe }}
-    <input type="submit" value="Filtrer">
-</form>
+    <form method="post" action="{{ url_for('groupes') }}" id="styleForm">
+        {{ form.hidden_tag() }}
+        {{ form.choix_style_musical.label }} {{ form.choix_style_musical }}
+        {{ form.recherche_groupe.label }} {{ form.recherche_groupe }}
+        <input type="submit" value="Filtrer">
+    </form>
 
-<h1>Groupes</h1>
+    <ul id="listeGroupes">
+        {% for groupe in groupes %}
+        <div>
+            <li>{{ groupe.nomgroupe }}</li>
+            <li>{{ groupe.description }}</li>
+            <li>{{ groupe.stylemusical }}</li>
+            <li>{{ groupe.lienvideo }}</li>
+            <li>
+                <a href="{{url_for('details_groupe', id=groupe.idgroupe)}}">Voir plus sur le groupe</a>
+            </li>
+        </div>
+        {% endfor %}
+    </ul>
+</div>
 
-<ul id="listeGroupes">
-    {% for groupe in groupes %}
-        <p>{{ groupe.nomgroupe }}</p>
-        <p>{{ groupe.stylemusical }}</p>
-    {% endfor %}
-</ul>
 
 {% endblock %}

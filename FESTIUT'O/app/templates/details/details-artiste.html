@@ -1,0 +1,37 @@
+<!-- template artiste.html -->
+
+{% extends 'base.html' %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/details.css') }}">
+{% endblock %}
+{% block content %}
+    <a href="{{ url_for('accueil') }}">
+        <h1>LES ARTISTES</h1>
+    </a>
+    <div class="cadre">
+        <div>
+            <h2>{{artiste.nomartiste}} {{artiste.prenomartiste}}</h2>
+        </div>
+        <div>
+            <h3>Instrument :</h3>
+            <p>{{artiste.descriptiona}}</p>
+        </div>
+        <div>
+            <h3>Date de Naissance :</h3>
+            <p>{{artiste.ddn}}</p>
+        </div>
+        <div>
+            <h3>Groupe :</h3>
+            <p>{{artiste.groupe.nomgroupe}}</p>
+        </div>
+        <div>
+            <h3>Style Musical :</h3>
+            <p>{{artiste.groupe.stylemusical}}</p>
+            </div>
+        <div>
+            <h3>Réseaux :</h3>
+            <p>{{artiste.groupe.lienvideo}}</p>
+        </div>    
+    </div>
+{% endblock %}
