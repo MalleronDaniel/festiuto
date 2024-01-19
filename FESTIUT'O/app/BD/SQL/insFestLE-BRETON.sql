@@ -40,23 +40,23 @@ values
 
 insert into CONCERT (idconcert, jour, datedebutc, duree, noml)
 values
-(1, 'Vendredi', '2024-03-22 18:00:00', 120, 'Main Stage'),
-(2, 'Vendredi', '2024-03-22 19:30:00', 150, 'Outdoor Arena'),
-(3, 'Vendredi', '2024-03-22 20:15:00', 105, 'Intimate Hall'),
-(4, 'Vendredi', '2024-03-22 21:00:00', 120, 'Club Venue'),
-(5, 'Vendredi', '2024-03-22 22:45:00', 135, 'Open Air Park'),
+(1, 'Vendredi', '2024-02-21 18:00:00', 120, 'Main Stage'),
+(2, 'Vendredi', '2024-02-21 19:30:00', 150, 'Outdoor Arena'),
+(3, 'Vendredi', '2024-02-21 20:15:00', 105, 'Intimate Hall'),
+(4, 'Vendredi', '2024-02-21 21:00:00', 120, 'Club Venue'),
+(5, 'Vendredi', '2024-02-21 22:45:00', 135, 'Open Air Park'),
 
-(6, 'Samedi', '2024-03-23 18:00:00', 120, 'Main Stage'),
-(7, 'Samedi', '2024-03-23 19:30:00', 150, 'Outdoor Arena'),
-(8, 'Samedi', '2024-03-23 20:15:00', 105, 'Intimate Hall'),
-(9, 'Samedi', '2024-03-23 21:00:00', 120, 'Club Venue'),
-(10, 'Samedi', '2024-03-23 22:45:00', 135, 'Open Air Park'),
+(6, 'Samedi', '2024-02-22 18:00:00', 120, 'Main Stage'),
+(7, 'Samedi', '2024-02-22 19:30:00', 150, 'Outdoor Arena'),
+(8, 'Samedi', '2024-02-22 20:15:00', 105, 'Intimate Hall'),
+(9, 'Samedi', '2024-02-22 21:00:00', 120, 'Club Venue'),
+(10, 'Samedi', '2024-02-22 22:45:00', 135, 'Open Air Park'),
 
-(11, 'Dimanche', '2024-03-24 18:00:00', 120, 'Main Stage'),
-(12, 'Dimanche', '2024-03-24 19:30:00', 150, 'Outdoor Arena'),
-(13, 'Dimanche', '2024-03-24 20:15:00', 105, 'Intimate Hall'),
-(14, 'Dimanche', '2024-03-24 21:00:00', 120, 'Club Venue'),
-(15, 'Dimanche', '2024-03-24 22:45:00', 135, 'Open Air Park');
+(11, 'Dimanche', '2024-02-23 18:00:00', 120, 'Main Stage'),
+(12, 'Dimanche', '2024-02-23 19:30:00', 150, 'Outdoor Arena'),
+(13, 'Dimanche', '2024-02-23 20:15:00', 105, 'Intimate Hall'),
+(14, 'Dimanche', '2024-02-23 21:00:00', 120, 'Club Venue'),
+(15, 'Dimanche', '2024-02-23 22:45:00', 135, 'Open Air Park');
 
 
 
@@ -204,6 +204,7 @@ insert into SOUS_STYLE (ids, nomstyle)
 values
 (1, 'Rap'),
 (2, 'Rock');
+(3, 'Variété française');
 
 
 -------
