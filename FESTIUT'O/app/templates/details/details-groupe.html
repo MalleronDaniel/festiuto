@@ -29,5 +29,12 @@
             </div>
             
         </div>
+        <form method="POST" action="{{ url_for('inputFavoris', id_groupe=groupe.idgroupe) }}">
+            {% if est_favori %}
+                <input class="detail" type="submit" value="Supprimer des favoris">
+            {% else %}
+                <input class="detail" type="submit" value="Ajouter aux favoris">
+            {% endif %}
+        </form>
     </div>
 {% endblock %}

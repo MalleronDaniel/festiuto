@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/details.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profil.css') }}">
 {% endblock %}
 {% block content %}
     <h1>Profil {{user.nomuser|upper}}</h1>
@@ -35,8 +35,8 @@
             <img src="{{ url_for('static', filename='img/artistes/daft_punk.jpeg') }}" alt="billet"><br>
             <a href="{{url_for('details_groupe', id=groupe.idgroupe)}}">{{groupe.nomgroupe}}</a>
             <p>{{groupe.stylemusical}}</p>
-        {% endfor %}
         </div>
+        {% endfor %}
     </div>
 
 {% endblock %}
