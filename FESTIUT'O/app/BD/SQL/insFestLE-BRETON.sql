@@ -203,7 +203,7 @@ values
 insert into SOUS_STYLE (ids, nomstyle)
 values
 (1, 'Rap'),
-(2, 'Rock');
+(2, 'Rock'),
 (3, 'Variété française');
 
 
