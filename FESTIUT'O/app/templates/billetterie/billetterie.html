@@ -1,3 +1,9 @@
+{% extends 'base.html' %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/billetterie.css') }}">
+{% endblock %}
+{% block content %}
+
 <a href="{{ url_for('billetterie') }}">
     <h1>BILLETTERIE</h1>
 </a>
@@ -10,10 +16,11 @@
             <div class="info-billet">
                 <h3>{{ billet.descbillet }}</h3>
                 <h4>{{ billet.prixbillet }} €</h4>
-                <a class="acheter" href="{{ url_for('billetterie')  ~ billet.typebillet }}">ACHETER</a>
+                <a class="acheter" href="{{ url_for('achatbillet', type=billet.typebillet) }}">ACHETER</a>
             </div>
         </div>
     </li>
 {% endfor %}
 </ul>
 
+{% endblock %}

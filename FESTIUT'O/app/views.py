@@ -14,9 +14,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 @app.route("/")
 def home():
-    s = Utilisateur.query.all()
-    a = Artiste.query.all()
-    return render_template("accueil.html", spectateurs=s, artistes=a)
+    return redirect(url_for('accueil'))
 
 @app.route("/admin/")
 def admin_home():
@@ -24,7 +22,9 @@ def admin_home():
 
 @app.route("/accueil/")
 def accueil():
-    return render_template("accueil.html")
+    b=[db.session.query(Billet).first(),db.session.query(Billet).get(2)]
+    c = db.session.query(Concert).first()
+    return render_template("accueil.html", current_user=current_user, billets=b, concert=c)
 
 @app.route("/burger/")
 def burger():
@@ -80,53 +80,37 @@ def save_inscription():
     db.session.commit()
     return redirect(url_for('login'))
 
-@app.route("/billetterie/1")
-@login_required
-def achat_billet_vendredi():
-    types_billets = Billet.get_types_billets()
-    billets = Billet.query.all()
-    f = BilletForm()
-    return render_template("billetterie/achat_billet_vendredi.html", form=f, types_billets=types_billets, billets=billets)
-
-@app.route("/billetterie/2")
-@login_required
-def achat_billet_samedi():
-    types_billets = Billet.get_types_billets()
-    billets = Billet.query.all()
-    f = BilletForm()
-    return render_template("billetterie/achat_billet_samedi.html", form=f, types_billets=types_billets, billets=billets)
-
-@app.route("/billetterie/3")
-@login_required
-def achat_billet_dimanche():
-    types_billets = Billet.get_types_billets()
-    billets = Billet.query.all()
-    f = BilletForm()
-    return render_template("billetterie/achat_billet_dimanche.html", form=f, types_billets=types_billets, billets=billets)
-
-@app.route("/billetterie/4")
-@login_required
-def achat_billet_totalite():
-    types_billets = Billet.get_types_billets()
-    billets = Billet.query.all()
-    f = BilletForm()
-    return render_template("billetterie/achat_billet_totalite.html", form=f, types_billets=types_billets, billets=billets)
-
-@app.route("/billetterie/5")
-@login_required
-def achat_billet_totaliteVIP():
-    types_billets = Billet.get_types_billets()
-    billets = Billet.query.all()
-    f = BilletForm()
-    return render_template("billetterie/achat_billet_totaliteVIP.html", form=f, types_billets=types_billets, billets=billets)
 
 @app.route("/billetterie/")
 @login_required
 def billetterie():
     types_billets = Billet.get_types_billets()
-    billets = Billet.query.all()
+    billets = Billet.query.filter(Billet.iduser.is_(None)).all()
+    return render_template("billetterie/billetterie.html", types_billets=types_billets, billets=billets)
+
+@app.route("/achatbillet/<int:type>")
+@login_required
+def achatbillet(type):
+    billet = Billet.query.filter(Billet.typebillet == type).first()
     f = BilletForm()
-    return render_template("billetterie/base_billetterie.html", form=f, types_billets=types_billets, billets=billets)
+    return render_template("billetterie/achat_billet.html", form=f, billet=billet)
+
+@login_required
+@app.route("/confirm-achatbillet/<int:type>")
+def confirm_achatbillet(type):
+    if(current_user.is_authenticated == False):
+        return redirect(url_for('login'))
+    user = current_user
+    billet = Billet.query.filter(Billet.typebillet == type).first()
+    b = Billet(
+        typebillet = billet.typebillet,
+        descbillet = billet.descbillet,
+        prixbillet = billet.prixbillet,
+        iduser = user.iduser
+    )
+    db.session.add(b)
+    db.session.commit()
+    return render_template("profil.html", user=current_user)
 
 @app.route("/admin/ajout-billet/")
 def ajout_billet():
@@ -134,7 +118,7 @@ def ajout_billet():
     b = db.session.query(Billet).all()
     return render_template("admin/ajout_billet.html", form=f, billets=b)
 
-@app.route("/admin/ajout-billet/save/",  methods=("POST",))
+@app.route("/admin/ajout-billet/save/",  methods=["POST"])
 def save_billet():
     f = TypeBilletForm()
     b = Billet(
@@ -175,7 +159,7 @@ def save_utilisateur():
     )
     db.session.add(u)
     db.session.commit()
-    flash(f'Félicitations ! L\'ajout d\'utilisateur "<Billet ({u.iduser}) | {u.nomuser}>" a été effectué avec succès.')
+    flash(f'Félicitations ! L\'ajout d\'utilisateur "<Utilisateur ({u.iduser}) | {u.nomuser}>" a été effectué avec succès.')
     return redirect(url_for('ajout_utilisateur'))
 
 @app.route("/admin/delete-utilisateur/<int:iduser>")
@@ -213,23 +197,17 @@ def save_concert():
 
 @app.route("/admin/delete-concert/<int:idconcert>")
 def delete_concert(idconcert):
-    try:
-        c = db.session.query(Concert).filter_by(idconcert=idconcert).first()
-        if c:
-            db.session.delete(c)
-            db.session.commit()
-        flash(f'Le concert "f"<Concert ({c.idconcert}) | {c.noml}>"" a été supprimé.')
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        flash(f"Error deleting concert: {str(e)}", "error")
-        return redirect(url_for('ajout_concert'))
+    c = db.session.query(Concert).filter_by(idconcert=idconcert).first()
+    if c:
+        db.session.delete(c)
+        db.session.commit()
+    flash(f'Le concert "f"<Concert ({c.idconcert}) | {c.noml}>"" a été supprimé.')
     return redirect(url_for('ajout_concert'))
 
 @app.route("/admin/ajout-groupe/")
 def ajout_groupe():
     f = GroupeForm()
     f.set_stylemusical_choices()
-    f.set_artiste_choices()
     g = db.session.query(Groupe).all()
     return render_template("admin/ajout_groupe.html", form=f, groupes=g)
 
@@ -244,14 +222,7 @@ def save_groupe():
         stylemusical = f.stylemusical.data,
         idgroupe = new_id
     )
-    contenir = Contenir(
-        idphoto = 1,
-        idgroupe = new_id
-    )
     db.session.add(g)
-    db.session.add(contenir)
-    a = Artiste.query.get(f.artiste.data)
-    a.idgroupe = new_id
     
     db.session.commit()
     flash(f'Félicitations ! L\'ajout du groupe "f"<Groupe ({g.idgroupe}) | {g.nomgroupe}>"" a été effectué avec succès.')
@@ -271,6 +242,7 @@ def delete_groupe(idgroupe):
 @app.route("/admin/ajout-artiste/")
 def ajout_artiste():
     f = ArtisteForm()
+    f.set_groupe_choices()
     a = db.session.query(Artiste).all()
     return render_template("admin/ajout_artiste.html", form=f, artistes=a)
 
@@ -282,7 +254,8 @@ def save_artiste():
         prenomartiste = f.prenomartiste.data,
         ddn = f.ddn.data,
         descriptiona = f.description.data,
-        idartiste = db.session.query(func.max(Artiste.idartiste)).scalar()+1
+        idartiste = db.session.query(func.max(Artiste.idartiste)).scalar()+1,
+        idgroupe = f.groupe.data
     )
     db.session.add(a)
     db.session.commit()
@@ -298,11 +271,72 @@ def delete_artiste(idartiste):
     flash(f'L\'artiste "f"<Artiste ({a.idartiste}) | {a.prenomartiste} {a.prenomartiste}>"" a été supprimé.')
     return redirect(url_for('ajout_artiste'))
 
+@app.route("/admin/ajout-lieu/")
+def ajout_lieu():
+    f = LieuForm()
+    l = db.session.query(Lieu).all()
+    return render_template("admin/ajout_lieu.html", form=f, lieux=l)
+
+@app.route("/admin/ajout-lieu/save/",  methods=("POST",))
+def save_lieu():
+    f = LieuForm()
+    l = Lieu(
+        noml = f.noml.data,
+        capacite = f.capacite.data,
+        scene = f.scene.data
+    )
+    db.session.add(l)
+    db.session.commit()
+    flash(f'Félicitations ! L\'ajout de lieu "f"<Lieu ({l.capacite}) | {l.noml}>"" a été effectué avec succès.')
+    return redirect(url_for('ajout_lieu'))
+
+@app.route("/admin/delete-lieu/<string:noml>")
+def delete_lieu(noml):
+    l = db.session.query(Lieu).filter_by(noml=noml).first()
+    if l:
+        db.session.delete(l)
+        db.session.commit()
+    flash(f'Le lieu "<Lieu ({l.capacite}) | {l.noml}>"" a été supprimé.')
+    return redirect(url_for('ajout_lieu'))
+
+@app.route("/admin/ajout-activite-annexe/")
+def ajout_activite_annexe():
+    f = ActiviteAnnexeForm()
+    f.set_noml_choices()
+    aa = db.session.query(ActiviteAnnexe).all()
+    return render_template("admin/ajout_activite_annexe.html", form=f, activites=aa)
+
+@app.route("/admin/ajout-activite-annexe/save/",  methods=("POST",))
+def save_activite_annexe():
+    f = ActiviteAnnexeForm()
+    dateact = datetime.combine(f.dateact.data, f.timeact.data)
+    aa = ActiviteAnnexe(
+        idact = db.session.query(func.max(ActiviteAnnexe.idact)).scalar()+1,
+        dateact = dateact,
+        typeact = f.typeact.data,
+        dureeact = f.dureeact.data,
+        noml = f.noml.data
+    )
+    db.session.add(aa)
+    db.session.commit()
+    flash(f'Félicitations ! L\'ajout de l\'activité annexe "f"<ActiviteAnnexe ({aa.idact}) | {aa.dateact} {aa.noml}>"" a été effectué avec succès.')
+    return redirect(url_for('ajout_activite_annexe'))
+
+@app.route("/admin/delete-activite-annexe/<int:idact>")
+def delete_activite_annexe(idact):
+    aa = db.session.query(ActiviteAnnexe).filter_by(idact=idact).first()
+    if aa:
+        db.session.delete(aa)
+        db.session.commit()
+    flash(f'L\'activité annexe "f"<ActiviteAnnexe ({aa.idact}) | {aa.dateact} {aa.noml}>"" a été supprimé.')
+    return redirect(url_for('ajout_activite_annexe'))
+
 @app.route("/save/billeterie/",  methods=("POST",))
 def save_billeterie():
     f = BilletForm()
-    p = Posseder(
+    p = Billet(
         typebillet = f.typebillet.data[0],
+        descbillet = f.typebillet.data[1],
         iduser = current_user.iduser
     )
     db.session.add(p)
@@ -368,27 +402,27 @@ def inputFavoris(id_groupe):
 @app.route("/groupes/", methods=["GET", "POST"])
 def groupes():
     form = StyleMusiqueForm()
+    style_selectionne = None
+    terme_recherche = None
 
     if form.validate_on_submit():
         style_selectionne = request.form.get("choix_style_musical")
         terme_recherche = form.recherche_groupe.data
 
-        if style_selectionne and style_selectionne != 'Tous':
-            groupes_filtres = Groupe.query.filter_by(stylemusical=style_selectionne).all()
-        else:
-            groupes_filtres = Groupe.query.all()
+    if style_selectionne and style_selectionne != 'Tous':
+        groupes_filtres = Groupe.query.filter_by(stylemusical=style_selectionne).all()
+    else:
+        groupes_filtres = Groupe.query.all()
 
-        if terme_recherche:
-            groupes_filtres = [groupe for groupe in groupes_filtres if terme_recherche.lower() in groupe.nomgroupe.lower()]
+    if terme_recherche:
+        groupes_filtres = [groupe for groupe in groupes_filtres if terme_recherche.lower() in groupe.nomgroupe.lower()]
 
-        if request.method == "POST":
-            noms_groupes = [groupe.nomgroupe for groupe in groupes_filtres]
-            return jsonify({"groupes": noms_groupes})
+    if request.method == "POST":
+        return render_template("groupes.html", groupes=groupes_filtres, form=form)
 
     groupes = Groupe.query.all()
 
     return render_template("groupes.html", groupes=groupes, form=form)
-
 @login_required
 @app.route("/profil")
 def profil():
@@ -396,7 +430,7 @@ def profil():
         return redirect(url_for('login'))
     user = current_user
     groupesFavoris = db.session.query(Groupe).join(Apprecier).filter(Apprecier.iduser == user.iduser).all()
-    billets = db.session.query(Billet).join(Posseder).filter(Posseder.iduser == user.iduser).all()
+    billets = db.session.query(Billet).filter(Billet.iduser == user.iduser).all()
     return render_template("profil.html", user=user, 
                            groupesFavoris=groupesFavoris,
                            billets=billets)

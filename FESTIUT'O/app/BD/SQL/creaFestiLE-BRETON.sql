@@ -1,180 +1,178 @@
 CREATE TABLE `ACTIVITE_ANNEXE` (
-  `idact` int(3),
-  `dateact` datetime,
-  `typeact` VARCHAR(42),
-  `dureeact` float,
+  `idact` int(3) NOT NULL AUTO_INCREMENT,
+  `dateact` datetime NOT NULL,
+  `typeact` VARCHAR(42) NOT NULL,
+  `dureeact` float NOT NULL,
+  `noml` VARCHAR(42) NOT NULL,
   PRIMARY KEY (`idact`, `dateact`)
 );
 CREATE TABLE `ARTISTE` (
-  `idartiste` int(3),
+  `idartiste` int(3) NOT NULL AUTO_INCREMENT,
   `nomartiste` VARCHAR(42),
   `prenomartiste` VARCHAR(42),
-  `ddn` date,
+  `ddn` date ,
   `descriptiona` VARCHAR(42),
   `idgroupe` int(3),
   PRIMARY KEY (`idartiste`)
 );
 CREATE TABLE `BILLET` (
-  `typebillet` int(3),
+  `idbillet` int(3) NOT NULL AUTO_INCREMENT,	
+  `typebillet` int(3) NOT NULL,
   `descbillet` VARCHAR(42),
   `prixbillet` float(6),
-  PRIMARY KEY (`typebillet`)
+  `iduser` int(3),
+  PRIMARY KEY (`idbillet`)
 );
 CREATE TABLE `CONCERT` (
-  `idconcert` int(3) UNIQUE,
-  `jour` ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'),
-  `datedebutc` datetime,
-  `duree` float,
-  `noml` VARCHAR(42),
+
+  `idconcert` int(3) NOT NULL AUTO_INCREMENT,
+  `jour` ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche') NOT NULL,
+  `datedebutc` datetime NOT NULL,
+  `duree` float NOT NULL,
+  `noml` VARCHAR(42) NOT NULL,
   PRIMARY KEY (`idconcert`)
 );
 CREATE TABLE `GROUPE` (
-  `idgroupe` int(3),
-  `nomgroupe` VARCHAR(42),
-  `description` TINYTEXT,
+  `idgroupe` int(3) NOT NULL AUTO_INCREMENT,
+  `nomgroupe` VARCHAR(42) NOT NULL,
+  `description` TINYTEXT NOT NULL,
   `lienvideo` VARCHAR(42),
-  `stylemusical` VARCHAR(42),
+  `stylemusical` VARCHAR(42) NOT NULL,
   PRIMARY KEY (`idgroupe`)
 );
 CREATE TABLE `HEBERGER`(
-  `idh` int(3),
-  `idgroupe` int(3),
-  `jourDebut` ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'),
-  `dureeH` int(2),
-  PRIMARY KEY (`idh`, `idGroupe`)
+  `idh` int(3) NOT NULL AUTO_INCREMENT,
+  `idgroupe` int(3) NOT NULL,
+  `jourDebut` ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche') NOT NULL,
+  `dureeH` int(2) NOT NULL,
+  PRIMARY KEY (`idh`, `idgroupe`)
 );
 CREATE TABLE `HEBERGEMENT` (
-  `idh` int(3),
-  `adresse` VARCHAR(42),
-  `nbplace` int(5),
+  `idh` int(3) NOT NULL AUTO_INCREMENT,
+  `adresse` VARCHAR(42) NOT NULL,
+  `nbplace` int(5) NOT NULL,
   PRIMARY KEY (`idh`)
 );
 CREATE TABLE `INSTRUMENTS` (
-  `idinstrument` int(3),
-  `nominstrument` VARCHAR(42),
+  `idinstrument` int(3) NOT NULL AUTO_INCREMENT,
+  `nominstrument` VARCHAR(42) NOT NULL,
   PRIMARY KEY (`idinstrument`)
 );
 CREATE TABLE `LIEU` (
-  `noml` VARCHAR(42),
-  `capacite` int(5),
-  `scene` boolean,
+  `noml` VARCHAR(42) NOT NULL,
+  `capacite` int(5) NOT NULL,
+  `scene` boolean NOT NULL,
   PRIMARY KEY (`noml`)
 );
 CREATE TABLE `PHOTOS`(
-  `idphoto` int(3),
-  `nomphoto` VARCHAR(42),
-  `photo` VARCHAR(42),
+  `idphoto` int(3) NOT NULL AUTO_INCREMENT,
+  `nomphoto` VARCHAR(42) NOT NULL,
+  `photo` VARCHAR(42) NOT NULL,
   PRIMARY KEY (`idphoto`)
 );
 CREATE TABLE `RESEAUX` (
-  `idreseau` int(3),
-  `lienreseau` VARCHAR(42),
-  `nomreseau` VARCHAR(42),
-  `idgroupe` int(3),
+
+  `idreseau` int(3) NOT NULL AUTO_INCREMENT,
+  `lienreseau` VARCHAR(42) NOT NULL,
+  `nomreseau` VARCHAR(42) NOT NULL,
   PRIMARY KEY (`idreseau`)
 );
 CREATE TABLE `SOUS_STYLE` (
-  `ids` int(3),
-  `nomstyle` VARCHAR(42),
+  `ids` int(3) NOT NULL AUTO_INCREMENT,
+  `nomstyle` VARCHAR(42) NOT NULL,
   PRIMARY KEY (`ids`)
 );
 CREATE TABLE `UTILISATEUR` (
-  `iduser` int(3),
-  `nomuser` VARCHAR(42),
-  `ddn` date,
-  `email` VARCHAR(42) UNIQUE,
-  `mdp` VARCHAR(42),
-  `admin` boolean,
+  `iduser` int(3) NOT NULL AUTO_INCREMENT,
+  `nomuser` VARCHAR(42) NOT NULL,
+  `ddn` date NOT NULL,
+  `email` VARCHAR(42) NOT NULL,
+  `mdp` VARCHAR(42) NOT NULL,
+  `admin` boolean NOT NULL,
   PRIMARY KEY (`iduser`)
 );
 CREATE TABLE `ACCEDER` (
-  `idconcert` int(3),
-  `typebillet` int(3),
-  `preinscription` boolean,
-  PRIMARY KEY (`idconcert`, `typebillet`)
+  `idconcert` int(3) NOT NULL,
+  `idbillet` int(3) NOT NULL,
+  PRIMARY KEY (`idconcert`,`idbillet`)
 );
 CREATE TABLE `APPRECIER` (
-  `idgroupe` int(3),
-  `iduser` int(3),
+  `idgroupe` int(3) NOT NULL,
+  `iduser` int(3) NOT NULL,
   PRIMARY KEY (`idgroupe`, `iduser`)
 );
 CREATE TABLE `AVOIR` (
-  `ids` int(3),
-  `idgroupe` int(3),
+  `ids` int(3) NOT NULL,
+  `idgroupe` int(3) NOT NULL,
   PRIMARY KEY (`ids`, `idgroupe`)
 );
 CREATE TABLE `CONTENIR` (
-  `idphoto` int(3),
-  `idgroupe` int(3),
+  `idphoto` int(3) NOT NULL,
+  `idgroupe` int(3) NOT NULL,
   PRIMARY KEY (`idphoto`, `idgroupe`)
 );
 CREATE TABLE `CONTRIBUER` (
-  `idgroupe` int(3),
-  `idconcert` int(3),
-  `tempsdemontage` float,
-  `tempsmontage` float,
+  `idgroupe` int(3) NOT NULL,
+  `idconcert` int(3) NOT NULL,
+  `tempsdemontage` float NOT NULL,
+  `tempsmontage` float NOT NULL,
   PRIMARY KEY (`idgroupe`, `idconcert`)
 );
 
-CREATE TABLE `GEOLOCALISER` (
-  `idact` int(3),
-  `dateact` DATETIME,
-  `noml` VARCHAR(42),
-  PRIMARY KEY (`idact`, `dateact`, `noml`)
-);
+
 CREATE TABLE `JOUER` (
-  `idinstrument` int(3),
-  `idartiste` int(3),
+  `idinstrument` int(3) NOT NULL,
+  `idartiste` int(3) NOT NULL,
   PRIMARY KEY (`idinstrument`, `idartiste`)
 );
+
+CREATE TABLE `PARTAGER` (
+  `idreseau` int(3) NOT NULL,
+  `idgroupe` int(3) NOT NULL,
+  PRIMARY KEY (`idreseau`, `idgroupe`)
+);
+
 CREATE TABLE `PARTICIPER` (
-  `idgroupe` int(3),
-  `idact` int(3),
-  `dateact` DATETIME,
+  `idgroupe` int(3) NOT NULL,
+  `idact` int(3) NOT NULL,
+  `dateact` DATETIME NOT NULL,
   PRIMARY KEY (`idgroupe`, `idact`, `dateact`)
 );
-CREATE TABLE `POSSEDER`(
-  `iduser` int(3),
-  `typebillet` int(3),
-  PRIMARY KEY (`iduser`, `typebillet`)
-);
 CREATE TABLE `REGARDER` (
-  `idact` int(3),
-  `dateact` DATETIME,
-  `typebillet` int(3),
-  PRIMARY KEY (`idact`, `dateact`, `typebillet`)
+  `idact` int(3) NOT NULL,
+  `dateact` DATETIME NOT NULL,
+  `idbillet` int(3) NOT NULL,
+  PRIMARY KEY (`idact`, `dateact`, `idbillet`)
 );
 CREATE TABLE `SIMILAIRE` (
-  `idgroupe` int(3),
-  `idgroupe_1` int(3),
+  `idgroupe` int(3) NOT NULL,
+  `idgroupe_1` int(3) NOT NULL,
   PRIMARY KEY (`idgroupe`, `idgroupe_1`)
 );
+ALTER TABLE `ACTIVITE_ANNEXE` ADD FOREIGN KEY (`noml`) REFERENCES `LIEU` (`noml`);
 ALTER TABLE `ARTISTE` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `CONCERT` ADD FOREIGN KEY (`noml`) REFERENCES `LIEU` (`noml`);
-ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`typebillet`) REFERENCES `BILLET` (`typebillet`);
-ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`idconcert`) REFERENCES `CONCERT` (`idconcert`);
 ALTER TABLE `APPRECIER` ADD FOREIGN KEY (`iduser`) REFERENCES `UTILISATEUR` (`iduser`);
 ALTER TABLE `APPRECIER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `AVOIR` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `AVOIR` ADD FOREIGN KEY (`ids`) REFERENCES `SOUS_STYLE` (`ids`);
+ALTER TABLE `BILLET` ADD FOREIGN KEY (`iduser`) REFERENCES `UTILISATEUR` (`iduser`);
 ALTER TABLE `CONTENIR` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `CONTENIR` ADD FOREIGN KEY (`idphoto`) REFERENCES `PHOTOS` (`idphoto`);
 ALTER TABLE `CONTRIBUER` ADD FOREIGN KEY (`idconcert`) REFERENCES `CONCERT` (`idconcert`);
 ALTER TABLE `CONTRIBUER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
-ALTER TABLE `GEOLOCALISER` ADD FOREIGN KEY (`noml`) REFERENCES `LIEU` (`noml`);
-ALTER TABLE `GEOLOCALISER` ADD FOREIGN KEY (`idact`, `dateact`) REFERENCES `ACTIVITE_ANNEXE` (`idact`, `dateact`);
 ALTER TABLE `JOUER` ADD FOREIGN KEY (`idartiste`) REFERENCES `ARTISTE` (`idartiste`);
 ALTER TABLE `JOUER` ADD FOREIGN KEY (`idinstrument`) REFERENCES `INSTRUMENTS` (`idinstrument`);
 ALTER TABLE `PARTICIPER` ADD FOREIGN KEY (`idact`, `dateact`) REFERENCES `ACTIVITE_ANNEXE` (`idact`, `dateact`);
 ALTER TABLE `PARTICIPER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
-ALTER TABLE `REGARDER` ADD FOREIGN KEY (`typebillet`) REFERENCES `BILLET` (`typebillet`);
+ALTER TABLE `REGARDER` ADD FOREIGN KEY (`idbillet`) REFERENCES `BILLET` (`idbillet`);
 ALTER TABLE `REGARDER` ADD FOREIGN KEY (`idact`, `dateact`) REFERENCES `ACTIVITE_ANNEXE` (`idact`, `dateact`);
 ALTER TABLE `SIMILAIRE` ADD FOREIGN KEY (`idgroupe_1`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `SIMILAIRE` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `HEBERGER` ADD FOREIGN KEY (`idgroupe`) REFERENCES `GROUPE` (`idgroupe`);
 ALTER TABLE `HEBERGER` ADD FOREIGN KEY (`idh`) REFERENCES `HEBERGEMENT` (`idh`);
-ALTER TABLE `POSSEDER` ADD FOREIGN KEY (`iduser`) REFERENCES `UTILISATEUR` (`iduser`);
-ALTER TABLE `POSSEDER` ADD FOREIGN KEY (`typebillet`) REFERENCES `BILLET` (`typebillet`);
+ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`idbillet`) REFERENCES `BILLET` (`idbillet`);
+ALTER TABLE `ACCEDER` ADD FOREIGN KEY (`idconcert`) REFERENCES `CONCERT` (`idconcert`);
 
 -- FONCTIONS 
 
@@ -376,7 +374,7 @@ DELIMITER ;
 -- Bloquer l'insertion d'une activité annexe si le lieu est déjà utilisé pour le moment
 DELIMITER |
 
-create or replace trigger lieuUtiliseAnnexe before insert on GEOLOCALISER for each row
+create or replace trigger lieuUtiliseAnnexe before insert on ACTIVITE_ANNEXE for each row
 begin
     declare dateactA datetime;
     declare dureeactA float;
@@ -387,7 +385,7 @@ begin
     declare newActiviteFin datetime;
 
     declare fini boolean default false;
-    declare lesActivites cursor for select dateact, dureeact, noml from ACTIVITE_ANNEXE natural join GEOLOCALISER;
+    declare lesActivites cursor for select dateact, dureeact, noml from ACTIVITE_ANNEXE;
     declare continue handler for not found set fini=true;
 
     select dureeact into newDureeActivite from ACTIVITE_ANNEXE where idact=new.idact and dateact=new.dateact;

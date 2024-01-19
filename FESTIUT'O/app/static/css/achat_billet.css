@@ -47,3 +47,23 @@ button:hover {
     color: black;
 }
 
+.submit_button {
+    margin: 2% auto;
+    cursor: pointer;
+    display: inline-block;
+    padding: 2% 3% 2% 3%;
+    margin-top: 5%;
+    background-color: #FF7373;
+    color: white;
+    text-decoration: none;
+    border: 3px solid #FF7373;
+    border-radius: 30px;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: bold;
+}
+
+.submit_button:hover {
+    background-color: white;
+    color: black;
+}
+

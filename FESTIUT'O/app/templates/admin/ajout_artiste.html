@@ -42,6 +42,18 @@
         <label for="description" class="col-sm-2 control-label">{{ form.description.label }}</label>
         <div class="col-sm-10">{{ form.description(class_="form-control", placeholder="instrument joué, ...", id="description") }}</div>
     </div>
+    <div class="form-group">
+        <label for="groupe" class="col-sm-2 control-label">{{ form.groupe.label }}</label>
+        <div class="col-sm-10">{{ form.groupe(class_="form-control", placeholder="instrument joué, ...", id="groupe") }}</div>
+    </div>
     </div>
     <button type="submit" name="submit_button">Ajouter</button>
 </form>
+{% for mesg in get_flashed_messages() %}
+    <dialog open>
+      <p>{{ mesg }}</p>
+      <form method="dialog" id="form-dialog">
+        <button>OK</button>
+      </form>
+    </dialog>
+{% endfor %}
