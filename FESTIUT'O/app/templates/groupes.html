@@ -19,7 +19,15 @@
 
     <ul id="listeGroupes">
         {% for groupe in groupes %}
+        <div>
             <li>{{ groupe.nomgroupe }}</li>
+            <li>{{ groupe.description }}</li>
+            <li>{{ groupe.stylemusical }}</li>
+            <li>{{ groupe.lienvideo }}</li>
+            <li>
+                <a href="{{url_for('details_groupe', id=groupe.idgroupe)}}">Voir plus sur le groupe</a>
+            </li>
+        </div>
         {% endfor %}
     </ul>
 </div>
