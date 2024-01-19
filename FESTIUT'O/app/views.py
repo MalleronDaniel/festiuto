@@ -396,7 +396,7 @@ def profil():
         return redirect(url_for('login'))
     user = current_user
     groupesFavoris = db.session.query(Groupe).join(Apprecier).filter(Apprecier.iduser == user.iduser).all()
-    billets = db.session.query(Billet).join(Posseder).filter(Posseder.iduser == user.iduser).all()
+    billets = db.session.query(Billet).filter(Billet.iduser == user.iduser).all()
     return render_template("profil.html", user=user, 
                            groupesFavoris=groupesFavoris,
                            billets=billets)

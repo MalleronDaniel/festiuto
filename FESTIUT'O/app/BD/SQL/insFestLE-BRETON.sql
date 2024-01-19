@@ -182,18 +182,18 @@ values
 
 -- insertion des réseaux
 
-insert into RESEAUX (idreseau, lienreseau, nomreseau, idgroupe)
+insert into RESEAUX (idreseau, lienreseau, nomreseau)
 values
-(1, 'instagram/Beathles.com', 'Instagram', 1),
-(2, 'instagram/RollingStones.com', 'Instagram', 2),
-(3, 'instagram/ACDC.com', 'Instagram', 3),
-(4, 'facebook/Queen.com', 'Facebook', 4),
-(5, 'facebook/Nirvana.com', 'Facebook', 5),
-(6, 'facebook/PNL.com', 'Facebook', 6),
-(7, 'facebook/Arsenic.com', 'Facebook', 7),
-(8, 'facebook/FonckyFamily.com', 'Facebook', 8),
-(9, 'instagram/Casseurs.com', 'Instagram', 9),
-(10, 'instagram/SCrew.com', 'Instagram', 10);
+(1, 'instagram/Beathles.com', 'Instagram'),
+(2, 'instagram/RollingStones.com', 'Instagram'),
+(3, 'instagram/ACDC.com', 'Instagram'),
+(4, 'facebook/Queen.com', 'Facebook'),
+(5, 'facebook/Nirvana.com', 'Facebook'),
+(6, 'facebook/PNL.com', 'Facebook'),
+(7, 'facebook/Arsenic.com', 'Facebook'),
+(8, 'facebook/FonckyFamily.com', 'Facebook'),
+(9, 'instagram/Casseurs.com', 'Instagram'),
+(10, 'instagram/SCrew.com', 'Instagram');
 
 
 -------
