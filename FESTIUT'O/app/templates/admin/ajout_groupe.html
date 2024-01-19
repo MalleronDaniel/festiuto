@@ -10,6 +10,7 @@
         <th>Description</th>
         <th>Lien Video</th>
         <th>Style Musical</th>
+        <th>Nb Membres</th>
     <tr>
     {% for gr in groupes %}
     <tr>
@@ -17,6 +18,7 @@
         <td>{{ gr.description }}</td>
         <td>{{ gr.lienvideo }}</td>
         <td>{{ gr.stylemusical }}</td>
+        <td>{{ gr.get_artistes_groupe() | length }}</td>
         <td><a href='{{ url_for("delete_groupe", idgroupe=gr.idgroupe)}}' onclick="return confirm('Confirmation')">Supprimer</a><td>
     </tr>
     {% endfor %}
@@ -40,9 +42,13 @@
         <label for="stylemusical" class="col-sm-2 control-label">{{ form.stylemusical.label }}</label>
         <div class="col-sm-10">{{ form.stylemusical(class_="form-control", placeholder="", id="stylemusical") }}</div>
     </div>
-    <div class="form-group">
-        <label for="artiste" class="col-sm-2 control-label">{{ form.artiste.label }}</label>
-        <div class="col-sm-10">{{ form.artiste(class_="form-control", placeholder="", id="artiste") }}</div>
-    </div>
     <button type="submit" name="submit_button">Ajouter</button>
 </form>
+{% for mesg in get_flashed_messages() %}
+    <dialog open>
+      <p>{{ mesg }}</p>
+      <form method="dialog" id="form-dialog">
+        <button>OK</button>
+      </form>
+    </dialog>
+{% endfor %}

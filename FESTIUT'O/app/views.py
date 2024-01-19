@@ -175,7 +175,7 @@ def save_utilisateur():
     )
     db.session.add(u)
     db.session.commit()
-    flash(f'Félicitations ! L\'ajout d\'utilisateur "<Billet ({u.iduser}) | {u.nomuser}>" a été effectué avec succès.')
+    flash(f'Félicitations ! L\'ajout d\'utilisateur "<Utilisateur ({u.iduser}) | {u.nomuser}>" a été effectué avec succès.')
     return redirect(url_for('ajout_utilisateur'))
 
 @app.route("/admin/delete-utilisateur/<int:iduser>")
@@ -213,23 +213,17 @@ def save_concert():
 
 @app.route("/admin/delete-concert/<int:idconcert>")
 def delete_concert(idconcert):
-    try:
-        c = db.session.query(Concert).filter_by(idconcert=idconcert).first()
-        if c:
-            db.session.delete(c)
-            db.session.commit()
-        flash(f'Le concert "f"<Concert ({c.idconcert}) | {c.noml}>"" a été supprimé.')
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        flash(f"Error deleting concert: {str(e)}", "error")
-        return redirect(url_for('ajout_concert'))
+    c = db.session.query(Concert).filter_by(idconcert=idconcert).first()
+    if c:
+        db.session.delete(c)
+        db.session.commit()
+    flash(f'Le concert "f"<Concert ({c.idconcert}) | {c.noml}>"" a été supprimé.')
     return redirect(url_for('ajout_concert'))
 
 @app.route("/admin/ajout-groupe/")
 def ajout_groupe():
     f = GroupeForm()
     f.set_stylemusical_choices()
-    f.set_artiste_choices()
     g = db.session.query(Groupe).all()
     return render_template("admin/ajout_groupe.html", form=f, groupes=g)
 
@@ -244,14 +238,7 @@ def save_groupe():
         stylemusical = f.stylemusical.data,
         idgroupe = new_id
     )
-    contenir = Contenir(
-        idphoto = 1,
-        idgroupe = new_id
-    )
     db.session.add(g)
-    db.session.add(contenir)
-    a = Artiste.query.get(f.artiste.data)
-    a.idgroupe = new_id
     
     db.session.commit()
     flash(f'Félicitations ! L\'ajout du groupe "f"<Groupe ({g.idgroupe}) | {g.nomgroupe}>"" a été effectué avec succès.')
@@ -271,6 +258,7 @@ def delete_groupe(idgroupe):
 @app.route("/admin/ajout-artiste/")
 def ajout_artiste():
     f = ArtisteForm()
+    f.set_groupe_choices()
     a = db.session.query(Artiste).all()
     return render_template("admin/ajout_artiste.html", form=f, artistes=a)
 
@@ -282,7 +270,8 @@ def save_artiste():
         prenomartiste = f.prenomartiste.data,
         ddn = f.ddn.data,
         descriptiona = f.description.data,
-        idartiste = db.session.query(func.max(Artiste.idartiste)).scalar()+1
+        idartiste = db.session.query(func.max(Artiste.idartiste)).scalar()+1,
+        idgroupe = f.groupe.data
     )
     db.session.add(a)
     db.session.commit()
@@ -297,6 +286,66 @@ def delete_artiste(idartiste):
         db.session.commit()
     flash(f'L\'artiste "f"<Artiste ({a.idartiste}) | {a.prenomartiste} {a.prenomartiste}>"" a été supprimé.')
     return redirect(url_for('ajout_artiste'))
+
+@app.route("/admin/ajout-lieu/")
+def ajout_lieu():
+    f = LieuForm()
+    l = db.session.query(Lieu).all()
+    return render_template("admin/ajout_lieu.html", form=f, lieux=l)
+
+@app.route("/admin/ajout-lieu/save/",  methods=("POST",))
+def save_lieu():
+    f = LieuForm()
+    l = Lieu(
+        noml = f.noml.data,
+        capacite = f.capacite.data,
+        scene = f.scene.data
+    )
+    db.session.add(l)
+    db.session.commit()
+    flash(f'Félicitations ! L\'ajout de lieu "f"<Lieu ({l.capacite}) | {l.noml}>"" a été effectué avec succès.')
+    return redirect(url_for('ajout_lieu'))
+
+@app.route("/admin/delete-lieu/<string:noml>")
+def delete_lieu(noml):
+    l = db.session.query(Lieu).filter_by(noml=noml).first()
+    if l:
+        db.session.delete(l)
+        db.session.commit()
+    flash(f'Le lieu "<Lieu ({l.capacite}) | {l.noml}>"" a été supprimé.')
+    return redirect(url_for('ajout_lieu'))
+
+@app.route("/admin/ajout-activite-annexe/")
+def ajout_activite_annexe():
+    f = ActiviteAnnexeForm()
+    f.set_noml_choices()
+    aa = db.session.query(ActiviteAnnexe).all()
+    return render_template("admin/ajout_activite_annexe.html", form=f, activites=aa)
+
+@app.route("/admin/ajout-activite-annexe/save/",  methods=("POST",))
+def save_activite_annexe():
+    f = ActiviteAnnexeForm()
+    dateact = datetime.combine(f.dateact.data, f.timeact.data)
+    aa = ActiviteAnnexe(
+        idact = db.session.query(func.max(ActiviteAnnexe.idact)).scalar()+1,
+        dateact = dateact,
+        typeact = f.typeact.data,
+        dureeact = f.dureeact.data,
+        noml = f.noml.data
+    )
+    db.session.add(aa)
+    db.session.commit()
+    flash(f'Félicitations ! L\'ajout de l\'activité annexe "f"<ActiviteAnnexe ({aa.idact}) | {aa.dateact} {aa.noml}>"" a été effectué avec succès.')
+    return redirect(url_for('ajout_activite_annexe'))
+
+@app.route("/admin/delete-activite-annexe/<int:idact>")
+def delete_activite_annexe(idact):
+    aa = db.session.query(ActiviteAnnexe).filter_by(idact=idact).first()
+    if aa:
+        db.session.delete(aa)
+        db.session.commit()
+    flash(f'L\'activité annexe "f"<ActiviteAnnexe ({aa.idact}) | {aa.dateact} {aa.noml}>"" a été supprimé.')
+    return redirect(url_for('ajout_activite_annexe'))
 
 @app.route("/save/billeterie/",  methods=("POST",))
 def save_billeterie():
