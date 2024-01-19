@@ -80,53 +80,37 @@ def save_inscription():
     db.session.commit()
     return redirect(url_for('login'))
 
-@app.route("/billetterie/1")
-@login_required
-def achat_billet_vendredi():
-    types_billets = Billet.get_types_billets()
-    billets = Billet.query.all()
-    f = BilletForm()
-    return render_template("billetterie/achat_billet_vendredi.html", form=f, types_billets=types_billets, billets=billets)
-
-@app.route("/billetterie/2")
-@login_required
-def achat_billet_samedi():
-    types_billets = Billet.get_types_billets()
-    billets = Billet.query.all()
-    f = BilletForm()
-    return render_template("billetterie/achat_billet_samedi.html", form=f, types_billets=types_billets, billets=billets)
-
-@app.route("/billetterie/3")
-@login_required
-def achat_billet_dimanche():
-    types_billets = Billet.get_types_billets()
-    billets = Billet.query.all()
-    f = BilletForm()
-    return render_template("billetterie/achat_billet_dimanche.html", form=f, types_billets=types_billets, billets=billets)
-
-@app.route("/billetterie/4")
-@login_required
-def achat_billet_totalite():
-    types_billets = Billet.get_types_billets()
-    billets = Billet.query.all()
-    f = BilletForm()
-    return render_template("billetterie/achat_billet_totalite.html", form=f, types_billets=types_billets, billets=billets)
-
-@app.route("/billetterie/5")
-@login_required
-def achat_billet_totaliteVIP():
-    types_billets = Billet.get_types_billets()
-    billets = Billet.query.all()
-    f = BilletForm()
-    return render_template("billetterie/achat_billet_totaliteVIP.html", form=f, types_billets=types_billets, billets=billets)
 
 @app.route("/billetterie/")
 @login_required
 def billetterie():
     types_billets = Billet.get_types_billets()
-    billets = Billet.query.all()
+    billets = Billet.query.filter(Billet.iduser.is_(None)).all()
+    return render_template("billetterie/billetterie.html", types_billets=types_billets, billets=billets)
+
+@app.route("/achatbillet/<int:type>")
+@login_required
+def achatbillet(type):
+    billet = Billet.query.filter(Billet.typebillet == type).first()
     f = BilletForm()
-    return render_template("billetterie/base_billetterie.html", form=f, types_billets=types_billets, billets=billets)
+    return render_template("billetterie/achat_billet.html", form=f, billet=billet)
+
+@login_required
+@app.route("/confirm-achatbillet/<int:type>")
+def confirm_achatbillet(type):
+    if(current_user.is_authenticated == False):
+        return redirect(url_for('login'))
+    user = current_user
+    billet = Billet.query.filter(Billet.typebillet == type).first()
+    b = Billet(
+        typebillet = billet.typebillet,
+        descbillet = billet.descbillet,
+        prixbillet = billet.prixbillet,
+        iduser = user.iduser
+    )
+    db.session.add(b)
+    db.session.commit()
+    return render_template("profil.html", user=current_user)
 
 @app.route("/admin/ajout-billet/")
 def ajout_billet():
@@ -134,7 +118,7 @@ def ajout_billet():
     b = db.session.query(Billet).all()
     return render_template("admin/ajout_billet.html", form=f, billets=b)
 
-@app.route("/admin/ajout-billet/save/",  methods=("POST",))
+@app.route("/admin/ajout-billet/save/",  methods=["POST"])
 def save_billet():
     f = TypeBilletForm()
     b = Billet(
@@ -350,8 +334,9 @@ def delete_activite_annexe(idact):
 @app.route("/save/billeterie/",  methods=("POST",))
 def save_billeterie():
     f = BilletForm()
-    p = Posseder(
+    p = Billet(
         typebillet = f.typebillet.data[0],
+        descbillet = f.typebillet.data[1],
         iduser = current_user.iduser
     )
     db.session.add(p)
