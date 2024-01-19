@@ -14,9 +14,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 @app.route("/")
 def home():
-    s = Utilisateur.query.all()
-    a = Artiste.query.all()
-    return render_template("accueil.html", spectateurs=s, artistes=a)
+    return redirect(url_for('accueil'))
 
 @app.route("/admin/")
 def admin_home():
@@ -24,7 +22,9 @@ def admin_home():
 
 @app.route("/accueil/")
 def accueil():
-    return render_template("accueil.html")
+    b=[db.session.query(Billet).first(),db.session.query(Billet).get(2)]
+    c = db.session.query(Concert).first()
+    return render_template("accueil.html", current_user=current_user, billets=b, concert=c)
 
 @app.route("/burger/")
 def burger():
