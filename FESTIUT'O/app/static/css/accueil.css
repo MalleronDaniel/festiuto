@@ -451,3 +451,16 @@ footer {
 .social a {
     margin-right:5%;
 }
+
+.Info a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: #FF7373;
+    transition: width 0.3s ease;
+}
+
+.Info a:hover::after {
+    width: 100%;
+}
