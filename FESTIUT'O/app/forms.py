@@ -85,6 +85,10 @@ class ArtisteForm(FlaskForm):
     prenomartiste = StringField('Prénom', validators=[DataRequired()])
     ddn = DateField('Date de Naissance', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
+    groupe = SelectField('Choisir un groupe')
+    
+    def set_groupe_choices(self):
+        self.groupe.choices = [(g.idgroupe, g.nomgroupe) for g in Groupe.query.all()]
     
     
 class GroupeForm(FlaskForm):
@@ -93,11 +97,24 @@ class GroupeForm(FlaskForm):
     description = StringField('Description', validators=[DataRequired()])
     lienvideo = StringField('Lien Vidéo', validators=[DataRequired()])
     stylemusical = SelectField('Choisir un style')
-    artiste = SelectField('Choisir un artiste')
     
     def set_stylemusical_choices(self):
         self.stylemusical.choices = [(s.nomstyle, s.nomstyle) for s in SousStyle.query.all()]
-        
-    def set_artiste_choices(self):
-        artistesLibre = Artiste.query.filter(Artiste.idgroupe.is_(None)).all()
-        self.artiste.choices = [(artist.idartiste, f'{artist.nomartiste} {artist.prenomartiste}') for artist in artistesLibre]
+
+
+class LieuForm(FlaskForm):
+    noml = StringField('Nom de Lieu', validators=[DataRequired()])
+    capacite = IntegerField('Capacité', validators=[DataRequired()])
+    scene = BooleanField('Scene ?')
+    
+    
+class ActiviteAnnexeForm(FlaskForm):
+    idact = HiddenField('id')
+    dateact = DateField('Date', validators=[DataRequired()])
+    timeact = TimeField('Heure', validators=[DataRequired()])
+    typeact = StringField('Type d\'activité', validators=[DataRequired()])
+    dureeact = FloatField('Durée', validators=[DataRequired()])
+    noml = SelectField('Lieu')
+    
+    def set_noml_choices(self):
+        self.noml.choices = [(l.noml, l.noml) for l in Lieu.query.all()]

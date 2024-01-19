@@ -46,3 +46,11 @@
     </div>
     <button type="submit" name="submit_button">Ajouter</button>
 </form>
+{% for mesg in get_flashed_messages() %}
+    <dialog open>
+      <p>{{ mesg }}</p>
+      <form method="dialog" id="form-dialog">
+        <button>OK</button>
+      </form>
+    </dialog>
+{% endfor %}
