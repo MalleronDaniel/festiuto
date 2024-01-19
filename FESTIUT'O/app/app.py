@@ -9,10 +9,10 @@ app.config["SECRET_KEY"] = "3111990a-e74c-4366-8f1e-77c770304a87"  # TODO
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 
-username = 'root'
-password = 'daniel'
-host = 'localhost'
-database = 'BD'
+# username = 'root'
+# password = 'daniel'
+# host = 'localhost'
+# database = 'BD'
 
 # username = 'rooot'
 # password = 'root'
@@ -24,10 +24,10 @@ database = 'BD'
 # host = 'localhost'
 # database = 'festiuto2'
 
-# username = 'root'
-# password = ''
-# host = 'localhost'
-# database = 'cours'
+username = 'root'
+password = ''
+host = 'localhost'
+database = 'cours'
 
 app.config['BOOTSTRAP_SERVE_LOCAL'] = True
 bootstrap = Bootstrap5(app)

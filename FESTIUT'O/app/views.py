@@ -464,4 +464,4 @@ def programme_dimanche():
     jourConcertsDistinct = [jour[0] for jour in jourConcerts];
     concerts_dimanche = Concert.query.filter((Concert.jour) == "Dimanche").order_by(Concert.datedebutc).all();
     
-    return render_template("programme/programme_samedi.html", joursConcerts = jourConcertsDistinct, concerts_dimanche = concerts_dimanche, c = c)
+    return render_template("programme/programme_dimanche.html", joursConcerts = jourConcertsDistinct, concerts_dimanche = concerts_dimanche, c = c)
