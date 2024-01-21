@@ -17,9 +17,9 @@ class BilletForm(FlaskForm):
     
 class TypeBilletForm(FlaskForm):
     """Formulaire pour ajouter un billet"""
-    typebillet = HiddenField('id')
-    descbillet = StringField('Description Billet')
-    prixbillet = IntegerField('Prix Billet')
+    typebillet = HiddenField('id', validators=[DataRequired()])
+    descbillet = StringField('Description Billet', validators=[DataRequired()])
+    prixbillet = IntegerField('Prix Billet', validators=[DataRequired()])
     # jours = SelectField('Type Billet', validators=[DataRequired()], choices=[(1, 'Samedi'), (2, 'Dimanche'), (3, 'Lundi')])
 
 

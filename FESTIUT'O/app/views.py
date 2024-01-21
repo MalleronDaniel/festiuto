@@ -232,7 +232,6 @@ def save_groupe():
 def delete_groupe(idgroupe):
     g = db.session.query(Groupe).filter_by(idgroupe=idgroupe).first()
     if g:
-        db.session.delete(db.session.query(Contenir).filter_by(idgroupe=idgroupe).first())
         db.session.delete(g)
         db.session.commit()
     flash(f'Le groupe "f"<Groupe ({g.idgroupe}) | {g.nomgroupe}>"" a été supprimé.')

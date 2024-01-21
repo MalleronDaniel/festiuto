@@ -1,16 +1,71 @@
-<h1>ADMIN</h1>
-<a href="{{ url_for('logout') }}"><button>Déconnexion</button></a>
+<!doctype html>
+<html lang="fr">
+<head>
+    {% block head %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+    <link rel="icon" href="{{ url_for('static', filename='img/logo_jaune.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo_jaune.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/accueil.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/admin.css')}}">
+    {% endblock %}
+    <title>Festiut'O</title>
+    {% endblock %}
+</head>
+<body>
+    <header class="head">
+            
+        <div class="left">
+                <div>
+                    <a href="{{ url_for('logout') }}">
+                        <span class="glyphicon glyphicon-log-out" title="Logout"></span>
+                        SE DECONNECTER
+                    </a>
+                </div>
+        </div>
+        <div class="logo">
+            <a aria-current="page" href="{{ url_for('admin_home') }}">
+                <img src="{{ url_for('static', filename='img/logo_jaune.png') }}" alt="Logo">
+            </a>
+        </div>
+        
+        <div class="menu-burger">
+            <div>
+                <a aria-current="page" href="{{ url_for('burger') }}">
+                    <img src="{{ url_for('static', filename='img/burger.png') }}" alt="Menu Burger">
+                </a>
+            </div>
+            
+        </div>
 
-<a href="{{ url_for('ajout_billet')}}"> ajout billet</a>
-
-<a href="{{ url_for('ajout_utilisateur')}}"> ajout utilisateur</a>
-
-<a href="{{ url_for('ajout_concert')}}"> ajout concert</a>
-
-<a href="{{ url_for('ajout_artiste')}}"> ajout artiste</a>
-
-<a href="{{ url_for('ajout_groupe')}}"> ajout groupe</a>
-
-<a href="{{ url_for('ajout_lieu')}}"> ajout lieu</a>
-
-<a href="{{ url_for('ajout_activite_annexe')}}"> ajout activite annexe</a>
+    </header>
+    <main>
+        <div class="info">
+            <div>
+                <a aria-current="page" href="{{ url_for('ajout_billet') }}"><button>GÉRER BILLET</button></a></button>
+            </div>
+            <div>
+                <a aria-current="page" href="{{ url_for('ajout_utilisateur') }}"><button>GÉRER UTILISATEUR</button></a></button>
+            </div>
+            <div>
+                <a aria-current="page" href="{{ url_for('ajout_concert') }}"><button>GÉRER CONCERT</button></a></button>
+            </div>
+            <div>
+                <a aria-current="page" href="{{ url_for('ajout_artiste') }}"><button>GÉRER ARTISTE</button></a></button>
+            </div>
+            <div>
+                <a aria-current="page" href="{{ url_for('ajout_groupe') }}"><button>GÉRER GROUPE</button></a></button>
+            </div>
+            <div>
+                <a aria-current="page" href="{{ url_for('ajout_lieu') }}"><button>GÉRER LIEU</button></a></button>
+            </div>
+            <div>
+                <a aria-current="page" href="{{ url_for('ajout_activite_annexe') }}"><button>GÉRER ACTIVITÉ ANNEXE</button></a></button>
+            </div>
+        </div>
+    </main>
+</body>
